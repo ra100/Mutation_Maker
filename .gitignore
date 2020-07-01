@@ -1,0 +1,15 @@
+**/.vscode/
+.ipynb_checkpoints/
+.DS_Store
+.coverage
+__pycache__/
+.mypy_cache/
+log*.txt
+venv
+node_modules
+work
+aws-deploy.sh
+.idea/
+backend/tests/unit_tests/qclm_*
+build/*
+primer3_core

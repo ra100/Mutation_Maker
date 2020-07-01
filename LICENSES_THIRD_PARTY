@@ -1,0 +1,1517 @@
+--------------------------------------------------
+Third party dependencies for api, backend and lambda components listed by License type
+[Format: Name Version License URL]
+--------------------------------------------------
+
+ Name                             Version    License                                                       URL
+ rsa                              3.4.2      Apache License 2.0                                            https://stuvel.eu/rsa
+ dataclasses                      0.6        Apache License 2.0                                            https://github.com/ericvsmith/dataclasses
+ arrow                            0.15.7     Apache License 2.0                                            https://arrow.readthedocs.io
+ falcon                           2.0.0      Apache License 2.0                                            https://falconframework.org
+ requests                         2.23.0     Apache License 2.0                                            https://requests.readthedocs.io
+ serverlessrepo                   0.1.9      Apache License 2.0                                            https://github.com/awslabs/aws-serverlessrepo-python
+ aws-lambda-builders              0.9.0      Apache License 2.0                                            https://github.com/awslabs/aws-lambda-builders
+ aws-sam-cli                      0.53.0     Apache License 2.0                                            https://github.com/awslabs/aws-sam-cli
+ aws-sam-translator               1.25.0     Apache License 2.0                                            https://github.com/awslabs/serverless-application-model
+ awscli                           1.18.69    Apache License 2.0                                            http://aws.amazon.com/cli/
+ boto3                            1.13.23    Apache License 2.0                                            https://github.com/boto/boto3
+ botocore                         1.16.26    Apache License 2.0                                            https://github.com/boto/botocore
+ docker                           4.2.1      Apache License 2.0                                            https://github.com/docker/docker-py
+ s3transfer                       0.3.3      Apache License 2.0                                            https://github.com/boto/s3transfer
+ importlib-metadata               1.6.0      Apache License 2.0                                            http://importlib-metadata.readthedocs.io/
+ zipp                             3.1.0      Apache License 2.0                                            https://github.com/jaraco/zipp
+ tornado                          5.1.1      Apache License 2.0                                            http://www.tornadoweb.org/
+ Babel                            2.8.0      BSD                                                           http://babel.pocoo.org/
+ amqp                             2.6.0      BSD                                                           http://github.com/celery/py-amqp
+ behave                           1.2.6      BSD                                                           http://github.com/behave/behave
+ billiard                         3.6.3.0    BSD                                                           https://github.com/celery/billiard
+ binaryornot                      0.4.4      BSD                                                           https://github.com/audreyr/binaryornot
+ celery                           4.3.0      BSD                                                           http://celeryproject.org
+ colorama                         0.4.3      BSD                                                           https://github.com/tartley/colorama
+ cookiecutter                     1.6.0      BSD                                                           https://github.com/audreyr/cookiecutter
+ dateparser                       0.7.6      BSD                                                           https://github.com/scrapinghub/dateparser
+ flower                           0.9.3      BSD                                                           https://github.com/mher/flower
+ itsdangerous                     1.1.0      BSD                                                           https://palletsprojects.com/p/itsdangerous/
+ kombu                            4.6.10     BSD                                                           https://kombu.readthedocs.io
+ numpy                            1.16.3     BSD                                                           https://www.numpy.org
+ parse-type                       0.5.2      BSD                                                           https://github.com/jenisys/parse_type
+ pyasn1                           0.4.8      BSD                                                           https://github.com/etingof/pyasn1
+ vine                             1.3.0      BSD                                                           http://github.com/celery/vine
+ websocket-client                 0.57.0     BSD                                                           https://github.com/websocket-client/websocket-client.git
+ whichcraft                       0.6.1      BSD                                                           https://github.com/pydanny/whichcraft
+ xlrd                             1.2.0      BSD                                                           http://www.python-excel.org/
+ prettytable                      0.7.2      BSD (3 clause)                                                http://code.google.com/p/prettytable
+ Flask                            1.0.4      BSD-3-Clause                                                  https://palletsprojects.com/p/flask/
+ Jinja2                           2.11.2     BSD-3-Clause                                                  https://palletsprojects.com/p/jinja/
+ MarkupSafe                       1.1.1      BSD-3-Clause                                                  https://palletsprojects.com/p/markupsafe/
+ Werkzeug                         1.0.1      BSD-3-Clause                                                  https://palletsprojects.com/p/werkzeug/
+ click                            7.1.2      BSD-3-Clause                                                  https://palletsprojects.com/p/click/
+ idna                             2.9        BSD-like                                                      https://github.com/kjd/idna
+ python-dateutil                  2.8.0      Apache License 2.0                                            https://dateutil.readthedocs.io
+ primer3-py                       0.5.7      GPLv2                                                         https://github.com/libnano/primer3-py
+ chardet                          3.0.4      LGPL                                                          https://github.com/chardet/chardet
+ PyYAML                           5.3.1      MIT                                                           https://github.com/yaml/pyyaml
+ attrs                            19.3.0     MIT                                                           https://www.attrs.org/
+ chevron                          0.13.1     MIT                                                           https://github.com/noahmorrison/chevron
+ future                           0.18.2     MIT                                                           https://python-future.org
+ gunicorn                         19.9.0     MIT                                                           http://gunicorn.org
+ hug                              2.5.1      MIT                                                           https://github.com/timothycrosley/hug
+ jinja2-time                      0.2.0      MIT                                                           https://github.com/hackebrot/jinja2-time
+ jmespath                         0.10.0     MIT                                                           https://github.com/jmespath/jmespath.py
+ poyo                             0.5.0      MIT                                                           https://github.com/hackebrot/poyo
+ pyrsistent                       0.16.0     MIT                                                           http://github.com/tobgu/pyrsistent/
+ pytz                             2020.1     MIT                                                           http://pythonhosted.org/pytz
+ redis                            3.2.1      MIT                                                           https://github.com/andymccurdy/redis-py
+ six                              1.15.0     MIT                                                           https://github.com/benjaminp/six
+ tomlkit                          0.5.8      MIT                                                           https://github.com/sdispater/tomlkit
+ tzlocal                          2.1        MIT                                                           https://github.com/regebro/tzlocal
+ urllib3                          1.25.9     MIT                                                           https://urllib3.readthedocs.io/
+ jsonobject                       0.9.8      MIT                                                           https://github.com/dimagi/jsonobject
+ jsonschema                       3.2.0      MIT                                                           https://github.com/Julian/jsonschema
+ parse                            1.15.0     MIT                                                           https://github.com/r1chardj0n3s/parse
+ timeout-decorator                0.4.1      MIT                                                           https://github.com/pnpnpn/timeout-decorator
+ certifi                          2020.6.20  MPL-2.0                                                       https://certifiio.readthedocs.io/en/latest/
+ regex                            2020.6.8   Python Software Foundation License                            https://bitbucket.org/mrabarnett/mrab-regex
+ biopython                        1.73       Biopython License Agreement                                   https://biopython.org/
+ docutils                         0.15.2     FreeBSD                                                       http://docutils.sourceforge.net/
+
+
+--------------------------------------------------
+Third party dependencies for frontend component listed by License type
+[Format: Module name Version License URL]
+--------------------------------------------------
+
+harmony-reflect 1.6.1 (Apache-2.0 OR MPL-1.1) git+https://tvcutsem github.com/tvcutsem/harmony-reflect
+node-forge 0.9.0 (BSD-3-Clause OR GPL-2.0) https://github.com/digitalbazaar/forge
+sha.js 2.4.11 (MIT AND BSD-3-Clause) https://github.com/crypto-browserify/sha.js
+pako 1.0.11 (MIT AND Zlib) https://github.com/nodeca/pako
+atob 2.1.2 (MIT OR Apache-2.0) git://git.coolaj86.com/coolaj86/atob.js
+type-fest 0.8.1 (MIT OR CC0-1.0) https://github.com/sindresorhus/type-fest
+jszip 3.4.0 (MIT OR GPL-3.0) https://github.com/Stuk/jszip
+path-is-inside 1.0.2 (WTFPL OR MIT) https://github.com/domenic/path-is-inside
+tslib 1.13.0 0BSD https://github.com/Microsoft/tslib
+json-schema 0.2.3 AFLv2.1 BSD https://github.com/kriszyp/json-schema
+aria-query 3.0.0 Apache-2.0 https://github.com/A11yance/aria-query
+axobject-query 2.1.2 Apache-2.0 https://github.com/A11yance/axobject-query
+typescript 3.9.3 Apache-2.0 https://github.com/Microsoft/TypeScript
+frac 1.1.2 Apache-2.0 https://github.com/SheetJS/frac
+adler-32 1.2.0 Apache-2.0 https://github.com/SheetJS/js-adler32
+cfb 1.1.4 Apache-2.0 https://github.com/SheetJS/js-cfb
+codepage 1.14.0 Apache-2.0 https://github.com/SheetJS/js-codepage
+crc-32 1.2.0 Apache-2.0 https://github.com/SheetJS/js-crc32
+wmf 1.0.2 Apache-2.0 https://github.com/SheetJS/js-wmf
+xlsx 0.16.1 Apache-2.0 https://github.com/SheetJS/js-xlsx
+exit-on-epipe 1.0.1 Apache-2.0 https://github.com/SheetJS/node-exit-on-epipe
+printj 1.1.2 Apache-2.0 https://github.com/SheetJS/printj
+ssf 0.10.3 Apache-2.0 https://github.com/SheetJS/ssf
+ansi-html 0.0.7 Apache-2.0 https://github.com/Tjatse/ansi-html
+tslint-config-standard 9.0.0 Apache-2.0 https://github.com/blakeembrey/tslint-config-standard
+walker 1.0.7 Apache-2.0 https://github.com/daaku/nodejs-walker
+ xtuc/long 4.2.2 Apache-2.0 https://github.com/dcodeIO/long.js
+doctrine 3.0.0 Apache-2.0 https://github.com/eslint/doctrine
+eslint-visitor-keys 1.1.0 Apache-2.0 https://github.com/eslint/eslint-visitor-keys
+bser 2.1.1 Apache-2.0 https://github.com/facebook/watchman
+fb-watchman 2.0.1 Apache-2.0 https://github.com/facebook/watchman
+websocket-driver 0.7.3 Apache-2.0 https://github.com/faye/websocket-driver-node
+xml-name-validator 3.0.0 Apache-2.0 https://github.com/jsdom/xml-name-validator
+spdx-correct 3.1.0 Apache-2.0 https://github.com/jslicense/spdx-correct.js
+validate-npm-package-license 3.0.4 Apache-2.0 https://github.com/kemitchell/validate-npm-package-license.js
+less 3.11.1 Apache-2.0 https://github.com/less/less.js
+aws-sign2 0.7.0 Apache-2.0 https://github.com/mikeal/aws-sign
+caseless 0.12.0 Apache-2.0 https://github.com/mikeal/caseless
+forever-agent 0.6.1 Apache-2.0 https://github.com/mikeal/forever-agent
+oauth-sign 0.9.0 Apache-2.0 https://github.com/mikeal/oauth-sign
+tunnel-agent 0.6.0 Apache-2.0 https://github.com/mikeal/tunnel-agent
+ cnakazawa/watch 1.0.4 Apache-2.0 https://github.com/mikeal/watch
+tslint 6.1.2 Apache-2.0 https://github.com/palantir/tslint
+tslint-react 5.0.0 Apache-2.0 https://github.com/palantir/tslint-react
+ts-toolbelt 6.8.9 Apache-2.0 https://github.com/pirix-gh/ts-toolbelt
+rxjs 6.5.5 Apache-2.0 https://github.com/reactivex/rxjs
+request 2.88.2 Apache-2.0 https://github.com/request/request
+glob-to-regexp 0.3.0 BSD* https://github.com/fitzgen/glob-to-regexp
+readline 1.3.0 BSD* https://github.com/maleck13/readline
+dotenv-expand 5.1.0 BSD-2-Clause
+domutils 1.7.0 BSD-2-Clause https://github.com/FB55/domutils
+eslint-scope 5.0.0 BSD-2-Clause https://github.com/eslint/eslint-scope
+espree 6.2.1 BSD-2-Clause https://github.com/eslint/espree
+escodegen 1.14.1 BSD-2-Clause https://github.com/estools/escodegen
+esrecurse 4.2.1 BSD-2-Clause https://github.com/estools/esrecurse
+estraverse 4.3.0 BSD-2-Clause https://github.com/estools/estraverse
+esutils 2.0.3 BSD-2-Clause https://github.com/estools/esutils
+domhandler 2.4.2 BSD-2-Clause https://github.com/fb55/DomHandler
+css-select 2.1.0 BSD-2-Clause https://github.com/fb55/css-select
+css-what 3.2.1 BSD-2-Clause https://github.com/fb55/css-what
+domelementtype 1.3.1 BSD-2-Clause https://github.com/fb55/domelementtype
+entities 2.0.2 BSD-2-Clause https://github.com/fb55/entities
+nth-check 1.0.2 BSD-2-Clause https://github.com/fb55/nth-check
+uri-js 4.2.2 BSD-2-Clause https://github.com/garycourt/uri-js
+esprima 4.0.1 BSD-2-Clause https://github.com/jquery/esprima
+webidl-conversions 4.0.2 BSD-2-Clause https://github.com/jsdom/webidl-conversions
+regjsparser 0.6.4 BSD-2-Clause https://github.com/jviereck/regjsparser
+browser-process-hrtime 1.0.0 BSD-2-Clause https://github.com/kumavis/browser-process-hrtime
+mississippi 3.0.0 BSD-2-Clause https://github.com/maxogden/mississippi
+dotenv 8.2.0 BSD-2-Clause https://github.com/motdotla/dotenv
+normalize-package-data 2.5.0 BSD-2-Clause https://github.com/npm/normalize-package-data
+default-gateway 4.2.0 BSD-2-Clause https://github.com/silverwind/default-gateway
+damerau-levenshtein 1.0.6 BSD-2-Clause https://github.com/tad-lispy/node-damerau-levenshtein
+terser 4.7.0 BSD-2-Clause https://github.com/terser/terser
+ typescript-eslint/parser 2.34.0 BSD-2-Clause https://github.com/typescript-eslint/typescript-eslint
+ typescript-eslint/typescript-estree 2.34.0 BSD-2-Clause https://github.com/typescript-eslint/typescript-eslint
+stringify-object 3.3.0 BSD-2-Clause https://github.com/yeoman/stringify-object
+sprintf-js 1.0.3 BSD-3-Clause https://github.com/alexei/sprintf.js
+filesize 6.0.1 BSD-3-Clause https://github.com/avoidwork/filesize.js
+makeerror 1.0.11 BSD-3-Clause https://github.com/daaku/nodejs-makeerror
+tmpl 1.0.4 BSD-3-Clause https://github.com/daaku/nodejs-tmpl
+duplexer2 0.1.4 BSD-3-Clause https://github.com/deoxxa/duplexer2
+esquery 1.3.1 BSD-3-Clause https://github.com/estools/esquery
+draft-js 0.10.5 BSD-3-Clause https://github.com/facebook/draft-js
+immutable 3.7.6 BSD-3-Clause https://github.com/facebook/immutable-js
+ xtuc/ieee754 1.2.0 BSD-3-Clause https://github.com/feross/ieee754
+ieee754 1.1.13 BSD-3-Clause https://github.com/feross/ieee754
+eslint-plugin-flowtype 4.6.0 BSD-3-Clause https://github.com/gajus/eslint-plugin-flowtype
+table 5.4.6 BSD-3-Clause https://github.com/gajus/table
+ hapi/address 2.1.4 BSD-3-Clause https://github.com/hapijs/address
+ hapi/bourne 1.3.2 BSD-3-Clause https://github.com/hapijs/bourne
+ hapi/hoek 8.5.1 BSD-3-Clause https://github.com/hapijs/hoek
+ hapi/joi 15.1.1 BSD-3-Clause https://github.com/hapijs/joi
+ hapi/topo 3.1.6 BSD-3-Clause https://github.com/hapijs/topo
+babel-plugin-istanbul 5.2.0 BSD-3-Clause https://github.com/istanbuljs/babel-plugin-istanbul
+istanbul-lib-coverage 2.0.5 BSD-3-Clause https://github.com/istanbuljs/istanbuljs
+istanbul-lib-instrument 3.3.0 BSD-3-Clause https://github.com/istanbuljs/istanbuljs
+istanbul-lib-report 2.0.8 BSD-3-Clause https://github.com/istanbuljs/istanbuljs
+istanbul-lib-source-maps 3.0.6 BSD-3-Clause https://github.com/istanbuljs/istanbuljs
+istanbul-reports 2.2.7 BSD-3-Clause https://github.com/istanbuljs/istanbuljs
+bcrypt-pbkdf 1.0.2 BSD-3-Clause https://github.com/joyent/node-bcrypt-pbkdf
+abab 2.0.3 BSD-3-Clause https://github.com/jsdom/abab
+diff 4.0.2 BSD-3-Clause https://github.com/kpdecker/jsdiff
+qs 6.5.2 BSD-3-Clause https://github.com/ljharb/qs
+d3 3.5.6 BSD-3-Clause https://github.com/mbostock/d3
+source-map 0.5.7 BSD-3-Clause https://github.com/mozilla/source-map
+hoist-non-react-statics 3.3.2 BSD-3-Clause https://github.com/mridgway/hoist-non-react-statics
+tough-cookie 2.5.0 BSD-3-Clause https://github.com/salesforce/tough-cookie
+serialize-javascript 2.1.2 BSD-3-Clause https://github.com/yahoo/serialize-javascript
+spdx-exceptions 2.3.0 CC-BY-3.0 https://github.com/kemitchell/spdx-exceptions.json
+caniuse-lite 1.0.30001062 CC-BY-4.0 https://github.com/ben-eb/caniuse-lite
+css-blank-pseudo 0.1.4 CC0-1.0 https://github.com/csstools/css-blank-pseudo
+css-has-pseudo 0.10.0 CC0-1.0 https://github.com/csstools/css-has-pseudo
+css-prefers-color-scheme 3.1.1 CC0-1.0 https://github.com/csstools/css-prefers-color-scheme
+cssdb 4.4.0 CC0-1.0 https://github.com/csstools/cssdb
+ csstools/normalize.css 10.1.0 CC0-1.0 https://github.com/csstools/normalize.css
+postcss-browser-comments 3.0.0 CC0-1.0 https://github.com/csstools/postcss-browser-comments
+postcss-normalize 8.0.1 CC0-1.0 https://github.com/csstools/postcss-normalize
+postcss-preset-env 6.7.0 CC0-1.0 https://github.com/csstools/postcss-preset-env
+sanitize.css 10.0.0 CC0-1.0 https://github.com/csstools/sanitize.css
+ csstools/convert-colors 1.4.0 CC0-1.0 https://github.com/jonathantneal/convert-colors
+postcss-color-functional-notation 2.0.1 CC0-1.0 https://github.com/jonathantneal/postcss-color-functional-notation
+postcss-color-mod-function 3.0.3 CC0-1.0 https://github.com/jonathantneal/postcss-color-mod-function
+postcss-dir-pseudo-class 5.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-dir-pseudo-class
+postcss-double-position-gradients 1.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-double-position-gradients
+postcss-env-function 2.0.2 CC0-1.0 https://github.com/jonathantneal/postcss-env-function
+postcss-focus-visible 4.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-focus-visible
+postcss-focus-within 3.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-focus-within
+postcss-gap-properties 2.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-gap-properties
+postcss-image-set-function 3.0.1 CC0-1.0 https://github.com/jonathantneal/postcss-image-set-function
+postcss-lab-function 2.0.1 CC0-1.0 https://github.com/jonathantneal/postcss-lab-function
+postcss-logical 3.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-logical
+postcss-nesting 7.0.1 CC0-1.0 https://github.com/jonathantneal/postcss-nesting
+postcss-overflow-shorthand 2.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-overflow-shorthand
+postcss-place 4.0.1 CC0-1.0 https://github.com/jonathantneal/postcss-place
+postcss-pseudo-class-any-link 6.0.0 CC0-1.0 https://github.com/jonathantneal/postcss-pseudo-class-any-link
+mdn-data 2.0.4 CC0-1.0 https://github.com/mdn/data
+spdx-license-ids 3.0.5 CC0-1.0 https://github.com/shinnn/spdx-license-ids
+buffers 0.1.1 Custom: http://github.com/substack/node-bufferlist https://github.com/substack/node-buffers
+biojs-events 0.0.4 Custom: https://github.com/biojs/biojs2/wiki/Event-systems https://github.com/biojs/biojs-events
+feature-viewer 1.0.5 GNU GPL v2 https://github.com/calipho-sib/feature-viewer
+nextprot 0.0.57 GPL-2.0 https://github.com/calipho-sib/nextprot-js
+mutationmaker-frontend 1.0.0 GPL-3.0-or-later https://github.com/Merck/Mutation_Maker
+ webassemblyjs/helper-fsm 1.8.5 ISC
+minipass-collect 1.0.2 ISC
+minipass-pipeline 1.2.3 ISC
+flatted 2.0.2 ISC https://github.com/WebReflection/flatted
+har-schema 2.0.0 ISC https://github.com/ahmadnassri/har-schema
+stealthy-require 1.1.1 ISC https://github.com/analog-nico/stealthy-require
+minimalistic-assert 1.0.1 ISC https://github.com/calvinmetcalf/minimalistic-assert
+browserify-sign 4.2.0 ISC https://github.com/crypto-browserify/browserify-sign
+parse-asn1 5.1.5 ISC https://github.com/crypto-browserify/parse-asn1
+icss-utils 4.1.1 ISC https://github.com/css-modules/icss-utils
+postcss-modules-extract-imports 2.0.0 ISC https://github.com/css-modules/postcss-modules-extract-imports
+postcss-modules-scope 2.2.0 ISC https://github.com/css-modules/postcss-modules-scope
+postcss-modules-values 3.0.0 ISC https://github.com/css-modules/postcss-modules-values
+remove-trailing-separator 1.1.0 ISC https://github.com/darsain/remove-trailing-separator
+yaml 1.10.0 ISC https://github.com/eemeli/yaml
+boolbase 1.0.0 ISC https://github.com/fb55/boolbase
+glob-parent 5.1.1 ISC https://github.com/gulpjs/glob-parent
+aproba 1.2.0 ISC https://github.com/iarna/aproba
+promise-inflight 1.0.1 ISC https://github.com/iarna/promise-inflight
+run-queue 1.0.3 ISC https://github.com/iarna/run-queue
+unique-filename 1.1.1 ISC https://github.com/iarna/unique-filename
+unique-slug 2.0.2 ISC https://github.com/iarna/unique-slug
+write-file-atomic 2.4.1 ISC https://github.com/iarna/write-file-atomic
+detect-node 2.0.4 ISC https://github.com/iliakan/detect-node
+abbrev 1.1.1 ISC https://github.com/isaacs/abbrev-js
+chownr 1.1.4 ISC https://github.com/isaacs/chownr
+fs.realpath 1.0.0 ISC https://github.com/isaacs/fs.realpath
+inherits 2.0.4 ISC https://github.com/isaacs/inherits
+ini 1.3.5 ISC https://github.com/isaacs/ini
+isexe 2.0.0 ISC https://github.com/isaacs/isexe
+json-stringify-safe 5.0.1 ISC https://github.com/isaacs/json-stringify-safe
+minimatch 3.0.4 ISC https://github.com/isaacs/minimatch
+minipass 3.1.3 ISC https://github.com/isaacs/minipass
+minipass-flush 1.0.5 ISC https://github.com/isaacs/minipass-flush
+mute-stream 0.0.8 ISC https://github.com/isaacs/mute-stream
+glob 7.1.6 ISC https://github.com/isaacs/node-glob
+graceful-fs 4.2.4 ISC https://github.com/isaacs/node-graceful-fs
+lru-cache 5.1.1 ISC https://github.com/isaacs/node-lru-cache
+which 1.3.1 ISC https://github.com/isaacs/node-which
+once 1.4.0 ISC https://github.com/isaacs/once
+rimraf 2.7.1 ISC https://github.com/isaacs/rimraf
+sax 1.2.4 ISC https://github.com/isaacs/sax-js
+yallist 4.0.0 ISC https://github.com/isaacs/yallist
+test-exclude 5.2.3 ISC https://github.com/istanbuljs/istanbuljs
+listenercount 1.0.1 ISC https://github.com/jden/node-listenercount
+electron-to-chromium 1.3.446 ISC https://github.com/kilian/electron-to-chromium
+cli-width 2.2.1 ISC https://github.com/knownasilya/cli-width
+ast-types-flow 0.0.7 ISC https://github.com/kyldvs/ast-types-flow
+saxes 5.0.1 ISC https://github.com/lddubeau/saxes
+killable 1.0.1 ISC https://github.com/marten-de-vries/killable
+d 1.0.1 ISC https://github.com/medikoo/d
+es5-ext 0.10.53 ISC https://github.com/medikoo/es5-ext
+ext 1.4.0 ISC https://github.com/medikoo/es5-ext/tree/ext
+es6-symbol 3.1.3 ISC https://github.com/medikoo/es6-symbol
+type 1.2.0 ISC https://github.com/medikoo/type
+anymatch 2.0.0 ISC https://github.com/micromatch/anymatch
+get-own-enumerable-property-symbols 3.0.2 ISC https://github.com/mightyiam/get-own-enumerable-property-symbols
+which-module 2.0.0 ISC https://github.com/nexdrew/which-module
+cacache 13.0.1 ISC https://github.com/npm/cacache
+copy-concurrently 1.0.5 ISC https://github.com/npm/copy-concurrently
+figgy-pudding 3.5.2 ISC https://github.com/npm/figgy-pudding
+fs-minipass 2.1.0 ISC https://github.com/npm/fs-minipass
+fs-write-stream-atomic 1.0.10 ISC https://github.com/npm/fs-write-stream-atomic
+fstream 1.0.12 ISC https://github.com/npm/fstream
+hosted-git-info 2.8.8 ISC https://github.com/npm/hosted-git-info
+infer-owner 1.0.4 ISC https://github.com/npm/infer-owner
+inflight 1.0.6 ISC https://github.com/npm/inflight
+move-concurrently 1.0.1 ISC https://github.com/npm/move-concurrently
+semver 6.3.0 ISC https://github.com/npm/node-semver
+nopt 4.0.3 ISC https://github.com/npm/nopt
+osenv 0.1.5 ISC https://github.com/npm/osenv
+ssri 7.1.0 ISC https://github.com/npm/ssri
+wrappy 1.0.2 ISC https://github.com/npm/wrappy
+postcss-color-gray 5.0.0 ISC https://github.com/postcss/postcss-color-gray
+request-promise-core 1.1.3 ISC https://github.com/request/promise-core
+request-promise-native 1.0.8 ISC https://github.com/request/request-promise-native
+is-resolvable 1.1.0 ISC https://github.com/shinnn/is-resolvable
+capture-exit 2.0.0 ISC https://github.com/stefanpenner/capture-exit
+get-caller-file 2.0.5 ISC https://github.com/stefanpenner/get-caller-file
+signal-exit 3.0.3 ISC https://github.com/tapjs/signal-exit
+setprototypeof 1.1.1 ISC https://github.com/wesleytodd/setprototypeof
+cliui 5.0.0 ISC https://github.com/yargs/cliui
+require-main-filename 2.0.0 ISC https://github.com/yargs/require-main-filename
+set-blocking 2.0.0 ISC https://github.com/yargs/set-blocking
+y18n 4.0.0 ISC https://github.com/yargs/y18n
+yargs-parser 13.1.2 ISC https://github.com/yargs/yargs-parser
+ babel/preset-modules 0.1.3 MIT
+ webassemblyjs/helper-api-error 1.8.5 MIT
+ webassemblyjs/ieee754 1.8.5 MIT
+ webassemblyjs/leb128 1.8.5 MIT
+gensync 1.0.0-beta.1 MIT
+mamacro 0.0.3 MIT
+mini-store 2.0.0 MIT
+rework-visit 1.0.0 MIT
+mutationobserver-shim 0.3.5 MIT github.com/megawac/MutationObserver.js
+chrome-trace-event 1.0.2 MIT github.com:samccone/chrome-trace-event
+tinycolor2 1.4.1 MIT https://bgrins.github.com/TinyColor
+renderkid 2.0.3 MIT https://github.com/AriaMinaei/RenderKid
+dom-converter 0.2.0 MIT https://github.com/AriaMinaei/dom-converter
+pretty-error 2.1.1 MIT https://github.com/AriaMinaei/pretty-error
+utila 0.4.0 MIT https://github.com/AriaMinaei/utila
+warning 4.0.3 MIT https://github.com/BerkeleyTrue/warning
+fast-csv 3.7.0 MIT https://github.com/C2FO/fast-csv
+safer-buffer 2.1.2 MIT https://github.com/ChALkeR/safer-buffer
+os-browserify 0.3.0 MIT https://github.com/CoderPuppy/os-browserify
+html-minifier-terser 5.1.1 MIT https://github.com/DanielRuf/html-minifier-terser
+ types/babel__core 7.1.7 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/babel__generator 7.6.1 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/babel__template 7.0.2 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/babel__traverse 7.0.11 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/color-name 1.1.1 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/eslint-visitor-keys 1.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/events 3.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/file-saver 2.0.1 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/glob 7.1.1 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/history 4.7.6 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/istanbul-lib-coverage 2.0.2 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/istanbul-lib-report 3.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/istanbul-reports 1.1.2 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/jest 25.2.3 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/jquery 3.3.38 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/json-schema 7.0.4 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/lodash 4.14.152 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/minimatch 3.0.3 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/node 14.0.4 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/parse-json 4.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/prop-types 15.7.3 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/q 1.5.4 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/ramda 0.27.6 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/react-dom 16.9.8 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/react-router-dom 5.1.5 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/react-router 5.1.7 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/react-slick 0.23.4 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/react 16.9.35 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/recompose 0.30.7 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/sizzle 2.3.2 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/stack-utils 1.0.1 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/uuid 8.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/yargs-parser 15.0.0 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+ types/yargs 13.0.9 MIT https://github.com/DefinitelyTyped/DefinitelyTyped
+microevent.ts 0.1.1 MIT https://github.com/DirtyHairy/microevent
+worker-rpc 0.1.1 MIT https://github.com/DirtyHairy/worker-rpc
+eventsource 1.0.7 MIT https://github.com/EventSource/eventsource
+acorn-globals 4.3.4 MIT https://github.com/ForbesLindesay/acorn-globals
+throat 4.1.0 MIT https://github.com/ForbesLindesay/throat
+events 3.1.0 MIT https://github.com/Gozala/events
+querystring 0.2.0 MIT https://github.com/Gozala/querystring
+regex-parser 2.2.10 MIT https://github.com/IonicaBizau/regex-parser.js
+classnames 2.2.6 MIT https://github.com/JedWatson/classnames
+buffer-from 1.1.1 MIT https://github.com/LinusU/buffer-from
+postcss-replace-overflow-wrap 3.0.0 MIT https://github.com/MattDiMu/postcss-replace-overflow-wrap
+big.js 5.2.2 MIT https://github.com/MikeMcl/big.js
+last-call-webpack-plugin 3.0.0 MIT https://github.com/NMFR/last-call-webpack-plugin
+optimize-css-assets-webpack-plugin 5.0.3 MIT https://github.com/NMFR/optimize-css-assets-webpack-plugin
+cssom 0.3.8 MIT https://github.com/NV/CSSOM
+color 3.1.2 MIT https://github.com/Qix-/color
+color-convert 1.9.3 MIT https://github.com/Qix-/color-convert
+color-string 1.5.3 MIT https://github.com/Qix-/color-string
+duplexer 0.1.1 MIT https://github.com/Raynos/duplexer
+function-bind 1.1.1 MIT https://github.com/Raynos/function-bind
+xtend 4.0.2 MIT https://github.com/Raynos/xtend
+history 4.10.1 MIT https://github.com/ReactTraining/history
+react-router-dom 5.2.0 MIT https://github.com/ReactTraining/react-router
+react-router 5.2.0 MIT https://github.com/ReactTraining/react-router
+svg-parser 2.0.4 MIT https://github.com/Rich-Harris/svg-parser
+universalify 0.1.2 MIT https://github.com/RyanZim/universalify
+inquirer 7.1.0 MIT https://github.com/SBoudrias/Inquirer.js
+run-async 2.4.1 MIT https://github.com/SBoudrias/run-async
+decode-uri-component 0.2.0 MIT https://github.com/SamVerschueren/decode-uri-component
+map-age-cleaner 0.1.3 MIT https://github.com/SamVerschueren/map-age-cleaner
+tr46 1.0.1 MIT https://github.com/Sebmaster/tr46.js
+postcss-attribute-case-insensitive 4.0.2 MIT https://github.com/Semigradsky/postcss-attribute-case-insensitive
+css-declaration-sorter 4.0.1 MIT https://github.com/Siilwyn/css-declaration-sorter
+realpath-native 1.1.0 MIT https://github.com/SimenB/realpath-native
+mini-create-react-context 0.4.0 MIT https://github.com/StringEpsilon/mini-create-react-context
+file-uri-to-path 1.0.0 MIT https://github.com/TooTallNate/file-uri-to-path
+bindings 1.5.0 MIT https://github.com/TooTallNate/node-bindings
+util-deprecate 1.0.2 MIT https://github.com/TooTallNate/util-deprecate
+alphanum-sort 1.0.2 MIT https://github.com/TrySound/alphanum-sort
+postcss-value-parser 4.1.0 MIT https://github.com/TrySound/postcss-value-parser
+stable 0.1.8 MIT https://github.com/Two-Screen/stable
+fork-ts-checker-webpack-plugin 3.1.1 MIT https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
+case-sensitive-paths-webpack-plugin 2.3.0 MIT https://github.com/Urthen/case-sensitive-paths-webpack-plugin
+html-escaper 2.0.2 MIT https://github.com/WebReflection/html-escaper
+enquire.js 2.1.6 MIT https://github.com/WickyNilliams/enquire.js
+setimmediate 1.0.5 MIT https://github.com/YuzuJS/setImmediate
+unzipper 0.10.11 MIT https://github.com/ZJONSSON/node-unzipper
+change-emitter 0.1.6 MIT https://github.com/acdlite/change-emitter
+recompose 0.30.0 MIT https://github.com/acdlite/recompose
+acorn-walk 6.2.0 MIT https://github.com/acornjs/acorn
+acorn 7.2.0 MIT https://github.com/acornjs/acorn
+acorn-jsx 5.2.0 MIT https://github.com/acornjs/acorn-jsx
+array-tree-filter 2.1.0 MIT https://github.com/afc163/array-tree-filter
+har-validator 5.1.3 MIT https://github.com/ahmadnassri/node-har-validator
+babel-plugin-dynamic-import-node 2.3.3 MIT https://github.com/airbnb/babel-plugin-dynamic-import-node
+tsutils 3.17.1 MIT https://github.com/ajafff/tsutils
+json2mq 0.2.0 MIT https://github.com/akiran/json2mq
+react-slick 0.25.2 MIT https://github.com/akiran/react-slick
+string-convert 0.2.1 MIT https://github.com/akiran/string-convert
+crc 3.8.0 MIT https://github.com/alexgorbatchev/node-crc
+asynckit 0.4.0 MIT https://github.com/alexindigo/asynckit
+tiny-invariant 1.1.0 MIT https://github.com/alexreardon/tiny-invariant
+tiny-warning 1.0.3 MIT https://github.com/alexreardon/tiny-warning
+sane 4.1.0 MIT https://github.com/amasad/sane
+encoding 0.1.12 MIT https://github.com/andris9/encoding
+jsbn 0.1.1 MIT https://github.com/andyperlitch/jsbn
+upath 1.2.0 MIT https://github.com/anodynos/upath
+antd 3.26.17 MIT https://github.com/ant-design/ant-design
+ ant-design/colors 3.2.2 MIT https://github.com/ant-design/ant-design-colors
+ ant-design/icons 2.1.1 MIT https://github.com/ant-design/ant-design-icons
+ ant-design/icons-react 2.0.1 MIT https://github.com/ant-design/ant-design-icons/tree/master/packages/icons-react
+babel-plugin-import 1.13.0 MIT https://github.com/ant-design/babel-plugin-import
+ ant-design/create-react-context 0.2.5 MIT https://github.com/ant-design/create-react-context
+ ant-design/css-animation 1.7.2 MIT https://github.com/ant-design/css-animation
+rc-drawer 3.1.3 MIT https://github.com/ant-motion/drawer
+customize-cra 0.9.1 MIT https://github.com/arackaf/customize-cra
+jest-pnp-resolver 1.2.1 MIT https://github.com/arcanis/jest-pnp-resolver
+pnp-webpack-plugin 1.6.4 MIT https://github.com/arcanis/pnp-webpack-plugin
+ts-pnp 1.1.6 MIT https://github.com/arcanis/ts-pnp
+archiver-utils 2.1.0 MIT https://github.com/archiverjs/archiver-utils
+archiver 3.1.1 MIT https://github.com/archiverjs/node-archiver
+compress-commons 2.1.1 MIT https://github.com/archiverjs/node-compress-commons
+crc32-stream 3.0.1 MIT https://github.com/archiverjs/node-crc32-stream
+zip-stream 2.1.3 MIT https://github.com/archiverjs/node-zip-stream
+getpass 0.1.7 MIT https://github.com/arekinath/node-getpass
+pirates 4.0.1 MIT https://github.com/ariporad/pirates
+iconv-lite 0.4.24 MIT https://github.com/ashtuchkin/iconv-lite
+find-cache-dir 2.1.0 MIT https://github.com/avajs/find-cache-dir
+axios 0.19.2 MIT https://github.com/axios/axios
+ babel/helper-create-regexp-features-plugin 7.8.8 MIT https://github.com/babel/babel
+ babel/plugin-transform-named-capturing-groups-regex 7.8.3 MIT https://github.com/babel/babel
+ babel/runtime 7.9.6 MIT https://github.com/babel/babel
+babel-eslint 10.1.0 MIT https://github.com/babel/babel-eslint
+babel-loader 8.1.0 MIT https://github.com/babel/babel-loader
+ babel/code-frame 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-code-frame
+babel-code-frame 6.26.0 MIT https://github.com/babel/babel/tree/master/packages/babel-code-frame
+ babel/compat-data 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-compat-data
+ babel/core 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-core
+ babel/generator 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-generator
+ babel/helper-annotate-as-pure 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-annotate-as-pure
+ babel/helper-builder-binary-assignment-operator-visitor 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-builder-binary-assignment-operator-visitor
+ babel/helper-builder-react-jsx 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-builder-react-jsx
+ babel/helper-builder-react-jsx-experimental 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-builder-react-jsx-experimental
+ babel/helper-compilation-targets 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-compilation-targets
+ babel/helper-create-class-features-plugin 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-create-class-features-plugin
+ babel/helper-define-map 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-define-map
+ babel/helper-explode-assignable-expression 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-explode-assignable-expression
+ babel/helper-function-name 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-function-name
+ babel/helper-get-function-arity 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-get-function-arity
+ babel/helper-hoist-variables 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-hoist-variables
+ babel/helper-member-expression-to-functions 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-member-expression-to-functions
+ babel/helper-module-imports 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-module-imports
+ babel/helper-module-transforms 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-module-transforms
+ babel/helper-optimise-call-expression 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-optimise-call-expression
+ babel/helper-plugin-utils 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-plugin-utils
+ babel/helper-regex 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-regex
+ babel/helper-remap-async-to-generator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-remap-async-to-generator
+ babel/helper-replace-supers 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-replace-supers
+ babel/helper-simple-access 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-simple-access
+ babel/helper-split-export-declaration 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-split-export-declaration
+ babel/helper-validator-identifier 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-validator-identifier
+ babel/helper-wrap-function 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-helper-wrap-function
+ babel/helpers 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-helpers
+ babel/highlight 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-highlight
+ babel/parser 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-parser
+ babel/plugin-proposal-async-generator-functions 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-async-generator-functions
+ babel/plugin-proposal-class-properties 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-class-properties
+ babel/plugin-proposal-decorators 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-decorators
+ babel/plugin-proposal-dynamic-import 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-dynamic-import
+ babel/plugin-proposal-json-strings 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-json-strings
+ babel/plugin-proposal-nullish-coalescing-operator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-nullish-coalescing-operator
+ babel/plugin-proposal-numeric-separator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-numeric-separator
+ babel/plugin-proposal-object-rest-spread 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-object-rest-spread
+ babel/plugin-proposal-optional-catch-binding 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-optional-catch-binding
+ babel/plugin-proposal-optional-chaining 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-optional-chaining
+ babel/plugin-proposal-unicode-property-regex 7.8.8 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-proposal-unicode-property-regex
+ babel/plugin-syntax-async-generators 7.8.4 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-async-generators
+ babel/plugin-syntax-decorators 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-decorators
+ babel/plugin-syntax-dynamic-import 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-dynamic-import
+ babel/plugin-syntax-flow 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-flow
+ babel/plugin-syntax-json-strings 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-json-strings
+ babel/plugin-syntax-jsx 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-jsx
+ babel/plugin-syntax-nullish-coalescing-operator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-nullish-coalescing-operator
+ babel/plugin-syntax-numeric-separator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-numeric-separator
+ babel/plugin-syntax-object-rest-spread 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread
+babel-plugin-syntax-object-rest-spread 6.13.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-object-rest-spread
+ babel/plugin-syntax-optional-catch-binding 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-catch-binding
+ babel/plugin-syntax-optional-chaining 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-optional-chaining
+ babel/plugin-syntax-top-level-await 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-top-level-await
+ babel/plugin-syntax-typescript 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-syntax-typescript
+ babel/plugin-transform-arrow-functions 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-arrow-functions
+ babel/plugin-transform-async-to-generator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-async-to-generator
+ babel/plugin-transform-block-scoped-functions 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-block-scoped-functions
+ babel/plugin-transform-block-scoping 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-block-scoping
+ babel/plugin-transform-classes 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-classes
+ babel/plugin-transform-computed-properties 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-computed-properties
+ babel/plugin-transform-destructuring 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-destructuring
+ babel/plugin-transform-dotall-regex 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-dotall-regex
+ babel/plugin-transform-duplicate-keys 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-duplicate-keys
+ babel/plugin-transform-exponentiation-operator 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-exponentiation-operator
+ babel/plugin-transform-flow-strip-types 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-flow-strip-types
+ babel/plugin-transform-for-of 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-for-of
+ babel/plugin-transform-function-name 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-function-name
+ babel/plugin-transform-literals 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-literals
+ babel/plugin-transform-member-expression-literals 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-member-expression-literals
+ babel/plugin-transform-modules-amd 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-amd
+ babel/plugin-transform-modules-commonjs 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-commonjs
+ babel/plugin-transform-modules-systemjs 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-systemjs
+ babel/plugin-transform-modules-umd 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-modules-umd
+ babel/plugin-transform-new-target 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-new-target
+babel-plugin-transform-object-rest-spread 6.26.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-object-rest-spread
+ babel/plugin-transform-object-super 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-object-super
+ babel/plugin-transform-parameters 7.9.5 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-parameters
+ babel/plugin-transform-property-literals 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-property-literals
+ babel/plugin-transform-react-constant-elements 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-constant-elements
+ babel/plugin-transform-react-display-name 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-display-name
+ babel/plugin-transform-react-jsx 7.9.4 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx
+ babel/plugin-transform-react-jsx-development 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-development
+ babel/plugin-transform-react-jsx-self 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-self
+ babel/plugin-transform-react-jsx-source 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-react-jsx-source
+ babel/plugin-transform-regenerator 7.8.7 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-regenerator
+ babel/plugin-transform-reserved-words 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-reserved-words
+ babel/plugin-transform-runtime 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-runtime
+ babel/plugin-transform-shorthand-properties 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-shorthand-properties
+ babel/plugin-transform-spread 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-spread
+ babel/plugin-transform-sticky-regex 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-sticky-regex
+ babel/plugin-transform-template-literals 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-template-literals
+ babel/plugin-transform-typeof-symbol 7.8.4 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-typeof-symbol
+ babel/plugin-transform-typescript 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-typescript
+ babel/plugin-transform-unicode-regex 7.8.3 MIT https://github.com/babel/babel/tree/master/packages/babel-plugin-transform-unicode-regex
+ babel/preset-env 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-preset-env
+ babel/preset-react 7.9.4 MIT https://github.com/babel/babel/tree/master/packages/babel-preset-react
+ babel/preset-typescript 7.9.0 MIT https://github.com/babel/babel/tree/master/packages/babel-preset-typescript
+babel-runtime 6.26.0 MIT https://github.com/babel/babel/tree/master/packages/babel-runtime
+ babel/runtime-corejs3 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-runtime-corejs3
+ babel/template 7.8.6 MIT https://github.com/babel/babel/tree/master/packages/babel-template
+ babel/traverse 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-traverse
+ babel/types 7.9.6 MIT https://github.com/babel/babel/tree/master/packages/babel-types
+babylon 6.18.0 MIT https://github.com/babel/babylon
+css-color-names 0.0.4 MIT https://github.com/bahamas10/css-color-names
+base64-js 1.3.1 MIT https://github.com/beatgammit/base64-js
+builtin-status-codes 3.0.0 MIT https://github.com/bendrucker/builtin-status-codes
+fill-keys 1.0.2 MIT https://github.com/bendrucker/fill-keys
+module-not-found-error 1.0.1 MIT https://github.com/bendrucker/module-not-found-error
+private 0.1.8 MIT https://github.com/benjamn/private
+omit.js 1.0.2 MIT https://github.com/benjycui/omit.js
+eslint-import-resolver-node 0.3.3 MIT https://github.com/benmosher/eslint-plugin-import
+eslint-module-utils 2.6.0 MIT https://github.com/benmosher/eslint-plugin-import
+eslint-plugin-import 2.20.1 MIT https://github.com/benmosher/eslint-plugin-import
+json3 3.3.3 MIT https://github.com/bestiejs/json3
+punycode 2.1.1 MIT https://github.com/bestiejs/punycode.js
+domain-browser 1.2.0 MIT https://github.com/bevry/domain-browser
+adjust-sourcemap-loader 2.0.0 MIT https://github.com/bholloway/adjust-sourcemap-loader
+resolve-url-loader 3.1.1 MIT https://github.com/bholloway/resolve-url-loader
+ mrmlnc/readdir-enhanced 2.2.1 MIT https://github.com/bigstickcarpet/readdir-enhanced
+node-fetch 1.7.3 MIT https://github.com/bitinn/node-fetch
+array-flatten 2.1.2 MIT https://github.com/blakeembrey/array-flatten
+camel-case 4.1.1 MIT https://github.com/blakeembrey/change-case
+dot-case 3.0.3 MIT https://github.com/blakeembrey/change-case
+lower-case 2.0.1 MIT https://github.com/blakeembrey/change-case
+no-case 3.0.3 MIT https://github.com/blakeembrey/change-case
+param-case 3.0.3 MIT https://github.com/blakeembrey/change-case
+pascal-case 3.1.1 MIT https://github.com/blakeembrey/change-case
+symbol-observable 1.2.0 MIT https://github.com/blesh/symbol-observable
+regjsgen 0.5.1 MIT https://github.com/bnjmnt4n/regjsgen
+bower 1.8.8 MIT https://github.com/bower/bower
+performance-now 2.1.0 MIT https://github.com/braveg1rl/performance-now
+buffer-crc32 0.2.13 MIT https://github.com/brianloveswords/buffer-crc32
+connect-history-api-fallback 1.6.0 MIT https://github.com/bripkens/connect-history-api-fallback
+node-int64 0.4.0 MIT https://github.com/broofa/node-int64
+mime 1.6.0 MIT https://github.com/broofa/node-mime
+console-browserify 1.2.0 MIT https://github.com/browserify/console-browserify
+resolve 1.17.0 MIT https://github.com/browserify/resolve
+stream-browserify 2.0.2 MIT https://github.com/browserify/stream-browserify
+browserslist 4.12.0 MIT https://github.com/browserslist/browserslist
+tslint-eslint-rules 5.4.0 MIT https://github.com/buzinas/tslint-eslint-rules
+immediate 3.0.6 MIT https://github.com/calvinmetcalf/immediate
+lie 3.3.0 MIT https://github.com/calvinmetcalf/lie
+process-nextick-args 2.0.1 MIT https://github.com/calvinmetcalf/process-nextick-args
+async 2.6.3 MIT https://github.com/caolan/async
+ansi-regex 5.0.0 MIT https://github.com/chalk/ansi-regex
+ansi-styles 3.2.1 MIT https://github.com/chalk/ansi-styles
+chalk 2.4.2 MIT https://github.com/chalk/chalk
+slice-ansi 2.1.0 MIT https://github.com/chalk/slice-ansi
+strip-ansi 5.2.0 MIT https://github.com/chalk/strip-ansi
+supports-color 5.5.0 MIT https://github.com/chalk/supports-color
+wrap-ansi 5.1.0 MIT https://github.com/chalk/wrap-ansi
+dom-serializer 0.2.2 MIT https://github.com/cheeriojs/dom-renderer
+node-releases 1.1.55 MIT https://github.com/chicoxyzzy/node-releases
+http-proxy-middleware 0.19.1 MIT https://github.com/chimurai/http-proxy-middleware
+raf 3.4.1 MIT https://github.com/chrisdickinson/raf
+array-equal 1.0.0 MIT https://github.com/component/array-equal
+component-classes 1.2.6 MIT https://github.com/component/classes
+component-emitter 1.3.0 MIT https://github.com/component/emitter
+escape-html 1.0.3 MIT https://github.com/component/escape-html
+merge-descriptors 1.0.1 MIT https://github.com/component/merge-descriptors
+toidentifier 1.0.0 MIT https://github.com/component/toidentifier
+exit 0.1.2 MIT https://github.com/cowboy/node-exit
+http-parser-js 0.4.10 MIT https://github.com/creationix/http-parser-js
+evp_bytestokey 1.0.3 MIT https://github.com/crypto-browserify/EVP_BytesToKey
+browserify-aes 1.2.0 MIT https://github.com/crypto-browserify/browserify-aes
+browserify-cipher 1.0.1 MIT https://github.com/crypto-browserify/browserify-cipher
+browserify-des 1.0.2 MIT https://github.com/crypto-browserify/browserify-des
+browserify-rsa 4.0.1 MIT https://github.com/crypto-browserify/browserify-rsa
+buffer-xor 1.0.3 MIT https://github.com/crypto-browserify/buffer-xor
+cipher-base 1.0.4 MIT https://github.com/crypto-browserify/cipher-base
+create-ecdh 4.0.3 MIT https://github.com/crypto-browserify/createECDH
+create-hash 1.2.0 MIT https://github.com/crypto-browserify/createHash
+create-hmac 1.1.7 MIT https://github.com/crypto-browserify/createHmac
+crypto-browserify 3.12.0 MIT https://github.com/crypto-browserify/crypto-browserify
+diffie-hellman 5.0.3 MIT https://github.com/crypto-browserify/diffie-hellman
+hash-base 3.1.0 MIT https://github.com/crypto-browserify/hash-base
+md5.js 1.3.5 MIT https://github.com/crypto-browserify/md5.js
+pbkdf2 3.0.17 MIT https://github.com/crypto-browserify/pbkdf2
+public-encrypt 4.0.3 MIT https://github.com/crypto-browserify/publicEncrypt
+randombytes 2.1.0 MIT https://github.com/crypto-browserify/randombytes
+randomfill 1.0.4 MIT https://github.com/crypto-browserify/randomfill
+ripemd160 2.0.2 MIT https://github.com/crypto-browserify/ripemd160
+pn 1.1.0 MIT https://github.com/cscott/node-pn
+postcss-modules-local-by-default 3.0.2 MIT https://github.com/css-modules/postcss-modules-local-by-default
+csso 4.0.3 MIT https://github.com/css/csso
+cssnano-preset-default 4.0.7 MIT https://github.com/cssnano/cssnano
+cssnano-util-get-arguments 4.0.0 MIT https://github.com/cssnano/cssnano
+cssnano-util-get-match 4.0.0 MIT https://github.com/cssnano/cssnano
+cssnano-util-raw-cache 4.0.1 MIT https://github.com/cssnano/cssnano
+cssnano-util-same-parent 4.0.1 MIT https://github.com/cssnano/cssnano
+cssnano 4.1.10 MIT https://github.com/cssnano/cssnano
+postcss-colormin 4.0.3 MIT https://github.com/cssnano/cssnano
+postcss-convert-values 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-discard-comments 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-discard-duplicates 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-discard-empty 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-discard-overridden 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-merge-longhand 4.0.11 MIT https://github.com/cssnano/cssnano
+postcss-merge-rules 4.0.3 MIT https://github.com/cssnano/cssnano
+postcss-minify-font-values 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-minify-gradients 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-minify-params 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-minify-selectors 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-charset 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-normalize-display-values 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-positions 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-repeat-style 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-string 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-timing-functions 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-normalize-unicode 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-normalize-url 4.0.1 MIT https://github.com/cssnano/cssnano
+postcss-normalize-whitespace 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-ordered-values 4.1.2 MIT https://github.com/cssnano/cssnano
+postcss-reduce-initial 4.0.3 MIT https://github.com/cssnano/cssnano
+postcss-reduce-transforms 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-svgo 4.0.2 MIT https://github.com/cssnano/cssnano
+postcss-unique-selectors 4.0.1 MIT https://github.com/cssnano/cssnano
+stylehacks 4.0.3 MIT https://github.com/cssnano/cssnano
+css-tree 1.0.0-alpha.37 MIT https://github.com/csstree/csstree
+webpack-manifest-plugin 2.2.0 MIT https://github.com/danethurber/webpack-manifest-plugin
+shallowequal 1.1.0 MIT https://github.com/dashed/shallowequal
+extsprintf 1.3.0 MIT https://github.com/davepacheco/node-extsprintf
+verror 1.10.0 MIT https://github.com/davepacheco/node-verror
+cosmiconfig 5.2.1 MIT https://github.com/davidtheclark/cosmiconfig
+common-tags 1.8.0 MIT https://github.com/declandewet/common-tags
+assert 1.4.1 MIT https://github.com/defunctzombie/commonjs-assert
+url 0.11.0 MIT https://github.com/defunctzombie/node-url
+util 0.10.3 MIT https://github.com/defunctzombie/node-util
+browserify-zlib 0.2.0 MIT https://github.com/devongovett/browserify-zlib
+color-name 1.1.3 MIT https://github.com/dfcreative/color-name
+indexes-of 1.0.1 MIT https://github.com/dominictarr/indexes-of
+through 2.3.8 MIT https://github.com/dominictarr/through
+ansi-colors 3.2.4 MIT https://github.com/doowb/ansi-colors
+detect-file 1.0.0 MIT https://github.com/doowb/detect-file
+homedir-polyfill 1.0.3 MIT https://github.com/doowb/homedir-polyfill
+parse-passwd 1.0.0 MIT https://github.com/doowb/parse-passwd
+depd 1.1.2 MIT https://github.com/dougwilson/nodejs-depd
+nwsapi 2.2.0 MIT https://github.com/dperini/nwsapi
+nice-try 1.0.5 MIT https://github.com/electerious/nice-try
+file-saver 2.0.2 MIT https://github.com/eligrey/FileSaver.js
+ajv 6.12.2 MIT https://github.com/epoberezkin/ajv
+ajv-errors 1.0.1 MIT https://github.com/epoberezkin/ajv-errors
+ajv-keywords 3.4.1 MIT https://github.com/epoberezkin/ajv-keywords
+fast-deep-equal 3.1.1 MIT https://github.com/epoberezkin/fast-deep-equal
+fast-json-stable-stringify 2.1.0 MIT https://github.com/epoberezkin/fast-json-stable-stringify
+json-schema-traverse 0.4.1 MIT https://github.com/epoberezkin/json-schema-traverse
+array.prototype.flat 1.2.3 MIT https://github.com/es-shims/Array.prototype.flat
+object.entries 1.1.1 MIT https://github.com/es-shims/Object.entries
+object.fromentries 2.0.2 MIT https://github.com/es-shims/Object.fromEntries
+object.values 1.1.1 MIT https://github.com/es-shims/Object.values
+regexp.prototype.flags 1.3.0 MIT https://github.com/es-shims/RegExp.prototype.flags
+string.prototype.trimend 1.0.1 MIT https://github.com/es-shims/String.prototype.trimEnd
+string.prototype.trimleft 2.1.2 MIT https://github.com/es-shims/String.prototype.trimLeft
+string.prototype.trimright 2.1.2 MIT https://github.com/es-shims/String.prototype.trimRight
+string.prototype.trimstart 1.0.1 MIT https://github.com/es-shims/String.prototype.trimStart
+array-includes 3.1.1 MIT https://github.com/es-shims/array-includes
+object-is 1.1.2 MIT https://github.com/es-shims/object-is
+object.getownpropertydescriptors 2.1.0 MIT https://github.com/es-shims/object.getownpropertydescriptors
+path-dirname 1.0.2 MIT https://github.com/es128/path-dirname
+eslint 6.8.0 MIT https://github.com/eslint/eslint
+source-map-support 0.5.19 MIT https://github.com/evanw/node-source-map-support
+eslint-plugin-jsx-a11y 6.2.3 MIT https://github.com/evcohen/eslint-plugin-jsx-a11y
+jsx-ast-utils 2.2.3 MIT https://github.com/evcohen/jsx-ast-utils
+lines-and-columns 1.1.6 MIT https://github.com/eventualbuddha/lines-and-columns
+exceljs 3.9.0 MIT https://github.com/exceljs/exceljs
+body-parser 1.19.0 MIT https://github.com/expressjs/body-parser
+compression 1.7.4 MIT https://github.com/expressjs/compression
+express 4.17.1 MIT https://github.com/expressjs/express
+serve-index 1.9.1 MIT https://github.com/expressjs/serve-index
+serve-static 1.14.1 MIT https://github.com/expressjs/serve-static
+babel-plugin-named-asset-import 0.3.6 MIT https://github.com/facebook/create-react-app
+babel-preset-react-app 9.1.2 MIT https://github.com/facebook/create-react-app
+confusing-browser-globals 1.0.9 MIT https://github.com/facebook/create-react-app
+eslint-config-react-app 5.2.1 MIT https://github.com/facebook/create-react-app
+react-app-polyfill 1.0.6 MIT https://github.com/facebook/create-react-app
+react-dev-utils 10.2.1 MIT https://github.com/facebook/create-react-app
+react-error-overlay 6.0.7 MIT https://github.com/facebook/create-react-app
+react-scripts 3.4.1 MIT https://github.com/facebook/create-react-app
+fbjs 0.8.17 MIT https://github.com/facebook/fbjs
+ jest/console 24.9.0 MIT https://github.com/facebook/jest
+ jest/core 24.9.0 MIT https://github.com/facebook/jest
+ jest/environment 24.9.0 MIT https://github.com/facebook/jest
+ jest/fake-timers 24.9.0 MIT https://github.com/facebook/jest
+ jest/reporters 24.9.0 MIT https://github.com/facebook/jest
+ jest/source-map 24.9.0 MIT https://github.com/facebook/jest
+ jest/test-result 24.9.0 MIT https://github.com/facebook/jest
+ jest/test-sequencer 24.9.0 MIT https://github.com/facebook/jest
+ jest/transform 24.9.0 MIT https://github.com/facebook/jest
+ jest/types 24.9.0 MIT https://github.com/facebook/jest
+babel-jest 24.9.0 MIT https://github.com/facebook/jest
+babel-plugin-jest-hoist 24.9.0 MIT https://github.com/facebook/jest
+babel-preset-jest 24.9.0 MIT https://github.com/facebook/jest
+diff-sequences 24.9.0 MIT https://github.com/facebook/jest
+expect 24.9.0 MIT https://github.com/facebook/jest
+jest-changed-files 24.9.0 MIT https://github.com/facebook/jest
+jest-config 24.9.0 MIT https://github.com/facebook/jest
+jest-diff 24.9.0 MIT https://github.com/facebook/jest
+jest-docblock 24.9.0 MIT https://github.com/facebook/jest
+jest-each 24.9.0 MIT https://github.com/facebook/jest
+jest-environment-jsdom 24.9.0 MIT https://github.com/facebook/jest
+jest-environment-node 24.9.0 MIT https://github.com/facebook/jest
+jest-get-type 24.9.0 MIT https://github.com/facebook/jest
+jest-haste-map 24.9.0 MIT https://github.com/facebook/jest
+jest-jasmine2 24.9.0 MIT https://github.com/facebook/jest
+jest-leak-detector 24.9.0 MIT https://github.com/facebook/jest
+jest-matcher-utils 24.9.0 MIT https://github.com/facebook/jest
+jest-message-util 24.9.0 MIT https://github.com/facebook/jest
+jest-mock 24.9.0 MIT https://github.com/facebook/jest
+jest-regex-util 24.9.0 MIT https://github.com/facebook/jest
+jest-resolve-dependencies 24.9.0 MIT https://github.com/facebook/jest
+jest-resolve 24.9.0 MIT https://github.com/facebook/jest
+jest-runner 24.9.0 MIT https://github.com/facebook/jest
+jest-runtime 24.9.0 MIT https://github.com/facebook/jest
+jest-serializer 24.9.0 MIT https://github.com/facebook/jest
+jest-snapshot 24.9.0 MIT https://github.com/facebook/jest
+jest-util 24.9.0 MIT https://github.com/facebook/jest
+jest-validate 24.9.0 MIT https://github.com/facebook/jest
+jest-watcher 24.9.0 MIT https://github.com/facebook/jest
+jest-worker 24.9.0 MIT https://github.com/facebook/jest
+jest 24.9.0 MIT https://github.com/facebook/jest
+pretty-format 24.9.0 MIT https://github.com/facebook/jest
+prop-types 15.7.2 MIT https://github.com/facebook/prop-types
+create-react-class 15.6.3 MIT https://github.com/facebook/react
+eslint-plugin-react-hooks 1.7.0 MIT https://github.com/facebook/react
+react-dom 16.13.1 MIT https://github.com/facebook/react
+react-is 16.13.1 MIT https://github.com/facebook/react
+react 16.13.1 MIT https://github.com/facebook/react
+scheduler 0.19.1 MIT https://github.com/facebook/react
+regenerator-runtime 0.11.1 MIT https://github.com/facebook/regenerator/tree/master/packages/regenerator-runtime
+regenerator-transform 0.14.4 MIT https://github.com/facebook/regenerator/tree/master/packages/regenerator-transform
+ua-parser-js 0.7.21 MIT https://github.com/faisalman/ua-parser-js
+faye-websocket 0.10.0 MIT https://github.com/faye/faye-websocket-node
+websocket-extensions 0.1.3 MIT https://github.com/faye/websocket-extensions-node
+htmlparser2 3.10.1 MIT https://github.com/fb55/htmlparser2
+combined-stream 1.0.8 MIT https://github.com/felixge/node-combined-stream
+delayed-stream 1.0.0 MIT https://github.com/felixge/node-delayed-stream
+ret 0.1.15 MIT https://github.com/fent/ret.js
+buffer 5.6.0 MIT https://github.com/feross/buffer
+is-buffer 1.1.6 MIT https://github.com/feross/is-buffer
+safe-buffer 5.1.2 MIT https://github.com/feross/safe-buffer
+uniqs 2.0.0 MIT https://github.com/fgnass/uniqs
+eventlistener 0.0.1 MIT https://github.com/finn-no/eventlistener
+pinkie 2.0.4 MIT https://github.com/floatdrop/pinkie
+pinkie-promise 2.0.1 MIT https://github.com/floatdrop/pinkie-promise
+follow-redirects 1.5.10 MIT https://github.com/follow-redirects/follow-redirects
+form-data 2.3.3 MIT https://github.com/form-data/form-data
+csstype 2.6.10 MIT https://github.com/frenic/csstype
+fsevents 2.1.2 MIT https://github.com/fsevents/fsevents
+whatwg-fetch 3.0.0 MIT https://github.com/github/fetch
+levn 0.3.0 MIT https://github.com/gkz/levn
+optionator 0.8.3 MIT https://github.com/gkz/optionator
+prelude-ls 1.1.2 MIT https://github.com/gkz/prelude-ls
+type-check 0.3.2 MIT https://github.com/gkz/type-check
+workbox-background-sync 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-broadcast-update 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-build 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-cacheable-response 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-core 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-expiration 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-google-analytics 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-navigation-preload 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-precaching 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-range-requests 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-routing 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-strategies 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-streams 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-sw 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-webpack-plugin 4.3.1 MIT https://github.com/googlechrome/workbox
+workbox-window 4.3.1 MIT https://github.com/googlechrome/workbox
+merge-stream 2.0.0 MIT https://github.com/grncdr/merge-stream
+grunt-cli 1.3.2 MIT https://github.com/gruntjs/grunt-cli
+grunt-known-options 1.1.1 MIT https://github.com/gruntjs/grunt-known-options
+fined 1.2.0 MIT https://github.com/gulpjs/fined
+flagged-respawn 1.0.1 MIT https://github.com/gulpjs/flagged-respawn
+v8flags 3.1.3 MIT https://github.com/gulpjs/v8flags
+hammerjs 2.0.8 MIT https://github.com/hammerjs/hammer.js
+fast-levenshtein 2.0.6 MIT https://github.com/hiddentao/fast-levenshtein
+http-proxy 1.18.1 MIT https://github.com/http-party/node-http-proxy
+portfinder 1.0.26 MIT https://github.com/http-party/node-portfinder
+from2 2.3.0 MIT https://github.com/hughsk/from2
+is-typedarray 1.0.0 MIT https://github.com/hughsk/is-typedarray
+dayjs 1.8.27 MIT https://github.com/iamkun/dayjs
+jest-environment-jsdom-fourteen 1.0.1 MIT https://github.com/ianschmitz/jest-environment-jsdom-fourteen
+image-size 0.5.5 MIT https://github.com/image-size/image-size
+asn1.js 4.10.1 MIT https://github.com/indutny/asn1.js
+bn.js 5.1.1 MIT https://github.com/indutny/bn.js
+brorand 1.1.0 MIT https://github.com/indutny/brorand
+des.js 1.0.1 MIT https://github.com/indutny/des.js
+elliptic 6.5.2 MIT https://github.com/indutny/elliptic
+handle-thing 2.0.1 MIT https://github.com/indutny/handle-thing
+hash.js 1.1.7 MIT https://github.com/indutny/hash.js
+hmac-drbg 1.0.1 MIT https://github.com/indutny/hmac-drbg
+hpack.js 2.1.6 MIT https://github.com/indutny/hpack.js
+http-deceiver 1.2.7 MIT https://github.com/indutny/http-deceiver
+miller-rabin 4.0.1 MIT https://github.com/indutny/miller-rabin
+minimalistic-crypto-utils 1.0.1 MIT https://github.com/indutny/minimalistic-crypto-utils
+ip 1.1.5 MIT https://github.com/indutny/node-ip
+spdy 4.0.2 MIT https://github.com/indutny/node-spdy
+obuf 1.1.2 MIT https://github.com/indutny/offset-buffer
+select-hose 2.0.0 MIT https://github.com/indutny/select-hose
+wbuf 1.7.3 MIT https://github.com/indutny/wbuf
+parse5 4.0.0 MIT https://github.com/inikulin/parse5
+is-symbol 1.0.3 MIT https://github.com/inspect-js/is-symbol
+core-util-is 1.0.2 MIT https://github.com/isaacs/core-util-is
+clean-css 4.2.3 MIT https://github.com/jakubpawlowicz/clean-css
+node-modules-regexp 1.0.0 MIT https://github.com/jamestalmage/node-modules-regexp
+normalize-range 0.1.2 MIT https://github.com/jamestalmage/normalize-range
+gud 1.0.0 MIT https://github.com/jamiebuilds/global-unique-id
+html-webpack-plugin 4.0.0-beta.11 MIT https://github.com/jantimon/html-webpack-plugin
+utils-merge 1.0.1 MIT https://github.com/jaredhanson/utils-merge
+path-parse 1.0.6 MIT https://github.com/jbgutierrez/path-parse
+imurmurhash 0.1.4 MIT https://github.com/jensyt/imurmurhash-js
+recursive-readdir 2.2.2 MIT https://github.com/jergason/recursive-readdir
+jest-watch-typeahead 0.4.2 MIT https://github.com/jest-community/jest-watch-typeahead
+selfsigned 1.10.7 MIT https://github.com/jfromaniello/selfsigned
+stream-http 2.8.3 MIT https://github.com/jhiesey/stream-http
+to-arraybuffer 1.0.1 MIT https://github.com/jhiesey/to-arraybuffer
+shellwords 0.1.1 MIT https://github.com/jimmycuadra/shellwords
+rgba-regex 1.0.0 MIT https://github.com/johnotander/rgba-regex
+ee-first 1.1.1 MIT https://github.com/jonathanong/ee-first
+arr-diff 4.0.0 MIT https://github.com/jonschlinkert/arr-diff
+arr-flatten 1.1.0 MIT https://github.com/jonschlinkert/arr-flatten
+arr-union 3.1.0 MIT https://github.com/jonschlinkert/arr-union
+array-each 1.0.1 MIT https://github.com/jonschlinkert/array-each
+array-slice 1.1.0 MIT https://github.com/jonschlinkert/array-slice
+array-unique 0.3.2 MIT https://github.com/jonschlinkert/array-unique
+assign-symbols 1.0.0 MIT https://github.com/jonschlinkert/assign-symbols
+babel-extract-comments 1.0.0 MIT https://github.com/jonschlinkert/babel-extract-comments
+cache-base 1.0.1 MIT https://github.com/jonschlinkert/cache-base
+class-utils 0.3.6 MIT https://github.com/jonschlinkert/class-utils
+clone-deep 0.2.4 MIT https://github.com/jonschlinkert/clone-deep
+collection-visit 1.0.0 MIT https://github.com/jonschlinkert/collection-visit
+contains-path 0.1.0 MIT https://github.com/jonschlinkert/contains-path
+copy-descriptor 0.1.1 MIT https://github.com/jonschlinkert/copy-descriptor
+define-property 2.0.2 MIT https://github.com/jonschlinkert/define-property
+expand-brackets 2.1.4 MIT https://github.com/jonschlinkert/expand-brackets
+expand-tilde 2.0.2 MIT https://github.com/jonschlinkert/expand-tilde
+extend-shallow 3.0.2 MIT https://github.com/jonschlinkert/extend-shallow
+fill-range 4.0.0 MIT https://github.com/jonschlinkert/fill-range
+for-in 1.0.2 MIT https://github.com/jonschlinkert/for-in
+for-own 1.0.0 MIT https://github.com/jonschlinkert/for-own
+fragment-cache 0.2.1 MIT https://github.com/jonschlinkert/fragment-cache
+get-value 2.0.6 MIT https://github.com/jonschlinkert/get-value
+global-modules 1.0.0 MIT https://github.com/jonschlinkert/global-modules
+global-prefix 1.0.2 MIT https://github.com/jonschlinkert/global-prefix
+has-value 1.0.0 MIT https://github.com/jonschlinkert/has-value
+has-values 1.0.0 MIT https://github.com/jonschlinkert/has-values
+is-absolute 1.0.0 MIT https://github.com/jonschlinkert/is-absolute
+is-accessor-descriptor 0.1.6 MIT https://github.com/jonschlinkert/is-accessor-descriptor
+is-data-descriptor 0.1.4 MIT https://github.com/jonschlinkert/is-data-descriptor
+is-descriptor 0.1.6 MIT https://github.com/jonschlinkert/is-descriptor
+is-directory 0.3.1 MIT https://github.com/jonschlinkert/is-directory
+is-extendable 0.1.1 MIT https://github.com/jonschlinkert/is-extendable
+is-extglob 2.1.1 MIT https://github.com/jonschlinkert/is-extglob
+is-glob 3.1.0 MIT https://github.com/jonschlinkert/is-glob
+is-number 3.0.0 MIT https://github.com/jonschlinkert/is-number
+is-plain-object 2.0.4 MIT https://github.com/jonschlinkert/is-plain-object
+is-relative 1.0.0 MIT https://github.com/jonschlinkert/is-relative
+is-unc-path 1.0.0 MIT https://github.com/jonschlinkert/is-unc-path
+is-windows 1.0.2 MIT https://github.com/jonschlinkert/is-windows
+isobject 3.0.1 MIT https://github.com/jonschlinkert/isobject
+kind-of 6.0.3 MIT https://github.com/jonschlinkert/kind-of
+lazy-cache 1.0.4 MIT https://github.com/jonschlinkert/lazy-cache
+make-iterator 1.0.1 MIT https://github.com/jonschlinkert/make-iterator
+map-cache 0.2.2 MIT https://github.com/jonschlinkert/map-cache
+map-visit 1.0.0 MIT https://github.com/jonschlinkert/map-visit
+merge-deep 3.0.2 MIT https://github.com/jonschlinkert/merge-deep
+mixin-deep 1.3.2 MIT https://github.com/jonschlinkert/mixin-deep
+mixin-object 2.0.1 MIT https://github.com/jonschlinkert/mixin-object
+normalize-path 3.0.0 MIT https://github.com/jonschlinkert/normalize-path
+object-copy 0.1.0 MIT https://github.com/jonschlinkert/object-copy
+object-visit 1.0.1 MIT https://github.com/jonschlinkert/object-visit
+object.defaults 1.1.0 MIT https://github.com/jonschlinkert/object.defaults
+object.map 1.0.1 MIT https://github.com/jonschlinkert/object.map
+object.pick 1.3.0 MIT https://github.com/jonschlinkert/object.pick
+parse-filepath 1.0.2 MIT https://github.com/jonschlinkert/parse-filepath
+pascalcase 0.1.1 MIT https://github.com/jonschlinkert/pascalcase
+path-root 0.1.1 MIT https://github.com/jonschlinkert/path-root
+posix-character-classes 0.1.1 MIT https://github.com/jonschlinkert/posix-character-classes
+regex-not 1.0.2 MIT https://github.com/jonschlinkert/regex-not
+repeat-element 1.1.3 MIT https://github.com/jonschlinkert/repeat-element
+repeat-string 1.6.1 MIT https://github.com/jonschlinkert/repeat-string
+resolve-dir 1.0.1 MIT https://github.com/jonschlinkert/resolve-dir
+set-value 2.0.1 MIT https://github.com/jonschlinkert/set-value
+shallow-clone 0.1.2 MIT https://github.com/jonschlinkert/shallow-clone
+snapdragon 0.8.2 MIT https://github.com/jonschlinkert/snapdragon
+snapdragon-node 2.1.1 MIT https://github.com/jonschlinkert/snapdragon-node
+snapdragon-util 3.0.1 MIT https://github.com/jonschlinkert/snapdragon-util
+split-string 3.1.0 MIT https://github.com/jonschlinkert/split-string
+static-extend 0.1.2 MIT https://github.com/jonschlinkert/static-extend
+strip-comments 1.0.2 MIT https://github.com/jonschlinkert/strip-comments
+to-object-path 0.3.0 MIT https://github.com/jonschlinkert/to-object-path
+to-regex 3.0.2 MIT https://github.com/jonschlinkert/to-regex
+union-value 1.0.1 MIT https://github.com/jonschlinkert/union-value
+unset-value 1.0.0 MIT https://github.com/jonschlinkert/unset-value
+use 3.1.1 MIT https://github.com/jonschlinkert/use
+word-wrap 1.2.3 MIT https://github.com/jonschlinkert/word-wrap
+write 1.0.3 MIT https://github.com/jonschlinkert/write
+asn1 0.2.4 MIT https://github.com/joyent/node-asn1
+http-signature 1.2.0 MIT https://github.com/joyent/node-http-signature
+jsprim 1.4.1 MIT https://github.com/joyent/node-jsprim
+sshpk 1.16.1 MIT https://github.com/joyent/node-sshpk
+lazystream 1.0.0 MIT https://github.com/jpommerening/node-lazystream
+fs-extra 8.1.0 MIT https://github.com/jprichardson/node-fs-extra
+jsonfile 4.0.0 MIT https://github.com/jprichardson/node-jsonfile
+jquery 3.5.1 MIT https://github.com/jquery/jquery
+timers-browserify 2.0.11 MIT https://github.com/jryans/timers-browserify
+liftoff 2.5.0 MIT https://github.com/js-cli/js-liftoff
+findup-sync 2.0.0 MIT https://github.com/js-cli/node-findup-sync
+cssstyle 1.4.0 MIT https://github.com/jsakas/CSSStyleDeclaration
+data-urls 1.1.0 MIT https://github.com/jsdom/data-urls
+domexception 1.0.1 MIT https://github.com/jsdom/domexception
+html-encoding-sniffer 1.0.2 MIT https://github.com/jsdom/html-encoding-sniffer
+symbol-tree 3.2.4 MIT https://github.com/jsdom/js-symbol-tree
+jsdom 11.12.0 MIT https://github.com/jsdom/jsdom
+w3c-hr-time 1.0.2 MIT https://github.com/jsdom/w3c-hr-time
+w3c-xmlserializer 1.1.2 MIT https://github.com/jsdom/w3c-xmlserializer
+whatwg-encoding 1.0.5 MIT https://github.com/jsdom/whatwg-encoding
+whatwg-mimetype 2.3.0 MIT https://github.com/jsdom/whatwg-mimetype
+whatwg-url 6.5.0 MIT https://github.com/jsdom/whatwg-url
+accepts 1.3.7 MIT https://github.com/jshttp/accepts
+compressible 2.0.18 MIT https://github.com/jshttp/compressible
+content-disposition 0.5.3 MIT https://github.com/jshttp/content-disposition
+content-type 1.0.4 MIT https://github.com/jshttp/content-type
+cookie 0.4.0 MIT https://github.com/jshttp/cookie
+etag 1.8.1 MIT https://github.com/jshttp/etag
+forwarded 0.1.2 MIT https://github.com/jshttp/forwarded
+fresh 0.5.2 MIT https://github.com/jshttp/fresh
+http-errors 1.7.2 MIT https://github.com/jshttp/http-errors
+media-typer 0.3.0 MIT https://github.com/jshttp/media-typer
+methods 1.1.2 MIT https://github.com/jshttp/methods
+mime-db 1.44.0 MIT https://github.com/jshttp/mime-db
+mime-types 2.1.27 MIT https://github.com/jshttp/mime-types
+negotiator 0.6.2 MIT https://github.com/jshttp/negotiator
+on-finished 2.3.0 MIT https://github.com/jshttp/on-finished
+on-headers 1.0.2 MIT https://github.com/jshttp/on-headers
+proxy-addr 2.0.6 MIT https://github.com/jshttp/proxy-addr
+range-parser 1.2.1 MIT https://github.com/jshttp/range-parser
+statuses 1.5.0 MIT https://github.com/jshttp/statuses
+type-is 1.6.18 MIT https://github.com/jshttp/type-is
+vary 1.1.2 MIT https://github.com/jshttp/vary
+spdx-expression-parse 3.0.1 MIT https://github.com/jslicense/spdx-expression-parse.js
+json5 2.1.3 MIT https://github.com/json5/json5
+balanced-match 1.0.0 MIT https://github.com/juliangruber/balanced-match
+brace-expansion 1.1.11 MIT https://github.com/juliangruber/brace-expansion
+constants-browserify 1.0.0 MIT https://github.com/juliangruber/constants-browserify
+is-mobile 2.2.1 MIT https://github.com/juliangruber/is-mobile
+isarray 1.0.0 MIT https://github.com/juliangruber/isarray
+extend 3.0.2 MIT https://github.com/justmoon/node-extend
+ignore 4.0.6 MIT https://github.com/kaelzhang/node-ignore
+babel-plugin-macros 2.8.0 MIT https://github.com/kentcdodds/babel-plugin-macros
+astral-regex 1.0.0 MIT https://github.com/kevva/astral-regex
+dir-glob 2.0.0 MIT https://github.com/kevva/dir-glob
+shebang-command 1.2.0 MIT https://github.com/kevva/shebang-command
+strict-uri-encode 1.1.0 MIT https://github.com/kevva/strict-uri-encode
+identity-obj-proxy 3.0.0 MIT https://github.com/keyanzhang/identity-obj-proxy
+emojis-list 3.0.0 MIT https://github.com/kikobeats/emojis-list
+asap 2.0.6 MIT https://github.com/kriskowal/asap
+q 1.5.1 MIT https://github.com/kriskowal/q
+unquote 1.1.1 MIT https://github.com/lakenen/node-unquote
+xmlchars 2.2.0 MIT https://github.com/lddubeau/xmlchars
+postcss-values-parser 2.0.1 MIT https://github.com/lesshint/postcss-values-parser
+call-me-maybe 1.0.1 MIT https://github.com/limulus/call-me-maybe
+natural-compare 1.4.0 MIT https://github.com/litejs/natural-compare-lite
+string.prototype.matchall 4.0.2 MIT https://github.com/ljharb/String.prototype.matchAll
+define-properties 1.1.3 MIT https://github.com/ljharb/define-properties
+es-abstract 1.17.5 MIT https://github.com/ljharb/es-abstract
+es-to-primitive 1.2.1 MIT https://github.com/ljharb/es-to-primitive
+has-symbols 1.0.1 MIT https://github.com/ljharb/has-symbols
+internal-slot 1.0.2 MIT https://github.com/ljharb/internal-slot
+is-arguments 1.0.4 MIT https://github.com/ljharb/is-arguments
+is-callable 1.1.5 MIT https://github.com/ljharb/is-callable
+is-date-object 1.0.2 MIT https://github.com/ljharb/is-date-object
+is-object 1.0.1 MIT https://github.com/ljharb/is-object
+is-regex 1.0.5 MIT https://github.com/ljharb/is-regex
+is-string 1.0.5 MIT https://github.com/ljharb/is-string
+object-keys 1.1.1 MIT https://github.com/ljharb/object-keys
+object.assign 4.1.0 MIT https://github.com/ljharb/object.assign
+side-channel 1.0.2 MIT https://github.com/ljharb/side-channel
+util.promisify 1.0.1 MIT https://github.com/ljharb/util.promisify
+lodash._reinterpolate 3.0.0 MIT https://github.com/lodash/lodash
+lodash.debounce 4.0.8 MIT https://github.com/lodash/lodash
+lodash.defaults 4.2.0 MIT https://github.com/lodash/lodash
+lodash.difference 4.5.0 MIT https://github.com/lodash/lodash
+lodash.escaperegexp 4.1.2 MIT https://github.com/lodash/lodash
+lodash.flatten 4.4.0 MIT https://github.com/lodash/lodash
+lodash.flow 3.5.0 MIT https://github.com/lodash/lodash
+lodash.groupby 4.6.0 MIT https://github.com/lodash/lodash
+lodash.isboolean 3.0.3 MIT https://github.com/lodash/lodash
+lodash.isequal 4.5.0 MIT https://github.com/lodash/lodash
+lodash.isfunction 3.0.9 MIT https://github.com/lodash/lodash
+lodash.isnil 4.0.0 MIT https://github.com/lodash/lodash
+lodash.isplainobject 4.0.6 MIT https://github.com/lodash/lodash
+lodash.isstring 4.0.1 MIT https://github.com/lodash/lodash
+lodash.isundefined 3.0.1 MIT https://github.com/lodash/lodash
+lodash.memoize 4.1.2 MIT https://github.com/lodash/lodash
+lodash.sortby 4.7.0 MIT https://github.com/lodash/lodash
+lodash.template 4.5.0 MIT https://github.com/lodash/lodash
+lodash.templatesettings 4.2.0 MIT https://github.com/lodash/lodash
+lodash.throttle 4.1.1 MIT https://github.com/lodash/lodash
+lodash.union 4.6.0 MIT https://github.com/lodash/lodash
+lodash.uniq 4.5.0 MIT https://github.com/lodash/lodash
+lodash 4.17.15 MIT https://github.com/lodash/lodash
+react-lazy-load 3.0.13 MIT https://github.com/loktar00/react-lazy-load
+postcss-flexbugs-fixes 4.1.0 MIT https://github.com/luisrudge/postcss-flexbugs-fixes
+kleur 3.0.3 MIT https://github.com/lukeed/kleur
+psl 1.8.0 MIT https://github.com/lupomontero/psl
+js-tokens 4.0.0 MIT https://github.com/lydell/js-tokens
+resolve-url 0.2.1 MIT https://github.com/lydell/resolve-url
+source-map-resolve 0.5.3 MIT https://github.com/lydell/source-map-resolve
+source-map-url 0.4.0 MIT https://github.com/lydell/source-map-url
+urix 0.1.0 MIT https://github.com/lydell/urix
+cyclist 1.0.1 MIT https://github.com/mafintosh/cyclist
+dns-packet 1.3.1 MIT https://github.com/mafintosh/dns-packet
+duplexify 3.7.1 MIT https://github.com/mafintosh/duplexify
+end-of-stream 1.4.4 MIT https://github.com/mafintosh/end-of-stream
+flush-write-stream 1.1.1 MIT https://github.com/mafintosh/flush-write-stream
+fs-constants 1.0.0 MIT https://github.com/mafintosh/fs-constants
+multicast-dns 6.2.3 MIT https://github.com/mafintosh/multicast-dns
+multicast-dns-service-types 1.1.0 MIT https://github.com/mafintosh/multicast-dns-service-types
+parallel-transform 1.2.0 MIT https://github.com/mafintosh/parallel-transform
+pump 3.0.0 MIT https://github.com/mafintosh/pump
+pumpify 1.5.1 MIT https://github.com/mafintosh/pumpify
+stream-each 1.2.3 MIT https://github.com/mafintosh/stream-each
+stream-shift 1.0.1 MIT https://github.com/mafintosh/stream-shift
+tar-stream 2.1.2 MIT https://github.com/mafintosh/tar-stream
+thunky 1.1.0 MIT https://github.com/mafintosh/thunky
+object-path 0.11.4 MIT https://github.com/mariocasciaro/object-path
+cssesc 3.0.0 MIT https://github.com/mathiasbynens/cssesc
+emoji-regex 8.0.0 MIT https://github.com/mathiasbynens/emoji-regex
+he 1.2.0 MIT https://github.com/mathiasbynens/he
+jsesc 2.5.2 MIT https://github.com/mathiasbynens/jsesc
+regenerate 1.4.0 MIT https://github.com/mathiasbynens/regenerate
+regenerate-unicode-properties 8.2.0 MIT https://github.com/mathiasbynens/regenerate-unicode-properties
+regexpu-core 4.7.0 MIT https://github.com/mathiasbynens/regexpu-core
+unicode-canonical-property-names-ecmascript 1.0.4 MIT https://github.com/mathiasbynens/unicode-canonical-property-names-ecmascript
+unicode-match-property-ecmascript 1.0.4 MIT https://github.com/mathiasbynens/unicode-match-property-ecmascript
+unicode-match-property-value-ecmascript 1.2.0 MIT https://github.com/mathiasbynens/unicode-match-property-value-ecmascript
+unicode-property-aliases-ecmascript 1.1.0 MIT https://github.com/mathiasbynens/unicode-property-aliases-ecmascript
+isomorphic-fetch 2.2.1 MIT https://github.com/matthew-andrews/isomorphic-fetch
+postcss-initial 3.0.2 MIT https://github.com/maximkoretskiy/postcss-initial
+concat-stream 1.6.2 MIT https://github.com/maxogden/concat-stream
+assert-plus 1.0.0 MIT https://github.com/mcavage/node-assert-plus
+html-entities 1.3.1 MIT https://github.com/mdevils/node-html-entities
+es6-iterator 2.0.3 MIT https://github.com/medikoo/es6-iterator
+next-tick 1.0.0 MIT https://github.com/medikoo/next-tick
+aws4 1.9.1 MIT https://github.com/mhart/aws4
+postcss-load-config 2.1.0 MIT https://github.com/michael-ciniawsky/postcss-load-config
+braces 2.3.2 MIT https://github.com/micromatch/braces
+extglob 2.0.4 MIT https://github.com/micromatch/extglob
+micromatch 3.1.10 MIT https://github.com/micromatch/micromatch
+nanomatch 1.2.13 MIT https://github.com/micromatch/nanomatch
+picomatch 2.2.2 MIT https://github.com/micromatch/picomatch
+to-regex-range 2.1.1 MIT https://github.com/micromatch/to-regex-range
+node-notifier 5.4.3 MIT https://github.com/mikaelbr/node-notifier
+querystring-es3 0.2.1 MIT https://github.com/mike-spainhower/querystring
+functional-red-black-tree 1.0.1 MIT https://github.com/mikolalysenko/functional-red-black-tree
+uniq 1.0.1 MIT https://github.com/mikolalysenko/uniq
+resolve-pathname 3.0.0 MIT https://github.com/mjackson/resolve-pathname
+value-equal 1.0.1 MIT https://github.com/mjackson/value-equal
+flatten 1.0.3 MIT https://github.com/mk-pmb/flatten-js
+moment 2.25.3 MIT https://github.com/moment/moment
+shallow-equal 1.2.1 MIT https://github.com/moroshko/shallow-equal
+cross-spawn 6.0.5 MIT https://github.com/moxystudio/node-cross-spawn
+external-editor 3.1.0 MIT https://github.com/mrkmg/node-external-editor
+fast-glob 2.2.7 MIT https://github.com/mrmlnc/fast-glob
+immer 1.10.0 MIT https://github.com/mweststrate/immer
+eslint-utils 2.0.0 MIT https://github.com/mysticatea/eslint-utils
+regexpp 3.1.0 MIT https://github.com/mysticatea/regexpp
+timsort 0.3.0 MIT https://github.com/mziccard/node-timsort
+backbone-events-standalone 0.2.7 MIT https://github.com/n1k0/backbone-events-standalone
+dom-closest 0.2.0 MIT https://github.com/necolas/dom-closest
+dom-matches 2.0.0 MIT https://github.com/necolas/dom-matches
+base 0.11.2 MIT https://github.com/node-base/base
+address 1.1.2 MIT https://github.com/node-modules/address
+detect-port-alt 1.1.6 MIT https://github.com/node-modules/detect-port
+argparse 1.0.10 MIT https://github.com/nodeca/argparse
+js-yaml 3.13.1 MIT https://github.com/nodeca/js-yaml
+nan 2.14.1 MIT https://github.com/nodejs/nan
+readable-stream 3.6.0 MIT https://github.com/nodejs/readable-stream
+string_decoder 1.1.1 MIT https://github.com/nodejs/string_decoder
+ nodelib/fs.stat 1.1.3 MIT https://github.com/nodelib/nodelib/tree/master/packages/fs/fs.stat
+css-select-base-adapter 0.1.1 MIT https://github.com/nrkn/css-select-base-adapter
+caniuse-api 3.0.0 MIT https://github.com/nyalab/caniuse-api
+babel-plugin-transform-react-remove-prop-types 0.4.24 MIT https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types
+async-each 1.0.3 MIT https://github.com/paulmillr/async-each
+chokidar 3.4.0 MIT https://github.com/paulmillr/chokidar
+readdirp 3.4.0 MIT https://github.com/paulmillr/readdirp
+bluebird 3.4.7 MIT https://github.com/petkaantonov/bluebird
+is-color-stop 1.1.0 MIT https://github.com/pigcan/is-color-stop
+encodeurl 1.0.2 MIT https://github.com/pillarjs/encodeurl
+finalhandler 1.1.2 MIT https://github.com/pillarjs/finalhandler
+parseurl 1.3.3 MIT https://github.com/pillarjs/parseurl
+path-to-regexp 1.8.0 MIT https://github.com/pillarjs/path-to-regexp
+send 0.17.1 MIT https://github.com/pillarjs/send
+loglevel 1.6.8 MIT https://github.com/pimterry/loglevel
+autoprefixer 9.8.0 MIT https://github.com/postcss/autoprefixer
+postcss 7.0.30 MIT https://github.com/postcss/postcss
+postcss-calc 7.0.2 MIT https://github.com/postcss/postcss-calc
+postcss-color-hex-alpha 5.0.3 MIT https://github.com/postcss/postcss-color-hex-alpha
+postcss-color-rebeccapurple 4.0.1 MIT https://github.com/postcss/postcss-color-rebeccapurple
+postcss-custom-media 7.0.8 MIT https://github.com/postcss/postcss-custom-media
+postcss-custom-properties 8.0.11 MIT https://github.com/postcss/postcss-custom-properties
+postcss-custom-selectors 5.1.2 MIT https://github.com/postcss/postcss-custom-selectors
+postcss-font-variant 4.0.0 MIT https://github.com/postcss/postcss-font-variant
+postcss-loader 3.0.0 MIT https://github.com/postcss/postcss-loader
+postcss-media-minmax 4.0.0 MIT https://github.com/postcss/postcss-media-minmax
+postcss-safe-parser 4.0.1 MIT https://github.com/postcss/postcss-safe-parser
+postcss-selector-matches 4.0.0 MIT https://github.com/postcss/postcss-selector-matches
+postcss-selector-not 4.0.0 MIT https://github.com/postcss/postcss-selector-not
+postcss-selector-parser 6.0.2 MIT https://github.com/postcss/postcss-selector-parser
+tslint-config-prettier 1.18.0 MIT https://github.com/prettier/tslint-config-prettier
+eventemitter3 4.0.4 MIT https://github.com/primus/eventemitter3
+object-hash 2.0.3 MIT https://github.com/puleos/object-hash
+clone 2.1.2 MIT https://github.com/pvorb/node-clone
+error-ex 1.3.2 MIT https://github.com/qix-/node-error-ex
+is-arrayish 0.2.1 MIT https://github.com/qix-/node-is-arrayish
+simple-swizzle 0.2.2 MIT https://github.com/qix-/node-simple-swizzle
+ecc-jsbn 0.1.2 MIT https://github.com/quartzjer/ecc-jsbn
+resize-observer-polyfill 1.5.1 MIT https://github.com/que-etc/resize-observer-polyfill
+ramda 0.27.0 MIT https://github.com/ramda/ramda
+tmp 0.1.0 MIT https://github.com/raszi/node-tmp
+rc-align 2.4.5 MIT https://github.com/react-component/align
+rc-animate 2.11.1 MIT https://github.com/react-component/animate
+rc-calendar 9.15.10 MIT https://github.com/react-component/calendar
+rc-cascader 0.17.5 MIT https://github.com/react-component/cascader
+rc-checkbox 2.1.8 MIT https://github.com/react-component/checkbox
+rc-collapse 1.11.8 MIT https://github.com/react-component/collapse
+rc-dialog 7.6.1 MIT https://github.com/react-component/dialog
+rc-dropdown 2.4.1 MIT https://github.com/react-component/dropdown
+rc-editor-core 0.8.10 MIT https://github.com/react-component/editor-core
+rc-form 2.4.11 MIT https://github.com/react-component/form
+rc-input-number 4.5.7 MIT https://github.com/react-component/input-number
+rmc-feedback 2.0.0 MIT https://github.com/react-component/m-feedback
+rc-editor-mention 1.1.13 MIT https://github.com/react-component/mention
+rc-mentions 0.4.2 MIT https://github.com/react-component/mentions
+rc-menu 7.5.5 MIT https://github.com/react-component/menu
+rc-notification 3.3.1 MIT https://github.com/react-component/notification
+rc-pagination 1.20.14 MIT https://github.com/react-component/pagination
+rc-progress 2.5.3 MIT https://github.com/react-component/progress
+rc-rate 2.5.1 MIT https://github.com/react-component/rate
+rc-hammerjs 0.6.9 MIT https://github.com/react-component/react-hammerjs
+rc-resize-observer 0.1.3 MIT https://github.com/react-component/resize-observer
+rc-select 9.2.3 MIT https://github.com/react-component/select
+rc-slider 8.7.1 MIT https://github.com/react-component/slider
+rc-steps 3.5.0 MIT https://github.com/react-component/steps
+rc-switch 1.9.0 MIT https://github.com/react-component/switch
+rc-table 6.10.15 MIT https://github.com/react-component/table
+rc-tabs 9.7.0 MIT https://github.com/react-component/tabs
+rc-time-picker 3.7.3 MIT https://github.com/react-component/time-picker
+rc-tooltip 3.7.3 MIT https://github.com/react-component/tooltip
+rc-tree 2.1.4 MIT https://github.com/react-component/tree
+rc-tree-select 2.9.4 MIT https://github.com/react-component/tree-select
+rc-trigger 2.6.5 MIT https://github.com/react-component/trigger
+rc-upload 2.9.4 MIT https://github.com/react-component/upload
+rc-util 4.20.5 MIT https://github.com/react-component/util
+react-lifecycles-compat 3.0.4 MIT https://github.com/reactjs/react-lifecycles-compat
+path-root-regex 0.1.2 MIT https://github.com/regexhq/path-root-regex
+unc-path-regex 0.1.2 MIT https://github.com/regexhq/unc-path-regex
+hex-color-regex 1.1.0 MIT https://github.com/regexps/hex-color-regex
+hsl-regex 1.0.0 MIT https://github.com/regexps/hsl-regex
+hsla-regex 1.0.0 MIT https://github.com/regexps/hsla-regex
+rgb-regex 1.0.1 MIT https://github.com/regexps/rgb-regex
+css 2.2.4 MIT https://github.com/reworkcss/css
+file-entry-cache 5.0.1 MIT https://github.com/royriojas/file-entry-cache
+flat-cache 2.0.1 MIT https://github.com/royriojas/flat-cache
+chardet 0.7.0 MIT https://github.com/runk/node-chardet
+bl 4.0.2 MIT https://github.com/rvagg/bl
+isstream 0.1.2 MIT https://github.com/rvagg/isstream
+errno 0.1.7 MIT https://github.com/rvagg/node-errno
+worker-farm 1.7.0 MIT https://github.com/rvagg/node-worker-farm
+prr 1.0.1 MIT https://github.com/rvagg/prr
+through2 2.0.5 MIT https://github.com/rvagg/through2
+json-stable-stringify-without-jsonify 1.0.1 MIT https://github.com/samn/json-stable-stringify
+buffer-indexof-polyfill 1.0.1 MIT https://github.com/sarosia/buffer-indexof-polyfill
+iferr 0.1.5 MIT https://github.com/shesek/iferr
+postcss-page-break 2.0.0 MIT https://github.com/shrpne/postcss-page-break
+browser-resolve 1.11.3 MIT https://github.com/shtylman/node-browser-resolve
+process 0.11.10 MIT https://github.com/shtylman/node-process
+aggregate-error 3.0.1 MIT https://github.com/sindresorhus/aggregate-error
+ansi-escapes 4.3.1 MIT https://github.com/sindresorhus/ansi-escapes
+array-union 1.0.2 MIT https://github.com/sindresorhus/array-union
+array-uniq 1.0.3 MIT https://github.com/sindresorhus/array-uniq
+arrify 1.0.1 MIT https://github.com/sindresorhus/arrify
+binary-extensions 2.0.0 MIT https://github.com/sindresorhus/binary-extensions
+builtin-modules 1.1.1 MIT https://github.com/sindresorhus/builtin-modules
+caller-callsite 2.0.0 MIT https://github.com/sindresorhus/caller-callsite
+caller-path 2.0.0 MIT https://github.com/sindresorhus/caller-path
+callsites 2.0.0 MIT https://github.com/sindresorhus/callsites
+camelcase 5.3.1 MIT https://github.com/sindresorhus/camelcase
+clean-stack 2.2.0 MIT https://github.com/sindresorhus/clean-stack
+cli-cursor 3.1.0 MIT https://github.com/sindresorhus/cli-cursor
+code-point-at 1.1.0 MIT https://github.com/sindresorhus/code-point-at
+decamelize 1.2.0 MIT https://github.com/sindresorhus/decamelize
+del 4.1.1 MIT https://github.com/sindresorhus/del
+detect-newline 2.1.0 MIT https://github.com/sindresorhus/detect-newline
+dot-prop 5.2.0 MIT https://github.com/sindresorhus/dot-prop
+escape-string-regexp 1.0.5 MIT https://github.com/sindresorhus/escape-string-regexp
+execa 1.0.0 MIT https://github.com/sindresorhus/execa
+figures 3.2.0 MIT https://github.com/sindresorhus/figures
+find-up 2.1.0 MIT https://github.com/sindresorhus/find-up
+get-stream 4.1.0 MIT https://github.com/sindresorhus/get-stream
+globals 11.12.0 MIT https://github.com/sindresorhus/globals
+globby 8.0.2 MIT https://github.com/sindresorhus/globby
+gzip-size 5.1.1 MIT https://github.com/sindresorhus/gzip-size
+has-ansi 2.0.0 MIT https://github.com/sindresorhus/has-ansi
+has-flag 3.0.0 MIT https://github.com/sindresorhus/has-flag
+import-cwd 2.1.0 MIT https://github.com/sindresorhus/import-cwd
+import-fresh 2.0.0 MIT https://github.com/sindresorhus/import-fresh
+import-from 2.1.0 MIT https://github.com/sindresorhus/import-from
+import-local 2.0.0 MIT https://github.com/sindresorhus/import-local
+indent-string 4.0.0 MIT https://github.com/sindresorhus/indent-string
+internal-ip 4.3.0 MIT https://github.com/sindresorhus/internal-ip
+invert-kv 2.0.0 MIT https://github.com/sindresorhus/invert-kv
+ip-regex 2.1.0 MIT https://github.com/sindresorhus/ip-regex
+is-absolute-url 2.1.0 MIT https://github.com/sindresorhus/is-absolute-url
+is-binary-path 2.1.0 MIT https://github.com/sindresorhus/is-binary-path
+is-docker 2.0.0 MIT https://github.com/sindresorhus/is-docker
+is-fullwidth-code-point 3.0.0 MIT https://github.com/sindresorhus/is-fullwidth-code-point
+is-generator-fn 2.1.0 MIT https://github.com/sindresorhus/is-generator-fn
+is-obj 2.0.0 MIT https://github.com/sindresorhus/is-obj
+is-path-cwd 2.2.0 MIT https://github.com/sindresorhus/is-path-cwd
+is-path-in-cwd 2.1.0 MIT https://github.com/sindresorhus/is-path-in-cwd
+is-path-inside 2.1.0 MIT https://github.com/sindresorhus/is-path-inside
+is-plain-obj 1.1.0 MIT https://github.com/sindresorhus/is-plain-obj
+is-regexp 1.0.0 MIT https://github.com/sindresorhus/is-regexp
+is-root 2.1.0 MIT https://github.com/sindresorhus/is-root
+is-stream 1.1.0 MIT https://github.com/sindresorhus/is-stream
+is-svg 3.0.0 MIT https://github.com/sindresorhus/is-svg
+is-wsl 1.1.0 MIT https://github.com/sindresorhus/is-wsl
+lcid 2.0.0 MIT https://github.com/sindresorhus/lcid
+leven 3.1.0 MIT https://github.com/sindresorhus/leven
+load-json-file 4.0.0 MIT https://github.com/sindresorhus/load-json-file
+locate-path 2.0.0 MIT https://github.com/sindresorhus/locate-path
+make-dir 2.1.0 MIT https://github.com/sindresorhus/make-dir
+mem 4.3.0 MIT https://github.com/sindresorhus/mem
+mimic-fn 2.1.0 MIT https://github.com/sindresorhus/mimic-fn
+normalize-url 1.9.1 MIT https://github.com/sindresorhus/normalize-url
+npm-run-path 2.0.2 MIT https://github.com/sindresorhus/npm-run-path
+number-is-nan 1.0.1 MIT https://github.com/sindresorhus/number-is-nan
+object-assign 4.1.1 MIT https://github.com/sindresorhus/object-assign
+onetime 5.1.0 MIT https://github.com/sindresorhus/onetime
+open 7.0.4 MIT https://github.com/sindresorhus/open
+opn 5.5.0 MIT https://github.com/sindresorhus/opn
+os-homedir 1.0.2 MIT https://github.com/sindresorhus/os-homedir
+os-locale 3.1.0 MIT https://github.com/sindresorhus/os-locale
+os-tmpdir 1.0.2 MIT https://github.com/sindresorhus/os-tmpdir
+p-defer 1.0.0 MIT https://github.com/sindresorhus/p-defer
+p-each-series 1.0.0 MIT https://github.com/sindresorhus/p-each-series
+p-finally 1.0.0 MIT https://github.com/sindresorhus/p-finally
+p-is-promise 2.1.0 MIT https://github.com/sindresorhus/p-is-promise
+p-limit 1.3.0 MIT https://github.com/sindresorhus/p-limit
+p-locate 2.0.0 MIT https://github.com/sindresorhus/p-locate
+p-map 3.0.0 MIT https://github.com/sindresorhus/p-map
+p-reduce 1.0.0 MIT https://github.com/sindresorhus/p-reduce
+p-retry 3.0.1 MIT https://github.com/sindresorhus/p-retry
+p-try 1.0.0 MIT https://github.com/sindresorhus/p-try
+parent-module 1.0.1 MIT https://github.com/sindresorhus/parent-module
+parse-json 4.0.0 MIT https://github.com/sindresorhus/parse-json
+path-exists 3.0.0 MIT https://github.com/sindresorhus/path-exists
+path-is-absolute 1.0.1 MIT https://github.com/sindresorhus/path-is-absolute
+path-key 2.0.1 MIT https://github.com/sindresorhus/path-key
+path-type 3.0.0 MIT https://github.com/sindresorhus/path-type
+pify 3.0.0 MIT https://github.com/sindresorhus/pify
+pkg-dir 3.0.0 MIT https://github.com/sindresorhus/pkg-dir
+pkg-up 2.0.0 MIT https://github.com/sindresorhus/pkg-up
+prepend-http 1.0.4 MIT https://github.com/sindresorhus/prepend-http
+pretty-bytes 5.3.0 MIT https://github.com/sindresorhus/pretty-bytes
+query-string 4.3.4 MIT https://github.com/sindresorhus/query-string
+read-pkg 3.0.0 MIT https://github.com/sindresorhus/read-pkg
+read-pkg-up 4.0.0 MIT https://github.com/sindresorhus/read-pkg-up
+resolve-cwd 2.0.0 MIT https://github.com/sindresorhus/resolve-cwd
+resolve-from 3.0.0 MIT https://github.com/sindresorhus/resolve-from
+restore-cursor 3.1.0 MIT https://github.com/sindresorhus/restore-cursor
+set-immediate-shim 1.0.1 MIT https://github.com/sindresorhus/set-immediate-shim
+shebang-regex 1.0.0 MIT https://github.com/sindresorhus/shebang-regex
+slash 2.0.0 MIT https://github.com/sindresorhus/slash
+sort-keys 1.1.2 MIT https://github.com/sindresorhus/sort-keys
+string-length 2.0.0 MIT https://github.com/sindresorhus/string-length
+string-width 4.2.0 MIT https://github.com/sindresorhus/string-width
+strip-bom 3.0.0 MIT https://github.com/sindresorhus/strip-bom
+strip-eof 1.0.0 MIT https://github.com/sindresorhus/strip-eof
+strip-json-comments 3.1.0 MIT https://github.com/sindresorhus/strip-json-comments
+to-fast-properties 2.0.0 MIT https://github.com/sindresorhus/to-fast-properties
+xregexp 4.3.0 MIT https://github.com/slevithan/xregexp
+ svgr/babel-plugin-add-jsx-attribute 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-add-jsx-attribute
+ svgr/babel-plugin-remove-jsx-attribute 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-remove-jsx-attribute
+ svgr/babel-plugin-remove-jsx-empty-expression 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-remove-jsx-empty-expression
+ svgr/babel-plugin-replace-jsx-attribute-value 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-replace-jsx-attribute-value
+ svgr/babel-plugin-svg-dynamic-title 4.3.3 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-svg-dynamic-title
+ svgr/babel-plugin-svg-em-dimensions 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-svg-em-dimensions
+ svgr/babel-plugin-transform-react-native-svg 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-transform-react-native-svg
+ svgr/babel-plugin-transform-svg-component 4.2.0 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-plugin-transform-svg-component
+ svgr/babel-preset 4.3.3 MIT https://github.com/smooth-code/svgr/tree/master/packages/babel-preset
+ svgr/core 4.3.3 MIT https://github.com/smooth-code/svgr/tree/master/packages/core
+ svgr/hast-util-to-babel-ast 4.3.2 MIT https://github.com/smooth-code/svgr/tree/master/packages/hast-util-to-babel-ast
+ svgr/plugin-jsx 4.3.3 MIT https://github.com/smooth-code/svgr/tree/master/packages/plugin-jsx
+ svgr/plugin-svgo 4.3.1 MIT https://github.com/smooth-code/svgr/tree/master/packages/plugin-svgo
+ svgr/webpack 4.3.3 MIT https://github.com/smooth-code/svgr/tree/master/packages/webpack
+sockjs-client 1.4.0 MIT https://github.com/sockjs/sockjs-client
+sockjs 0.3.19 MIT https://github.com/sockjs/sockjs-node
+buffer-indexof 1.1.1 MIT https://github.com/soldair/node-buffer-indexof
+spdy-transport 3.0.0 MIT https://github.com/spdy-http2/spdy-transport
+html-comment-regex 1.1.2 MIT https://github.com/stevemao/html-comment-regex
+relateurl 0.2.7 MIT https://github.com/stevenvachon/relateurl
+arity-n 1.0.4 MIT https://github.com/stoeffel/arityN
+compose-function 3.0.3 MIT https://github.com/stoeffel/compose-function
+destroy 1.0.4 MIT https://github.com/stream-utils/destroy
+raw-body 2.4.0 MIT https://github.com/stream-utils/raw-body
+unpipe 1.0.0 MIT https://github.com/stream-utils/unpipe
+async-limiter 1.0.1 MIT https://github.com/strml/async-limiter
+https-browserify 1.0.0 MIT https://github.com/substack/https-browserify
+json-stable-stringify 1.0.1 MIT https://github.com/substack/json-stable-stringify
+minimist 1.2.5 MIT https://github.com/substack/minimist
+binary 0.3.0 MIT https://github.com/substack/node-binary
+commondir 1.0.1 MIT https://github.com/substack/node-commondir
+concat-map 0.0.1 MIT https://github.com/substack/node-concat-map
+deep-equal 1.1.1 MIT https://github.com/substack/node-deep-equal
+mkdirp 0.5.5 MIT https://github.com/substack/node-mkdirp
+shell-quote 1.7.2 MIT https://github.com/substack/node-shell-quote
+object-inspect 1.7.0 MIT https://github.com/substack/object-inspect
+path-browserify 0.0.1 MIT https://github.com/substack/path-browserify
+safe-regex 1.1.0 MIT https://github.com/substack/safe-regex
+text-table 0.2.0 MIT https://github.com/substack/text-table
+tty-browserify 0.0.0 MIT https://github.com/substack/tty-browserify
+typedarray 0.0.6 MIT https://github.com/substack/typedarray
+vm-browserify 1.1.2 MIT https://github.com/substack/vm-browserify
+copy-to-clipboard 3.3.1 MIT https://github.com/sudodoki/copy-to-clipboard
+toggle-selection 1.0.6 MIT https://github.com/sudodoki/toggle-selection
+neo-async 2.6.1 MIT https://github.com/suguru03/neo-async
+svgo 1.3.2 MIT https://github.com/svg/svgo
+levenary 1.1.1 MIT https://github.com/tanhauhau/levenary
+stack-utils 1.0.2 MIT https://github.com/tapjs/stack-utils
+has 1.0.3 MIT https://github.com/tarruda/has
+merge2 1.3.0 MIT https://github.com/teambition/merge2
+prompts 2.3.2 MIT https://github.com/terkelg/prompts
+sisteransi 1.0.5 MIT https://github.com/terkelg/sisteransi
+growly 1.3.0 MIT https://github.com/theabraham/growly
+promise 7.3.1 MIT https://github.com/then/promise
+convert-source-map 1.7.0 MIT https://github.com/thlorenz/convert-source-map
+deep-is 0.1.3 MIT https://github.com/thlorenz/deep-is
+proxyquire 2.1.3 MIT https://github.com/thlorenz/proxyquire
+rsvp 4.8.5 MIT https://github.com/tildeio/rsvp.js
+retry 0.12.0 MIT https://github.com/tim-kos/node-retry
+react-app-rewired 2.1.6 MIT https://github.com/timarney/react-app-rewired
+co 4.6.0 MIT https://github.com/tj/co
+commander 2.20.3 MIT https://github.com/tj/commander.js
+interpret 1.1.0 MIT https://github.com/tkellen/node-interpret
+rechoir 0.6.2 MIT https://github.com/tkellen/node-rechoir
+dashdash 1.14.1 MIT https://github.com/trentm/node-dashdash
+require-directory 2.1.1 MIT https://github.com/troygoode/node-require-directory
+exec-sh 0.3.4 MIT https://github.com/tsertkov/exec-sh
+bootstrap 4.5.0 MIT https://github.com/twbs/bootstrap
+ typescript-eslint/eslint-plugin 2.34.0 MIT https://github.com/typescript-eslint/typescript-eslint
+ typescript-eslint/experimental-utils 2.34.0 MIT https://github.com/typescript-eslint/typescript-eslint
+original 1.0.2 MIT https://github.com/unshiftio/original
+querystringify 2.1.1 MIT https://github.com/unshiftio/querystringify
+requires-port 1.0.0 MIT https://github.com/unshiftio/requires-port
+url-parse 1.4.7 MIT https://github.com/unshiftio/url-parse
+uuid 8.0.0 MIT https://github.com/uuidjs/uuid
+coa 2.0.2 MIT https://github.com/veged/coa
+loader-fs-cache 1.0.3 MIT https://github.com/viankakrisna/loader-fs-cache
+batch 0.6.1 MIT https://github.com/visionmedia/batch
+bytes 3.0.0 MIT https://github.com/visionmedia/bytes.js
+debug 3.1.0 MIT https://github.com/visionmedia/debug
+cookie-signature 1.0.6 MIT https://github.com/visionmedia/node-cookie-signature
+progress 2.0.3 MIT https://github.com/visionmedia/node-progress
+bonjour 3.5.0 MIT https://github.com/watson/bonjour
+ci-info 2.0.0 MIT https://github.com/watson/ci-info
+dns-equal 1.0.0 MIT https://github.com/watson/dns-equal
+dns-txt 2.0.2 MIT https://github.com/watson/dns-txt
+is-ci 2.0.0 MIT https://github.com/watson/is-ci
+css-loader 3.4.2 MIT https://github.com/webpack-contrib/css-loader
+eslint-loader 3.0.3 MIT https://github.com/webpack-contrib/eslint-loader
+file-loader 4.3.0 MIT https://github.com/webpack-contrib/file-loader
+less-loader 5.0.0 MIT https://github.com/webpack-contrib/less-loader
+mini-css-extract-plugin 0.9.0 MIT https://github.com/webpack-contrib/mini-css-extract-plugin
+sass-loader 8.0.2 MIT https://github.com/webpack-contrib/sass-loader
+style-loader 0.23.1 MIT https://github.com/webpack-contrib/style-loader
+terser-webpack-plugin 2.3.5 MIT https://github.com/webpack-contrib/terser-webpack-plugin
+url-loader 2.3.0 MIT https://github.com/webpack-contrib/url-loader
+webpack-log 2.0.0 MIT https://github.com/webpack-contrib/webpack-log
+worker-loader 2.0.0 MIT https://github.com/webpack-contrib/worker-loader
+enhanced-resolve 4.1.1 MIT https://github.com/webpack/enhanced-resolve
+loader-runner 2.4.0 MIT https://github.com/webpack/loader-runner
+loader-utils 1.4.0 MIT https://github.com/webpack/loader-utils
+memory-fs 0.4.1 MIT https://github.com/webpack/memory-fs
+node-libs-browser 2.2.1 MIT https://github.com/webpack/node-libs-browser
+schema-utils 2.6.6 MIT https://github.com/webpack/schema-utils
+source-list-map 2.0.1 MIT https://github.com/webpack/source-list-map
+tapable 1.1.3 MIT https://github.com/webpack/tapable
+watchpack-chokidar2 2.0.0 MIT https://github.com/webpack/watchpack
+watchpack 1.7.2 MIT https://github.com/webpack/watchpack
+webpack 4.42.0 MIT https://github.com/webpack/webpack
+webpack-dev-middleware 3.7.2 MIT https://github.com/webpack/webpack-dev-middleware
+webpack-dev-server 3.10.3 MIT https://github.com/webpack/webpack-dev-server
+webpack-sources 1.4.3 MIT https://github.com/webpack/webpack-sources
+ws 5.2.2 MIT https://github.com/websockets/ws
+ipaddr.js 1.9.1 MIT https://github.com/whitequark/ipaddr.js
+vendors 1.0.4 MIT https://github.com/wooorm/vendors
+ webassemblyjs/ast 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/floating-point-hex-parser 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/helper-buffer 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/helper-code-frame 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/helper-module-context 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/helper-wasm-bytecode 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/helper-wasm-section 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/utf8 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wasm-edit 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wasm-gen 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wasm-opt 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wasm-parser 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wast-parser 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+ webassemblyjs/wast-printer 1.8.5 MIT https://github.com/xtuc/webassemblyjs
+eslint-plugin-react 7.19.0 MIT https://github.com/yannickcr/eslint-plugin-react
+yargs 13.3.2 MIT https://github.com/yargs/yargs
+add-dom-event-listener 1.1.0 MIT https://github.com/yiminghe/add-dom-event-listener
+async-validator 1.11.5 MIT https://github.com/yiminghe/async-validator
+css-animation 1.6.1 MIT https://github.com/yiminghe/css-animation
+dom-align 1.12.0 MIT https://github.com/yiminghe/dom-align
+dom-scroll-into-view 1.2.1 MIT https://github.com/yiminghe/dom-scroll-into-view
+num2fraction 1.2.2 MIT https://github.com/yisibl/num2fraction
+ms 2.0.0 MIT https://github.com/zeit/ms
+invariant 2.2.4 MIT https://github.com/zertosh/invariant
+loose-envify 1.4.0 MIT https://github.com/zertosh/loose-envify
+v8-compile-cache 2.1.0 MIT https://github.com/zertosh/v8-compile-cache
+json-parse-better-errors 1.0.2 MIT https://github.com/zkat/json-parse-better-errors
+core-js-compat 3.6.5 MIT https://github.com/zloirock/core-js
+core-js-pure 3.6.5 MIT https://github.com/zloirock/core-js
+core-js 2.6.11 MIT https://github.com/zloirock/core-js
+component-indexof 0.0.3 MIT* https://github.com/component/indexof
+rework 1.0.1 MIT* https://github.com/reworkcss/rework
+traverse 0.3.9 MIT* https://github.com/substack/js-traverse
+chainsaw 0.1.0 MIT* https://github.com/substack/node-chainsaw
+jsonify 0.0.0 Public Domain https://github.com/substack/jsonify
+tweetnacl 0.14.5 Unlicense https://github.com/dchest/tweetnacl-js
+big-integer 1.6.48 Unlicense https://github.com/peterolson/BigInteger.js
+left-pad 1.3.0 WTFPL https://github.com/stevemao/left-pad
+
+
+--------------------------------------------------
+
+NOTE #1: Although we try to keep this libraries list current, the latest 
+information about Mutation Maker third party libraries can be found by running the 
+following command(s) with activated virtual environment. However some licences
+can be shown as UNKNOWN which needs to be handled manually:
+
+# if pip-licences is not installed you can install it with command: 'pip install pip-licenses'
+pip-licenses --with-urls --order=license
+
+# for frontend use this command
+# potentially install license-checker with this command: 'npm install -g license-checker'
+license-checker --csv --direct| sort -k 2 -t ','| tr -d \" | tr ',' '\t'| tr '@' '\t'
+
+--------------------------------------------------

@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-standard",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": ["node_modules/**", "src/setupTests.ts"]
+  },
+  "rules": {
+    // @override: tslint-react rules
+    "jsx-boolean-value": [true, "never"],
+    "jsx-no-multiline-js": false,
+
+    // @override: tslint-config-standard
+    "no-use-before-declare": false,
+
+    // @override: tslint:recommended
+    "max-classes-per-file": false,
+    "member-access": false,
+    "object-literal-sort-keys": false,
+    "no-namespace": [true, "allow-declarations"],
+
+    // @core: code rules
+    "prefer-object-spread": true,
+    "prefer-template": true,
+    "prefer-method-signature": true,
+    "newline-before-return": true,
+    "arrow-return-shorthand": true,
+    "no-require-imports": true,
+    "ordered-imports": false,
+
+    // @core: type rules
+    "no-inferrable-types": true,
+    "callable-types": true,
+    "interface-name": [true, "never-prefix"],
+    "interface-over-type-literal": false
+  }
+}

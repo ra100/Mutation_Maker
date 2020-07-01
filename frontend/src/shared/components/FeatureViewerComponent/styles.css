@@ -1,0 +1,155 @@
+/*   Copyright (c) 2020 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.
+ *
+ *   This file is part of the Mutation Maker, An Open Source Oligo Design Software For Mutagenesis and De Novo Gene Synthesis Experiments.
+ *
+ *   Mutation Maker is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#fTTT,
+#fTTC {
+  fill: #D6E5F3;
+}
+
+#fTTA,
+#fTTG,
+#fCTT,
+#fCTC,
+#fCTA,
+#fCTG {
+  fill: #D6E5F3;
+}
+
+#fATT,
+#fATC,
+#fATA {
+  fill: #D6E5F3;
+}
+
+#fATG {
+  fill: #D6E5F3;
+}
+
+#fGTT,
+#fGTC,
+#fGTA,
+#fGTG {
+  fill: #D6E5F3;
+}
+
+#fTCT,
+#fTCC,
+#fTCA,
+#fTCG,
+#fAGT,
+#fAGC {
+  fill: #E1DCD9;
+}
+
+#fCCT,
+#fCCC,
+#fCCA,
+#fCCG {
+  fill: #D6E5F3;
+}
+
+#fACT,
+#fACC,
+#fACA,
+#fACG {
+  fill: #E1DCD9;
+}
+
+#fGCT,
+#fGCC,
+#fGCA,
+#fGCG {
+  fill: #D6E5F3;
+}
+
+#fTAT,
+#fTAC {
+  fill: #E1DCD9;
+}
+
+#fTAA,
+#fTAG,
+#fTGA {
+  fill: #E4C890;
+}
+
+#fCAT,
+#fCAC {
+  fill: #D4EFD5;
+}
+
+#fCAA,
+#fCAG {
+  fill: #E1DCD9;
+}
+
+#fAAT,
+#fAAC {
+  fill: #E1DCD9;
+}
+
+#fAAA,
+#fAAG {
+  fill: #D4EFD5;
+}
+
+#fGAT,
+#fGAC {
+  fill: #E5D4F4;
+}
+
+#fGAA,
+#fGAG {
+  fill: #E5D4F4;
+}
+
+#fTGT,
+#fTGC {
+  fill: #E1DCD9;
+}
+
+#fTGG {
+  fill: #D6E5F3;
+}
+
+#fCGT,
+#fCGC,
+#fCGA,
+#fCGG,
+#fAGA,
+#fAGG {
+  fill: #D4EFD5;
+}
+
+#fGGT,
+#fGGC,
+#fGGA,
+#fGGG {
+  fill: #D6E5F3;
+}
+
+.FeatureViewer--hint {
+  color: gray;
+  text-align: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+
+.FeatureViewer .header-zoom {
+  display: none !important;
+}

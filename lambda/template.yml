@@ -1,0 +1,11 @@
+Description: "Primer3 wrapper for Mutation Maker"
+
+Resources:
+  DesignPrimersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+        CodeUri: deploy-package/
+        Handler: lambda_function.lambda_handler
+        Runtime: python3.6
+        MemorySize: 512
+        Timeout: 900

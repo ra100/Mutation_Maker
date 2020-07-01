@@ -1,0 +1,80 @@
+version: "3.4"
+services:
+# API provides an API that schedules and monitors tasks
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - worker
+# Worker provides a Celery worker that processes tasks from the Redis queue
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - RUN_LAMBDA_DOCKER=1
+      - LAMBDA_FN_NAME
+    depends_on:
+      - redis
+      - lambda
+# Redis provides Redis in-memory database that serves as a queue for Celery tasks
+  redis:
+    image: redis
+    ports:
+      - "6379"
+# Frontend provides the frontend React server that communicates with the API
+# It is exposed only through the Webserver service
+  frontend:
+    build:
+      context: ./frontend
+# Select live-reload-server target for the development npm server with live reload
+#      target: live-reload-server
+# Select the production-server target for the production-ready Nginx server with built artifacts
+      target: production-server
+    volumes:
+      - ./frontend/public:/frontend/public
+      - ./frontend/src:/frontend/src
+    depends_on:
+      - api
+# Webserver is the main entry point for the user, proxying "/v1" requests to the API and all remaining requests to the frontend
+  webserver:
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - frontend
+      - api
+# Lambda is a container for local AWS Lambda function execution by SAM CLI: https://github.com/awslabs/aws-sam-cli
+  lambda:
+    build:
+      context: ./lambda
+      dockerfile: Dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./lambda:/lambda
+    environment:
+      - SAM_CLI_TELEMETRY=0
+    ports:
+      - "3001"
+    command: sam local start-lambda --docker-volume-basedir "$PWD/lambda" --skip-pull-image --host 0.0.0.0
+# Monitor provides a GUI for inspecting the Celery task queue
+#  monitor:
+#    build:
+#      context: ./backend
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5555:5555"
+#    entrypoint: flower
+#    command:  -A tasks --port=5555 --broker=redis://redis:6379/0
+#    depends_on:
+#      - redis

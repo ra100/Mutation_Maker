@@ -1,0 +1,81 @@
+{
+  "G": {
+    "symbol3": "Gly",
+    "name": "Glycine"
+  },
+  "W": {
+    "symbol3": "Trp",
+    "name": "Tryptophan"
+  },
+  "C": {
+    "symbol3": "Cys",
+    "name": "Cysteine"
+  },
+  "E": {
+    "symbol3": "Glu",
+    "name": "Glutamic acid"
+  },
+  "D": {
+    "symbol3": "Asp",
+    "name": "Aspartic acid"
+  },
+  "K": {
+    "symbol3": "Lys",
+    "name": "Lysine"
+  },
+  "N": {
+    "symbol3": "Asn",
+    "name": " Asparagine"
+  },
+  "Q": {
+    "symbol3": "Gln",
+    "name": "Glutamine"
+  },
+  "H": {
+    "symbol3": "His",
+    "name": "Histidine"
+  },
+  "*": {
+    "name": "stop"
+  },
+  "Y": {
+    "symbol3": "Tyr",
+    "name": "Tyrosine"
+  },
+  "A": {
+    "symbol3": "Ala",
+    "name": "Alanine"
+  },
+  "T": {
+    "symbol3": "Thr",
+    "name": "Threonine"
+  },
+  "P": {
+    "symbol3": "Pro",
+    "name": "Proline"
+  },
+  "S": {
+    "symbol3": "Ser",
+    "name": "Serine"
+  },
+  "V": {
+    "symbol3": "Val",
+    "name": "Valine"
+  },
+  "M": {
+    "symbol3": "Met",
+    "name": "Methionine"
+  },
+  "I": {
+    "symbol3": "Ile",
+    "name": "Isoleucine"
+  },
+  "L": {
+    "symbol3": "Leu",
+    "name": "Leucine"
+  },
+  "F": {
+    "symbol3": "Phe",
+    "name": "Phenylalanine"
+  }
+}

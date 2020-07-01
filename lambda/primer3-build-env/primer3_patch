@@ -1,0 +1,35 @@
+diff --git a/src/Makefile b/src/Makefile
+index 4ca0b12..3e3f48b 100644
+--- a/src/Makefile
++++ b/src/Makefile
+@@ -56,7 +56,7 @@ AR         = ar
+ CC         = gcc
+ CPP        = g++
+ O_OPTS     = -O2
+-CC_OPTS    = -g -Wall -D__USE_FIXED_PROTOTYPES__
++CC_OPTS    = -g -fpermissive -D__USE_FIXED_PROTOTYPES__
+ P_DEFINES  =
+ 
+ CFLAGS  = $(CC_OPTS) $(O_OPTS)
+diff --git a/src/libprimer3.c b/src/libprimer3.c
+index 263ec7c..1a4af88 100644
+--- a/src/libprimer3.c
++++ b/src/libprimer3.c
+@@ -76,7 +76,7 @@ namespace std
+ #define OPTIMIZE_OK_REGIONS 1
+ 
+ #ifndef MAX_PRIMER_LENGTH
+-#define MAX_PRIMER_LENGTH 36
++#define MAX_PRIMER_LENGTH 60
+ #endif
+ #if (MAX_PRIMER_LENGTH > DPAL_MAX_ALIGN)
+ #error "MAX_PRIMER_LENGTH must be <= DPAL_MAX_ALIGN"
+@@ -84,7 +84,7 @@ namespace std
+ #if (MAX_PRIMER_LENGTH > THAL_MAX_ALIGN)
+ # error "MAX_PRIMER_LENGTH must be <= THAL_MAX_ALIGN"
+ #endif
+-#define MAX_NN_TM_LENGTH 36 /* The maxium length for which to use the
++#define MAX_NN_TM_LENGTH 60 /* The maxium length for which to use the
+                                nearest neighbor model when calculating
+                                oligo Tms. */
+ 

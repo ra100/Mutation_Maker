@@ -1,0 +1,8 @@
+primer3/
+venv/
+venv3.6/
+.idea/
+.pyre
+.pyre_configuration
+.watchmanconfig
+stats/

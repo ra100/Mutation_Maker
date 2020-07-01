@@ -1,0 +1,189 @@
+/*   Copyright (c) 2020 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.
+ *
+ *   This file is part of the Mutation Maker, An Open Source Oligo Design Software For Mutagenesis and De Novo Gene Synthesis Experiments.
+ *
+ *   Mutation Maker is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+body {
+  background: #f1f5f7;
+}
+
+#root {
+  height: 100%;
+}
+
+.ant-layout {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  padding: 1em;
+}
+
+.ant-input::selection {
+  border: 1px solid #334d5b !important;
+}
+
+.ant-form-item-label {
+  font-weight: bold;
+}
+
+.btn-codons, .btn-codons:active, .btn-codons:focus {
+  margin: 3px;
+}
+
+.codon-info {
+  margin: 7px;
+}
+
+.ant-steps-item-process .ant-steps-item-icon .ant-steps-icon {
+  font-size: 18px;
+}
+
+.ant-alert {
+  margin-bottom: 30px;
+}
+
+.DataInputForm-submitRow {
+  text-align: center;
+}
+
+.GeneTextArea textarea {
+  font-family: 'Lucida Console', monospace;
+  letter-spacing: 0.1em;
+}
+
+.MutationsTextArea textarea {
+  font-family: 'Lucida Console', monospace;
+}
+
+.ant-row.Result {
+  margin-bottom: 1em;
+  height: 100vh;
+}
+
+@media (min-width: 1600px) {
+  .Result .Result--wrapper {
+    background-color: white;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+  @media screen {
+    .Result .Result--wrapper.Wrapper-Print-Only {
+      display: none;
+    }
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none;
+  }
+}
+
+@media print
+{
+  .no-print, .no-print *
+  {
+    display: none !important;
+  }
+}
+
+.FeatureViewer {
+  background-color: white;
+}
+
+.Result--divider {
+  margin: 8px 0;
+}
+
+.ResultTable {
+  font-size: 0.9em;
+  background-color: white;
+}
+
+.ResultTable td {
+  word-break: break-word !important;
+}
+
+.ResultTable tr.selected > td {
+  background: #fa541c;
+  color: white;
+}
+
+.ResultTable tr.highlighted.selected > td,
+.ResultTable tr.highlighted.selected:hover > td {
+  background: #f5222d;
+  color: white;
+}
+.ResultTable tr.highlighted:not(.selected) > td,
+.ResultTable tr.highlighted:not(.selected):hover > td {
+  background: #ffe58f;
+}
+
+.ResultTable .ant-table-thead > tr {
+  background: #f1f5f7;
+}
+
+.ResultTable .ant-table-thead > tr > th {
+  color: #0d877c;
+  text-align: center;
+  word-break: break-word;
+}
+
+.ResultTable td.sequence {
+  font-size: 12px;
+}
+
+.ResultTable tr > td:first-child {
+  text-align: center;
+}
+
+.ResultTable tr.resultNotFound > td:not(:first-child) {
+  text-align: center;
+}
+
+.ResultTable tr:not(.highlighted):not(.selected) > td {
+  color: gray;
+}
+
+.InProgress {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.ant-menu-item.version {
+  float: right;
+}
+
+.GeneTextArea .has-success.has-feedback .ant-form-item-children:after {
+  content: none;
+}
+.workflow-cards {
+    padding: 30px;
+}
+
+.workflow-card .ant-btn {
+    display: block;
+}
+
+.workflow-card-description {
+    min-height: 100px;
+}

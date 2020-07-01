@@ -1,0 +1,14 @@
+behave==1.2.6
+biopython==1.73
+boto3==1.13.26
+celery==4.3.0
+dataclasses==0.6
+flower==0.9.3
+jmespath==0.9.5
+jsonobject==0.9.8
+numpy==1.16.3
+primer3-py==0.5.7
+redis==3.2.1
+requests==2.23.0
+timeout-decorator==0.4.1
+tornado==5.1.1
