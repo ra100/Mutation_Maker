@@ -21,7 +21,7 @@ import {flattenMutations, Mutation, parseMutation} from '../genes'
 import { notUndefined } from '../helpers'
 import {
   PASResponseData, PASResultFragment,
-  QCLMMutationData, QCLMResponseData,
+  MSDMMutationData, MSDMResponseData,
   SSMResponseData
 } from './Api'
 
@@ -30,38 +30,38 @@ export type SSMResultData = SSMResponseData
 
 export const responseToSSMResultData = (response: SSMResponseData): SSMResultData => response
 
-// QCLM
-const mutationDataToQCLMResultRecord = (mutationData: QCLMMutationData): QCLMResultRecord => ({
+// MSDM
+const mutationDataToMSDMResultRecord = (mutationData: MSDMMutationData): MSDMResultRecord => ({
   mutations: flattenMutations(mutationData.mutations.map(parseMutation).filter(notUndefined)),
   result_found: mutationData.result_found,
   primers: mutationData.primers,
 })
 
-export const responseToQCLMResultData = (response: QCLMResponseData): QCLMResultData => ({
-  results: response.results.map(mutationDataToQCLMResultRecord),
+export const responseToMSDMResultData = (response: MSDMResponseData): MSDMResultData => ({
+  results: response.results.map(mutationDataToMSDMResultRecord),
   full_sequence: response.full_sequence,
   goi_offset: response.goi_offset,
   input_data: response.input_data
 })
 
-export type QCLMResultRecord = {
+export type MSDMResultRecord = {
   mutations: Mutation[]
   result_found: boolean
-  primers: QCLMPrimer[]
+  primers: MSDMPrimer[]
 }
 
-export type QCLMResultDataInput = {
+export type MSDMResultDataInput = {
   config: any
 }
 
-export type QCLMResultData = {
-  results: QCLMResultRecord[]
+export type MSDMResultData = {
+  results: MSDMResultRecord[]
   full_sequence: string
   goi_offset: number,
-  input_data: QCLMResultDataInput
+  input_data: MSDMResultDataInput
 }
 
-export type QCLMPrimer = {
+export type MSDMPrimer = {
   sequence: string
   start: number
   length: number
@@ -71,15 +71,15 @@ export type QCLMPrimer = {
   overlap_with_following?: boolean
 }
 
-export type QCLMFlatResultRecord = {
+export type MSDMFlatResultRecord = {
   mutations: Mutation[]
   result_found: boolean,
   ratio?: number
-} & Partial<QCLMPrimer>
+} & Partial<MSDMPrimer>
 
-export type IndexedQCLMFlatResultRecord = QCLMFlatResultRecord & { index: number, ratio: number }
+export type IndexedMSDMFlatResultRecord = MSDMFlatResultRecord & { index: number, ratio: number }
 
-const resultRecordToFlatResultRecords = (resultRecord: QCLMResultRecord): QCLMFlatResultRecord[] =>
+const resultRecordToFlatResultRecords = (resultRecord: MSDMResultRecord): MSDMFlatResultRecord[] =>
   R.isEmpty(resultRecord.primers)
     ? [
         {
@@ -94,8 +94,8 @@ const resultRecordToFlatResultRecords = (resultRecord: QCLMResultRecord): QCLMFl
       }))
 
 export const resultRecordsToFlatResultRecords = (
-  resultRecords: QCLMResultRecord[],
-): IndexedQCLMFlatResultRecord[] =>
+  resultRecords: MSDMResultRecord[],
+): IndexedMSDMFlatResultRecord[] =>
   resultRecords
     .reduce((acc, record) => [...acc, ...resultRecordToFlatResultRecords(record)], [])
     .map((record, index) => ({ ...record, index, ratio: 0 }))

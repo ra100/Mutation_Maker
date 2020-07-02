@@ -18,6 +18,6 @@
 
 export enum Workflow {
   ssm = 'ssm',
-  qclm = 'qclm',
+  msdm = 'msdm',
   pas = 'pas',
 }

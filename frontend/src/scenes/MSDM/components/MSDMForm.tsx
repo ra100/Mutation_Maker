@@ -34,17 +34,17 @@ import {validateMutations} from 'shared/components/FormValidation'
 import MinOptMaxInputs from 'shared/components/MinOptMaxInputs'
 import MutationsInput from 'shared/components/MutationsInput'
 import {endsWithStopCodonValidationRule, geneValidationRule} from 'shared/form'
-import {QCLMFormData} from 'shared/lib/FormData'
+import {MSDMFormData} from 'shared/lib/FormData'
 import withForm, {WithFormInnerProps} from 'shared/withForm'
 import CodonUsage from "shared/components/CodonUsage";
 
-type QCLMFormOuterProps = {
+type MSDMFormOuterProps = {
   disabled: boolean
 }
 
-type QCLMFormInnerProps = QCLMFormOuterProps & WithFormInnerProps<QCLMFormData>
+type MSDMFormInnerProps = MSDMFormOuterProps & WithFormInnerProps<MSDMFormData>
 
-class QCLMForm extends React.Component<QCLMFormInnerProps> {
+class MSDMForm extends React.Component<MSDMFormInnerProps> {
   state = {
     showGoiWarning: false,
     customCodonUsage: '',
@@ -84,7 +84,7 @@ class QCLMForm extends React.Component<QCLMFormInnerProps> {
     event.preventDefault();
     const {form, onSubmit} = this.props;
 
-    form.validateFields((error: any, values: QCLMFormData) => {
+    form.validateFields((error: any, values: MSDMFormData) => {
       if (!error) {
         onSubmit(values)
       } else {
@@ -457,14 +457,14 @@ class QCLMForm extends React.Component<QCLMFormInnerProps> {
             <Button.Group>
               <Tooltip title="Design primers">
                 <Button type="primary" htmlType="submit" icon="save"
-                        id="submit_qclm_btn">
+                        id="submit_msdm_btn">
                   Submit
                 </Button>
               </Tooltip>
               <Tooltip title="Clear the form">
                 <Button
                   type="default"
-                  id="reset_qclm_btn"
+                  id="reset_msdm_btn"
                   htmlType="reset"
                   icon="reload"
                   disabled={disabled}
@@ -480,4 +480,4 @@ class QCLMForm extends React.Component<QCLMFormInnerProps> {
   }
 }
 
-export default withForm<QCLMFormOuterProps, QCLMFormData>(QCLMForm)
+export default withForm<MSDMFormOuterProps, MSDMFormData>(MSDMForm)

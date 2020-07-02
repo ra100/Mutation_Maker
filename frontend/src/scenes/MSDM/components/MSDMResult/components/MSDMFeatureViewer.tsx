@@ -27,12 +27,12 @@ import FeatureViewerTheme from 'shared/FeatureViewerTheme'
 import { codonToAminoAcid, gcContent, Mutation, toCodons } from 'shared/genes'
 import { notUndefined } from 'shared/helpers'
 import { Omit } from 'shared/lib/Omit'
-import { IndexedQCLMFlatResultRecord } from 'shared/lib/ResultData'
+import { IndexedMSDMFlatResultRecord } from 'shared/lib/ResultData'
 
-type QCLMFeatureViewerProps = {
+type MSDMFeatureViewerProps = {
   geneSequence: string
   geneOffset: number
-  resultRecords: IndexedQCLMFlatResultRecord[]
+  resultRecords: IndexedMSDMFlatResultRecord[]
   scrollOffset?: number
 } & Omit<WithSelectedAndHighlighted, 'setSelected' | 'setHighlighted'>
 
@@ -43,10 +43,10 @@ const addSequenceDescription = (sequence: string) => (data: any): any => (
   }
 );
 
-const initializeQCLMFeatureViewer = (
+const initializeMSDMFeatureViewer = (
   geneSequence: string,
   geneOffset: number,
-  resultRecords: IndexedQCLMFlatResultRecord[],
+  resultRecords: IndexedMSDMFlatResultRecord[],
 ) => (componentId: string, options: FeatureViewerOptions | undefined): FeatureViewer => {
   const featureViewer = new FeatureViewer(geneSequence, `#${componentId}`, options);
 
@@ -141,7 +141,7 @@ const initializeQCLMFeatureViewer = (
   return featureViewer
 };
 
-const makeGetBoundaries = (resultRecords: IndexedQCLMFlatResultRecord[]) => (
+const makeGetBoundaries = (resultRecords: IndexedMSDMFlatResultRecord[]) => (
   identifier: string,
 ): Boundaries | undefined => {
   const matchingResultRecords = resultRecords.filter(result =>
@@ -164,7 +164,7 @@ const makeGetBoundaries = (resultRecords: IndexedQCLMFlatResultRecord[]) => (
   return combinedBoundaries(allBoundaries)
 };
 
-const QCLMFeatureViewer: React.SFC<QCLMFeatureViewerProps> = ({
+const MSDMFeatureViewer: React.SFC<MSDMFeatureViewerProps> = ({
   geneSequence,
   geneOffset,
   resultRecords,
@@ -178,7 +178,7 @@ const QCLMFeatureViewer: React.SFC<QCLMFeatureViewerProps> = ({
   <FeatureViewerComponent
     geneSequence={geneSequence}
     geneOffset={geneOffset}
-    initializeFeatureViewer={initializeQCLMFeatureViewer(geneSequence, geneOffset, resultRecords)}
+    initializeFeatureViewer={initializeMSDMFeatureViewer(geneSequence, geneOffset, resultRecords)}
     getBoundaries={makeGetBoundaries(resultRecords)}
     selected={selected}
     scrollOffset={scrollOffset}
@@ -192,4 +192,4 @@ const QCLMFeatureViewer: React.SFC<QCLMFeatureViewerProps> = ({
   />
 );
 
-export default QCLMFeatureViewer
+export default MSDMFeatureViewer

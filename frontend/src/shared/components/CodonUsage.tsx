@@ -40,7 +40,7 @@ export default class CodonUsage extends React.Component<any> {
     codonUsageData: [],
   };
   codonUsageDataLoad: any[] = [];
-  timeout: number = 0;
+  timeout = 0;
 
   clearTimeout = () => {
     if (this.timeout) {
@@ -60,7 +60,7 @@ export default class CodonUsage extends React.Component<any> {
         const regex = new RegExp(_.escapeRegExp(value), 'i');
         const isMatch = (result: any) => regex.test(result.name)
           || regex.test(result.id);
-        let filteredResults = this.codonUsageDataLoad.filter(isMatch);
+        const filteredResults = this.codonUsageDataLoad.filter(isMatch);
         // Display maximum 10 results
         filteredResults.length = Math.min(
           filteredResults.length,

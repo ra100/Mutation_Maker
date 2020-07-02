@@ -23,8 +23,8 @@ import {
   JobDescription,
   JobResponse,
   JobStatus,
-  QCLMRequestData,
-  QCLMResponseData,
+  MSDMRequestData,
+  MSDMResponseData,
   SSMRequestConfig,
   SSMRequestData,
   SSMResponseData,
@@ -34,7 +34,7 @@ import {
 import {
   FormParameters,
   PASFormData,
-  QCLMFormData,
+  MSDMFormData,
   SSMFormData
 } from 'shared/lib/FormData'
 import {Workflow} from 'shared/workflow'
@@ -133,72 +133,72 @@ export const dataToSSMFormData = (data: SSMResponseData): Partial<SSMFormData> =
   }
 };
 
-// QCLM
-export const formDataToQclmRequest = (qclmFormData: QCLMFormData): QCLMRequestData => ({
-  mutations: qclmFormData.mutations.trim().split(/\s+/).filter( e => e.trim().length > 0),
+// MSDM
+export const formDataToMsdmRequest = (msdmFormData: MSDMFormData): MSDMRequestData => ({
+  mutations: msdmFormData.mutations.trim().split(/\s+/).filter( e => e.trim().length > 0),
   sequences: {
-    five_end_flanking_sequence: qclmFormData.fivePrimeFlankingSequence,
-    three_end_flanking_sequence: qclmFormData.threePrimeFlankingSequence,
-    gene_of_interest: qclmFormData.goiSequence,
+    five_end_flanking_sequence: msdmFormData.fivePrimeFlankingSequence,
+    three_end_flanking_sequence: msdmFormData.threePrimeFlankingSequence,
+    gene_of_interest: msdmFormData.goiSequence,
   },
   config: {
-    min_primer_size: Number(qclmFormData.sizeMin),
-    max_primer_size: Number(qclmFormData.sizeMax),
-    min_gc_content: Number(qclmFormData.gcContentMin),
-    max_gc_content: Number(qclmFormData.gcContentMax),
-    min_three_end_size: Number(qclmFormData.threePrimeSizeMin),
-    max_three_end_size: Number(qclmFormData.threePrimeSizeMax),
-    min_five_end_size: Number(qclmFormData.fivePrimeSizeMin),
-    max_five_end_size: Number(qclmFormData.fivePrimeSizeMax),
-    min_temperature: Number(qclmFormData.temperatureMin),
-    max_temperature: Number(qclmFormData.temperatureMax),
+    min_primer_size: Number(msdmFormData.sizeMin),
+    max_primer_size: Number(msdmFormData.sizeMax),
+    min_gc_content: Number(msdmFormData.gcContentMin),
+    max_gc_content: Number(msdmFormData.gcContentMax),
+    min_three_end_size: Number(msdmFormData.threePrimeSizeMin),
+    max_three_end_size: Number(msdmFormData.threePrimeSizeMax),
+    min_five_end_size: Number(msdmFormData.fivePrimeSizeMin),
+    max_five_end_size: Number(msdmFormData.fivePrimeSizeMax),
+    min_temperature: Number(msdmFormData.temperatureMin),
+    max_temperature: Number(msdmFormData.temperatureMax),
 
-    temp_weight: Number(qclmFormData.temperatureWeight),
-    primer_size_weight: Number(qclmFormData.totalSizeWeight),
-    three_end_size_weight: Number(qclmFormData.threePrimeSizeWeight),
-    five_end_size_weight: Number(qclmFormData.fivePrimeSizeWeight),
-    gc_content_weight: Number(qclmFormData.gcContentWeight),
-    hairpin_temperature_weight: Number(qclmFormData.hairpinTemperatureWeight),
-    primer_dimer_temperature_weight: Number(qclmFormData.primerDimerTemperatureWeight),
-    mutation_coverage_weight: Number(qclmFormData.mutationCoverageWeight),
+    temp_weight: Number(msdmFormData.temperatureWeight),
+    primer_size_weight: Number(msdmFormData.totalSizeWeight),
+    three_end_size_weight: Number(msdmFormData.threePrimeSizeWeight),
+    five_end_size_weight: Number(msdmFormData.fivePrimeSizeWeight),
+    gc_content_weight: Number(msdmFormData.gcContentWeight),
+    hairpin_temperature_weight: Number(msdmFormData.hairpinTemperatureWeight),
+    primer_dimer_temperature_weight: Number(msdmFormData.primerDimerTemperatureWeight),
+    mutation_coverage_weight: Number(msdmFormData.mutationCoverageWeight),
 
-    codon_usage: formatCodonUsage(qclmFormData.codonUsage, qclmFormData.customCodonUsage),
-    taxonomy_id: qclmFormData.taxonomyId,
-    codon_usage_frequency_threshold: qclmFormData.codonUsageFrequencyThresholdPct / 100, // must be normalized to [0, 1] range
-    use_degeneracy_codon: qclmFormData.useDegeneracyCodon,
+    codon_usage: formatCodonUsage(msdmFormData.codonUsage, msdmFormData.customCodonUsage),
+    taxonomy_id: msdmFormData.taxonomyId,
+    codon_usage_frequency_threshold: msdmFormData.codonUsageFrequencyThresholdPct / 100, // must be normalized to [0, 1] range
+    use_degeneracy_codon: msdmFormData.useDegeneracyCodon,
 
-    use_primer3: Boolean(qclmFormData.usePrimer3),
-    non_overlapping_primers: Boolean(qclmFormData.nonOverlappingPrimers),
-    file_name: String(qclmFormData.fileName),
-    oligo_prefix: String(qclmFormData.oligoPrefix),
+    use_primer3: Boolean(msdmFormData.usePrimer3),
+    non_overlapping_primers: Boolean(msdmFormData.nonOverlappingPrimers),
+    file_name: String(msdmFormData.fileName),
+    oligo_prefix: String(msdmFormData.oligoPrefix),
   },
 });
 
-export const dataToQCLMFormData = (data: QCLMResponseData): Partial<QCLMFormData> => {
-  const qclmRequestData = data.input_data;
+export const dataToMSDMFormData = (data: MSDMResponseData): Partial<MSDMFormData> => {
+  const msdmRequestData = data.input_data;
 
   return {
-    mutations: qclmRequestData.mutations.join(' '),
-    fivePrimeFlankingSequence: qclmRequestData.sequences.five_end_flanking_sequence,
-    threePrimeFlankingSequence: qclmRequestData.sequences.three_end_flanking_sequence,
-    goiSequence: qclmRequestData.sequences.gene_of_interest,
-    sizeMin: qclmRequestData.config.min_primer_size,
-    sizeMax: qclmRequestData.config.max_primer_size,
-    gcContentMin: qclmRequestData.config.min_gc_content,
-    gcContentMax: qclmRequestData.config.max_gc_content,
-    threePrimeSizeMin: qclmRequestData.config.min_three_end_size,
-    threePrimeSizeMax: qclmRequestData.config.max_three_end_size,
-    fivePrimeSizeMin: qclmRequestData.config.min_five_end_size,
-    fivePrimeSizeMax: qclmRequestData.config.max_five_end_size,
-    temperatureMin: qclmRequestData.config.min_temperature,
-    temperatureMax: qclmRequestData.config.max_temperature,
-    codonUsage: qclmRequestData.config.codon_usage,
-    customCodonUsage: qclmRequestData.config.codon_usage && formatCustomCodonUsage(qclmRequestData.config.codon_usage),
-    taxonomyId: qclmRequestData.config.taxonomy_id,
+    mutations: msdmRequestData.mutations.join(' '),
+    fivePrimeFlankingSequence: msdmRequestData.sequences.five_end_flanking_sequence,
+    threePrimeFlankingSequence: msdmRequestData.sequences.three_end_flanking_sequence,
+    goiSequence: msdmRequestData.sequences.gene_of_interest,
+    sizeMin: msdmRequestData.config.min_primer_size,
+    sizeMax: msdmRequestData.config.max_primer_size,
+    gcContentMin: msdmRequestData.config.min_gc_content,
+    gcContentMax: msdmRequestData.config.max_gc_content,
+    threePrimeSizeMin: msdmRequestData.config.min_three_end_size,
+    threePrimeSizeMax: msdmRequestData.config.max_three_end_size,
+    fivePrimeSizeMin: msdmRequestData.config.min_five_end_size,
+    fivePrimeSizeMax: msdmRequestData.config.max_five_end_size,
+    temperatureMin: msdmRequestData.config.min_temperature,
+    temperatureMax: msdmRequestData.config.max_temperature,
+    codonUsage: msdmRequestData.config.codon_usage,
+    customCodonUsage: msdmRequestData.config.codon_usage && formatCustomCodonUsage(msdmRequestData.config.codon_usage),
+    taxonomyId: msdmRequestData.config.taxonomy_id,
     codonUsageFrequencyThresholdPct:
-      (qclmRequestData.config.codon_usage_frequency_threshold || 0) * 100,
-    useDegeneracyCodon: qclmRequestData.config.use_degeneracy_codon,
-    nonOverlappingPrimers: qclmRequestData.config.non_overlapping_primers,
+      (msdmRequestData.config.codon_usage_frequency_threshold || 0) * 100,
+    useDegeneracyCodon: msdmRequestData.config.use_degeneracy_codon,
+    nonOverlappingPrimers: msdmRequestData.config.non_overlapping_primers,
   }
 };
 
@@ -211,10 +211,11 @@ const formatPasMutationsRequest = (mutations: any[]) => {
       mutants: value.mt.split(',').map((mt: string) => {
         return mt.trim().toUpperCase()
       }),
-      position: parseInt(value.target.slice(1)),
+      position: parseInt(value.target.slice(1), 10),
       target: value.target.slice(0, 1)
     })
   });
+
   return mutationsBody
 };
 
@@ -228,6 +229,7 @@ const formatPasMutationsResponse = (mutations: any[]) => {
 
     })
   });
+
   return {mutations: mutationsBody}
 };
 
@@ -242,7 +244,7 @@ const formatString = (text: string) => {
   return null
 };
 
-const formatCodonUsage = (codonUsage: string, customCodonUsage: string = '') => {
+const formatCodonUsage = (codonUsage: string, customCodonUsage = '') => {
   if (codonUsage === 'custom') {
     return customCodonUsage
   } else if (codonUsage === 'e-coli' || codonUsage === 'yeast') {
@@ -362,11 +364,17 @@ export const pollWhilePending = (jobId: string, pollInterval: number): Promise<J
 
 const getJobId = (job: JobResponse): string => R.last(job.result_url.split('/'))!; // TODO bang
 
-export const submitRequest = (endpoint: string, requestData: any): Promise<JobDescription> =>
-  submitJob(endpoint, requestData).then(jobResponse => ({
+export const submitRequest = (endpoint: string, requestData: any): Promise<JobDescription> => {
+  let path = endpoint
+  if (endpoint === Workflow.msdm) {
+    path = 'qclm' // TODO remove when backend renames qclm to msdm
+  }
+
+  return submitJob(path, requestData).then(jobResponse => ({
     id: getJobId(jobResponse),
     jobResponse
   }));
+}
 
 const sortSSMResponseResults = (data: SSMResponseData): SSMResponseData => {
   return R.over(R.lensProp('results'), R.sortBy(R.prop('mutation')), data)
@@ -386,20 +394,20 @@ export const submitSSMRequest = (requestData: SSMRequestData): Promise<JobDescri
 export const fetchSSMResponseData = (id: string): Promise<SSMResponseData> =>
   fetchJobResultData(id).then(dataToSSMResponseData);
 
-const dataToQCLMResponseData = (data: any): QCLMResponseData => {
+const dataToMSDMResponseData = (data: any): MSDMResponseData => {
   // TODO
   if (typeof data === 'string') {
     throw new Error(`Request failed: ${data}`)
   }
 
-  return data as QCLMResponseData
+  return data as MSDMResponseData
 };
 
-export const submitQCLMRequest = (requestData: QCLMRequestData): Promise<JobDescription> =>
-  submitRequest('qclm', requestData);
+export const submitMSDMRequest = (requestData: MSDMRequestData): Promise<JobDescription> =>
+  submitRequest('msdm', requestData);
 
-export const fetchQCLMResponseData = (id: string): Promise<QCLMResponseData> =>
-  fetchJobResultData(id).then(dataToQCLMResponseData);
+export const fetchMSDMResponseData = (id: string): Promise<MSDMResponseData> =>
+  fetchJobResultData(id).then(dataToMSDMResponseData);
 
 export const getExportUrl = (workflow: Workflow, jobId: string) =>
   `${API_PREFIX}/export_${workflow}/${jobId}.xlsx`;

@@ -28,24 +28,24 @@ import withSelectedAndHighlightedTableHandlers, {
 } from 'shared/components/withSelectedAndHighlightedTableHandlers'
 import { Omit } from 'shared/lib/Omit'
 import {
-  IndexedQCLMFlatResultRecord,
-  QCLMFlatResultRecord,
-  QCLMResultRecord,
+  IndexedMSDMFlatResultRecord,
+  MSDMFlatResultRecord,
+  MSDMResultRecord,
 } from 'shared/lib/ResultData'
 import { skipUnlessResultFound } from 'shared/table'
 
-type QCLMResultTableOuterProps = {
-  resultRecords: IndexedQCLMFlatResultRecord[]
+type MSDMResultTableOuterProps = {
+  resultRecords: IndexedMSDMFlatResultRecord[]
 } & Omit<WithSelectedAndHighlighted, 'setSelected' | 'setHighlighted'>
 
 type WithResultDataRecords = {}
 
-type QCLMResultTableInnerProps = QCLMResultTableOuterProps &
+type MSDMResultTableInnerProps = MSDMResultTableOuterProps &
   WithResultDataRecords &
   WithRowIndexKey &
-  WithSelectedAndHighlightedTableHandlers<QCLMResultRecord>
+  WithSelectedAndHighlightedTableHandlers<MSDMResultRecord>
 
-const columns: Array<ColumnProps<QCLMFlatResultRecord>> = [
+const columns: Array<ColumnProps<MSDMFlatResultRecord>> = [
   {
     title: 'Mutations',
     key: 'mutations',
@@ -85,7 +85,7 @@ const columns: Array<ColumnProps<QCLMFlatResultRecord>> = [
   },
 ]
 
-const QCLMResultTable: React.SFC<QCLMResultTableInnerProps> = ({
+const MSDMResultTable: React.SFC<MSDMResultTableInnerProps> = ({
   resultRecords,
   rowKey,
   onRow,
@@ -104,11 +104,11 @@ const QCLMResultTable: React.SFC<QCLMResultTableInnerProps> = ({
   />
 )
 
-export default compose<QCLMResultTableInnerProps, QCLMResultTableOuterProps>(
+export default compose<MSDMResultTableInnerProps, MSDMResultTableOuterProps>(
   withRowIndexKey,
-  withSelectedAndHighlightedTableHandlers<QCLMResultRecord & { index: number }>(
+  withSelectedAndHighlightedTableHandlers<MSDMResultRecord & { index: number }>(
     (record) => [`primer${record.index.toString()}`, ...record.mutations.map(R.prop('identifier'))],
     (record) => [`primer${record.index.toString()}`],
     (record) => !record.result_found,
   ),
-)(QCLMResultTable)
+)(MSDMResultTable)

@@ -17,24 +17,24 @@
  */
 
 import * as React from 'react'
-import { dataToQCLMFormData, formDataToQclmRequest } from 'services/api'
+import { dataToMSDMFormData, formDataToMsdmRequest } from 'services/api'
 import WorkflowScene, { WorkflowSceneExternalProps } from 'shared/components/WorkflowScene'
-import { QCLMFormData } from 'shared/lib/FormData'
-import { responseToQCLMResultData } from 'shared/lib/ResultData'
+import { MSDMFormData } from 'shared/lib/FormData'
+import { responseToMSDMResultData } from 'shared/lib/ResultData'
 import routes from 'shared/routes'
 import { Workflow } from 'shared/workflow'
-import QCLMForm from './components/QCLMForm'
-import QCLMResult from './components/QCLMResult'
+import MSDMForm from './components/MSDMForm'
+import MSDMResult from './components/MSDMResult'
 
-const demoData: Partial<QCLMFormData> = {
+const demoData: Partial<MSDMFormData> = {
   fivePrimeFlankingSequence: '',
   goiSequence: '',
   mutations: '',
 };
 
-type QCLMOuterProps = WorkflowSceneExternalProps
+type MSDMOuterProps = WorkflowSceneExternalProps
 
-const QCLM: React.SFC<QCLMOuterProps> = ({
+const MSDM: React.FC<MSDMOuterProps> = ({
   submitRequest,
   requestJobResult,
   jobId,
@@ -45,22 +45,22 @@ const QCLM: React.SFC<QCLMOuterProps> = ({
     jobId={jobId}
     jobData={jobData}
     defaultFormData={demoData}
-    getRoute={routes.qclm}
+    getRoute={routes.msdm}
     // tslint:disable-next-line:jsx-no-lambda
     requestJobResult={(id: string) => requestJobResult(id, pollInterval)}
-    responseToFormData={dataToQCLMFormData}
-    responseToResultData={responseToQCLMResultData}
+    responseToFormData={dataToMSDMFormData}
+    responseToResultData={responseToMSDMResultData}
     // tslint:disable-next-line:jsx-no-lambda
-    submitRequest={(formData: QCLMFormData) =>
-      submitRequest(Workflow.qclm, formDataToQclmRequest, formData)
+    submitRequest={(formData: MSDMFormData) =>
+      submitRequest(Workflow.msdm, formDataToMsdmRequest, formData)
     }
     // tslint:disable-next-line:jsx-no-lambda
     InputForm={({ disabled, formData, onSubmit }) => (
-      <QCLMForm disabled={disabled} data={formData} onSubmit={onSubmit} />
+      <MSDMForm disabled={disabled} data={formData} onSubmit={onSubmit} />
     )}
     // tslint:disable-next-line:jsx-no-lambda
     ResultsView={({ resultData, formData }) =>
-      <QCLMResult
+      <MSDMResult
         resultData={resultData}
         jobId={jobId}
         formData={formData}
@@ -68,4 +68,4 @@ const QCLM: React.SFC<QCLMOuterProps> = ({
   />
 );
 
-export default QCLM
+export default MSDM

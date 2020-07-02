@@ -157,8 +157,8 @@ export type SSMResponseData = {
   max_overlap_temperature: number
 }
 
-// QCLM
-export type QCLMRequestConfig = {
+// MSDM
+export type MSDMRequestConfig = {
   min_primer_size: number
   opt_primer_size: number
   max_primer_size: number
@@ -204,17 +204,17 @@ export type QCLMRequestConfig = {
   oligo_prefix: string
 }
 
-export type QCLMRequestData = {
+export type MSDMRequestData = {
   mutations: string[]
   sequences: {
     five_end_flanking_sequence: string
     gene_of_interest: string
     three_end_flanking_sequence: string
   }
-  config: Partial<QCLMRequestConfig & {}>
+  config: Partial<MSDMRequestConfig & {}>
 }
 
-export type QCLMPrimer = {
+export type MSDMPrimer = {
   sequence: string
   start: number
   length: number
@@ -224,15 +224,15 @@ export type QCLMPrimer = {
   overlap_with_following?: boolean
 }
 
-export type QCLMMutationData = {
+export type MSDMMutationData = {
   mutations: string[]
   result_found: boolean
-  primers: QCLMPrimer[]
+  primers: MSDMPrimer[]
 }
 
-export type QCLMResponseData = {
-  input_data: QCLMRequestData
-  results: QCLMMutationData[]
+export type MSDMResponseData = {
+  input_data: MSDMRequestData
+  results: MSDMMutationData[]
   full_sequence: string
   goi_offset: number
 }

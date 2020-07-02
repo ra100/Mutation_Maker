@@ -17,14 +17,14 @@
  */
 
 import { Mutation } from 'shared/genes'
-import { IndexedQCLMFlatResultRecord } from 'shared/lib/ResultData'
+import { IndexedMSDMFlatResultRecord } from 'shared/lib/ResultData'
 
 const getAminoAcidsFromIdentifier = (identifier: string): string[] =>
   identifier.replace(/^\w\d*/,'').split('')
 
 type MutationPositionRatio = Record<number, number>
 
-const getPositionMutations = (mutations: IndexedQCLMFlatResultRecord[]): MutationPositionRatio => {
+const getPositionMutations = (mutations: IndexedMSDMFlatResultRecord[]): MutationPositionRatio => {
   const positions: Record<number, Set<string>> = mutations[0].mutations.reduce((acc, mutation) => {
     acc[mutation.position] = acc[mutation.position] || new Set()
     return acc
@@ -44,7 +44,7 @@ const getPositionMutations = (mutations: IndexedQCLMFlatResultRecord[]): Mutatio
   }, {})
 }
 
-const getRatios = (mutations: IndexedQCLMFlatResultRecord[], ratios: MutationPositionRatio): IndexedQCLMFlatResultRecord[] =>
+const getRatios = (mutations: IndexedMSDMFlatResultRecord[], ratios: MutationPositionRatio): IndexedMSDMFlatResultRecord[] =>
   mutations.map((mutation) => {
     const mutationMutations = mutation.mutations.map(positionMutation => ({
       ...positionMutation,
@@ -65,10 +65,10 @@ const getSiteIdFromMutations = (mutations: Mutation[]): string =>
     .join('-')
 
 const getSites = (
-  records: IndexedQCLMFlatResultRecord[],
-): Record<string, IndexedQCLMFlatResultRecord[]> =>
+  records: IndexedMSDMFlatResultRecord[],
+): Record<string, IndexedMSDMFlatResultRecord[]> =>
   records.reduce(
-    (acc: Record<string, IndexedQCLMFlatResultRecord[]>, record: IndexedQCLMFlatResultRecord) => {
+    (acc: Record<string, IndexedMSDMFlatResultRecord[]>, record: IndexedMSDMFlatResultRecord) => {
       const siteId = getSiteIdFromMutations(record.mutations)
       if (!acc[siteId]) {
         acc[siteId] = []
@@ -81,10 +81,10 @@ const getSites = (
   )
 
 const ratioCounter = (
-  resultRecords: IndexedQCLMFlatResultRecord[],
-): IndexedQCLMFlatResultRecord[] => {
+  resultRecords: IndexedMSDMFlatResultRecord[],
+): IndexedMSDMFlatResultRecord[] => {
   const sites = getSites(resultRecords)
-  const result: IndexedQCLMFlatResultRecord[] = []
+  const result: IndexedMSDMFlatResultRecord[] = []
 
   Object.values(sites).forEach((mutations) => {
     const mutationsPerPosition = getPositionMutations(mutations)

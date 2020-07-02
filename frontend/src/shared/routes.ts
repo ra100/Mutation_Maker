@@ -19,7 +19,7 @@
 import { Workflow } from './workflow'
 
 export default {
-  qclm: (id?: string) => `/${Workflow.qclm}/${id ? id : ''}`,
+  msdm: (id?: string) => `/${Workflow.msdm}/${id ? id : ''}`,
   ssm: (id?: string) => `/${Workflow.ssm}/${id ? id : ''}`,
   pas: (id?: string) => `/${Workflow.pas}/${id ? id : ''}`,
 }

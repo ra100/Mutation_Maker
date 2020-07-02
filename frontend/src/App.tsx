@@ -24,7 +24,7 @@ import { Link } from 'react-router-dom'
 import withJobStore, { WithJobStore } from 'shared/components/withJobStore'
 import { Workflow } from 'shared/workflow'
 
-import QCLM from 'scenes/QCLM'
+import MSDM from 'scenes/MSDM'
 import SSM from 'scenes/SSM'
 import PAS from 'scenes/PAS'
 
@@ -40,7 +40,7 @@ const getCurrentRootPath = () => {
   return chunks.length > 1 ? chunks[1] : '/'
 }
 
-const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, requestJobResult }) => (
+const App: React.FC<AppInnerProps> = ({ jobState, getJob, submitRequest, requestJobResult }) => (
   <Layout>
     <Layout.Header>
       <Menu
@@ -51,8 +51,8 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
         <Menu.Item key="ssm">
           <Link to={`/${Workflow.ssm}`}>SSSM</Link>
         </Menu.Item>
-        <Menu.Item key="qclm">
-          <Link to={`/${Workflow.qclm}`}>MSDM</Link>
+        <Menu.Item key="msdm">
+          <Link to={`/${Workflow.msdm}`}>MSDM</Link>
         </Menu.Item>
         <Menu.Item key="pas">
           <Link to={`/${Workflow.pas}`}>PAS</Link>
@@ -89,13 +89,13 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
         />
         <Route
           exact
-          path="/qclm/:id?"
+          path="/msdm/:id?"
           // tslint:disable-next-line:jsx-no-lambda
           render={(routeParams) => {
             const jobId = routeParams.match.params.id
 
             return (
-              <QCLM
+              <MSDM
                 jobId={jobId}
                 jobData={getJob(jobId)}
                 submitRequest={submitRequest}
@@ -154,11 +154,11 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
                       bordered={false}>
                       <p className="workflow-card-description">
                         Design mutagenic primers for multi-site directed mutagenesis workflows using
-                        the QCLM kit by which specific amino acid changes at multiple sites could be
+                        the MSDM kit by which specific amino acid changes at multiple sites could be
                         combined simultaneously.
                       </p>
 
-                      <Button type="primary" size="large" href={`/${Workflow.qclm}`}>
+                      <Button type="primary" size="large" href={`/${Workflow.msdm}`}>
                         MSDM
                       </Button>
                     </Card>

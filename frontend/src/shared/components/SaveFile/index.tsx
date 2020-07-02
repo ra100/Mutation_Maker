@@ -25,10 +25,10 @@ import * as FileSaver from 'file-saver'
 
 import {
   IndexedPASResultFragment,
-  IndexedQCLMFlatResultRecord,
+  IndexedMSDMFlatResultRecord,
   SSMResultData
 } from 'shared/lib/ResultData'
-import {PASFormData, QCLMFormData, SSMFormData} from 'shared/lib/FormData';
+import {PASFormData, MSDMFormData, SSMFormData} from 'shared/lib/FormData';
 
 const PLATE_SIZE = 96;
 const CHAR_LOWER_A = 97;
@@ -36,12 +36,12 @@ const CHAR_UPPER_A = 65;
 
 type AnyFormData =
   Partial<SSMFormData>
-  | Partial<QCLMFormData>
+  | Partial<MSDMFormData>
   | Partial<PASFormData>
 
 type SaveFileProps = {
-  result: SSMResultData | IndexedQCLMFlatResultRecord[] | IndexedPASResultFragment[],
-  type: 'ssm' | 'qclm' | 'pas',
+  result: SSMResultData | IndexedMSDMFlatResultRecord[] | IndexedPASResultFragment[],
+  type: 'ssm' | 'msdm' | 'pas',
   input: any,
   formData: AnyFormData
 }
@@ -50,7 +50,7 @@ const getPosition = (pos: number) => `${String.fromCharCode(CHAR_UPPER_A + Math.
 
 const tableHeaders = {
   ssm: ['Well Position', 'Name', 'Sequence', 'Notes'],
-  qclm: ['Name', 'Primer Sequence', 'Scale', 'Purification', 'Mutation Syntax', 'Overlap'],
+  msdm: ['Name', 'Primer Sequence', 'Scale', 'Purification', 'Mutation Syntax', 'Overlap'],
   pas: ['Name', 'Fragment Sequence', 'Mutation Syntax', 'Mix ratio', 'Target and MT%']
 };
 
@@ -135,9 +135,9 @@ const createSSMTable = (result: any, oligoPrefix: string, input: any): any => {
   return table
 };
 
-const createQCLMTable = (result: any, oligoPrefix: string, formData: Partial<QCLMFormData>): any => {
+const createMSDMTable = (result: any, oligoPrefix: string, formData: Partial<MSDMFormData>): any => {
   const table = {};
-  const type = 'qclm';
+  const type = 'msdm';
   // Create array of sites
   const sites = result.reduce((acc: any, mutation: any) => {
     // Create site ID based on source and position of all mutations
@@ -153,7 +153,7 @@ const createQCLMTable = (result: any, oligoPrefix: string, formData: Partial<QCL
     return acc
   }, {});
 
-  const sheetName = formData.fileName ? `${formData.fileName} qclm` : 'qclm';
+  const sheetName = formData.fileName ? `${formData.fileName} msdm` : 'msdm';
   table[sheetName] = [tableHeaders[type]];
 
   // Create table
@@ -280,8 +280,8 @@ const resultsToTable = (result: any, type: string, input: any, formData: AnyForm
   if (type === 'ssm') {
     return createSSMTable(result, oligoPrefix, input)
   }
-  if (type === 'qclm') {
-    return createQCLMTable(result, oligoPrefix, formData as Partial<QCLMFormData>)
+  if (type === 'msdm') {
+    return createMSDMTable(result, oligoPrefix, formData as Partial<MSDMFormData>)
   }
   if (type === 'pas') {
     return createPASTable(result, oligoPrefix, formData as Partial<PASFormData>)

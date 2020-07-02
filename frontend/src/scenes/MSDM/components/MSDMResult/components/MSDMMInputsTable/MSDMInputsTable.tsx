@@ -17,15 +17,15 @@
  */
 
 import * as React from 'react'
-import { QCLMFormData } from 'shared/lib/FormData';
+import { MSDMFormData } from 'shared/lib/FormData';
 import InputsTableRow from 'shared/components/InputsTableRow';
 import './styles.css'
 
-type QCLMInputsTableProps = {
- formData: Partial<QCLMFormData>
+type MSDMInputsTableProps = {
+ formData: Partial<MSDMFormData>
 }
 
-const QCLMInputsTable: React.SFC<QCLMInputsTableProps> = ({
+const MSDMInputsTable: React.SFC<MSDMInputsTableProps> = ({
   formData
 }) => (
   <div className="Print-Only">
@@ -55,4 +55,4 @@ const QCLMInputsTable: React.SFC<QCLMInputsTableProps> = ({
   </div>
 );
 
-export default QCLMInputsTable
+export default MSDMInputsTable

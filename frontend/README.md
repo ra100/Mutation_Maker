@@ -4,7 +4,7 @@
 
 This is a frontend application for Mutation Maker.
 
-Landing page presents links to three workflows (SSM, QCLM and PAS). Each workflow consists of Input Form and Results Report. 
+Landing page presents links to three workflows (SSM, MSDM and PAS). Each workflow consists of Input Form and Results Report.
 
 Results are displayed in Interactive Table, Feature Viewer and Excel file.
 
@@ -28,7 +28,7 @@ Repository is created with [create-react-app](https://github.com/facebook/create
 
 Repository is structured along the lines of [How to better organize your react applications](https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1).
 
-Three main screens are defined in `src/scenes/SSM/index.tsx`, `src/scenes/QCLM/index.tsx`, `src/scenes/PAS/index.tsx`. They are based on `src/shared/components/WorkflowScene.tsx` which is the heart of this application.
+Three main screens are defined in `src/scenes/SSM/index.tsx`, `src/scenes/MSDM/index.tsx`, `src/scenes/PAS/index.tsx`. They are based on `src/shared/components/WorkflowScene.tsx` which is the heart of this application.
 
 ### Application state
 

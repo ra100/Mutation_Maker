@@ -73,7 +73,7 @@ export type SSMFormData = {
   aminoAcids: object[]
 } & FormParameters
 
-export type QCLMFormData = {
+export type MSDMFormData = {
   fivePrimeFlankingSequence: string
   goiSequence: string
   threePrimeFlankingSequence: string
