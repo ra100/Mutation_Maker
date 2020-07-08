@@ -60,7 +60,7 @@ def qclm(qclm_input):
     return qclm_solve(input)
 
 @celery.task(name='tasks.species_table')
-def species_table():
+def species_table(args):
     organisms = get_organism_names_with_ids()
     print("Returning {} organisms".format(len(organisms)))
     return organisms
