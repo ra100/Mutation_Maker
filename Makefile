@@ -70,7 +70,7 @@ service-redis:
 ## Install built frontend into nginx dir
 service-frontend:
 	sudo cp frontend/resources/local-nginx-frontend.conf /etc/nginx/sites-enabled/default
-	sudo rm -rf /var/www/html; sudo mkdir -p /var/www/; sudo cp -r frontend/build /var/www/html
+	sudo rm -rf /usr/share/nginx/html; sudo mkdir -p /usr/share/nginx; sudo cp -r frontend/build /usr/share/nginx/html
 	sudo systemctl restart nginx
 	sleep 3; sudo systemctl status --no-pager nginx
 
