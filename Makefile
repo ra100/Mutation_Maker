@@ -1,10 +1,12 @@
 CONDA_ENV_NAME = mutationmaker
 CONDA_INIT := eval "$$(conda shell.bash hook)"
 
+HOST ?= localhost
+
 default: help
 
 ## Create Conda environment and install all backend dependencies
-env:
+conda-env:
 	@$(CONDA_INIT); conda activate $(CONDA_ENV_NAME) 2>/dev/null || conda create -y -n $(CONDA_ENV_NAME) python=3.7
 	@echo "Installing requirements..."
 	$(CONDA_INIT); conda activate $(CONDA_ENV_NAME) && \
@@ -15,32 +17,21 @@ env:
 env-frontend:
 	cd frontend && npm ci
 
+## Create frontend production build for nginx
+build-frontend:
+	cd frontend && npm ci && npm run build
+
 ## Run all backend unit tests
 test:
 	cd backend; PYTHONHASHSEED=0 python -m unittest tests/unit_tests/*
 
+#
+# Local development servers
+#
+
 ## Run Mutation Maker locally (requires active Python environment)
 run:
-	@echo "Please remember to activate the Mutation Maker environment"
-	@echo "Using python executable: $$(which python)"
-	@sleep 2
-	@{ \
-		@set -Eeuo pipefail; \
-		trap "exit" INT TERM ERR; \
-		trap "kill -9 0" EXIT; \
-		pids=""; \
-		make run-worker & pids="$$pids $!"; \
-		make run-monitor & pids="$$pids $!"; \
-		make run-frontend & pids="$$pids $!"; \
-		make run-api & pids="$$pids $$!"; \
-		make run-lambda & pids="$$pids $$!"; \
-		while [[ ! -z "$$pids" ]]; do \
-		  for pid in $$pids; do \
-			kill -0 "$$pid" 2>/dev/null || exit 1; \
-		  done; \
-		  sleep 1; \
-		done; \
-	}
+	./runlocal.sh
 
 ## Run frontend live-reload NPM server locally
 run-frontend:
@@ -48,7 +39,7 @@ run-frontend:
 
 ## Run API server locally
 run-api:
-	cd api && gunicorn server:app
+	cd api && gunicorn server:app --bind $(HOST)
 
 ## Run Celery worker locally
 run-worker:
@@ -62,9 +53,48 @@ run-lambda:
 run-monitor:
 	cd backend && celery -A tasks flower --loglevel=INFO
 
-## Create frontend production build
-build-frontend:
-	cd frontend && npm ci && npm run build
+#
+# Systemctl services
+#
+
+## Install all services
+services: service-redis service-frontend service-worker service-api
+	sudo systemctl status --no-pager nginx celery gunicorn redis-server
+
+## Restart redis service (should be available after installing redis-server)
+service-redis:
+	sudo systemctl enable redis-server.service
+	sudo systemctl restart redis-server.service
+	sleep 3; sudo systemctl status --no-pager redis-server.service
+
+## Install built frontend into nginx dir
+service-frontend:
+	sudo cp frontend/resources/local-nginx-frontend.conf /etc/nginx/sites-enabled/default
+	sudo rm -rf /var/www/html; sudo mkdir -p /var/www/; sudo cp -r frontend/build /var/www/html
+	sudo systemctl restart nginx
+	sleep 3; sudo systemctl status --no-pager nginx
+
+## Install celery as service
+service-worker:
+	sudo useradd celery -d /home/celery -b /bin/bash || true
+	sudo mkdir -p /etc/conf.d; sudo cp backend/resources/celery.config /etc/conf.d/celery
+	sudo cp backend/resources/celery.service /etc/systemd/system/celery.service
+	sudo mkdir -p /etc/tmpfiles.d; sudo cp backend/resources/celery.tmpfiles /etc/tmpfiles.d/celery.conf
+	sudo systemd-tmpfiles --create
+	sudo systemctl daemon-reload
+	sudo systemctl restart celery
+	sleep 3; sudo systemctl status --no-pager celery
+
+## Install api gunicorn service
+service-api:
+	sudo cp api/resources/gunicorn.service /etc/systemd/system/gunicorn.service
+	sudo systemctl daemon-reload
+	sudo systemctl restart gunicorn
+	sleep 3; sudo systemctl status --no-pager gunicorn
+
+#
+# Docker
+#
 
 ## Run all Docker containers using docker-compose (rebuild if changed)
 docker-run:
