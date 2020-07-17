@@ -31,12 +31,12 @@ import SaveFile from 'shared/components/SaveFile'
 import QCLMFeatureViewer from './components/QCLMFeatureViewer'
 import QCLMResultTable from './components/QCLMResultTable'
 import ratioCounter from './components/ratioCounter'
-import QCLMInputsTable from './components/QCLMInputsTable/QCLMInputsTable';
-import { QCLMFormData } from 'shared/lib/FormData';
+import QCLMInputsTable from './components/QCLMInputsTable/QCLMInputsTable'
+import { QCLMFormData } from 'shared/lib/FormData'
 
 type QCLMResultOuterProps = {
   jobId?: string
-  resultData: QCLMResultData,
+  resultData: QCLMResultData
   formData: Partial<QCLMFormData>
 }
 
@@ -48,7 +48,7 @@ type WithProcessedResults = {
 
 type QCLMResultInnerProps = QCLMResultOuterProps & WithProcessedResults & WithSelectedAndHighlighted
 
-const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
+const QCLMResult: React.FC<QCLMResultInnerProps> = ({
   jobId,
   geneSequence,
   geneOffset,
@@ -59,56 +59,53 @@ const QCLMResult: React.SFC<QCLMResultInnerProps> = ({
   onMouseEnter,
   onMouseLeave,
   resultData,
-  formData
+  formData,
 }) => (
   <>
     {jobId && (
-      <SaveFile result={resultRecords} type="qclm" input={resultData.input_data} formData={formData} />
+      <SaveFile
+        result={resultRecords}
+        type="qclm"
+        input={resultData.input_data}
+        formData={formData}
+      />
     )}
     <Divider className="Result--divider" />
-    <Row className="Result" gutter={8}>
-      <Col className="Result--col print-only" xxl={12}>
-        <div className="Result--wrapper Wrapper-Print-Only">
-          <QCLMInputsTable formData={formData} />
-        </div>
+    <Row className="Result MSDMResult" gutter={8}>
+      <Col className="Result--col print-only Result--wrapper Wrapper-Print-Only" xxl={12}>
+        <QCLMInputsTable formData={formData} />
       </Col>
-      <Col className="Result--col" xxl={12}>
-        <div className="Result--wrapper">
-          <QCLMResultTable
-            resultRecords={resultRecords}
-            selected={selected}
-            highlighted={highlighted}
-            onClick={onClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          />
-        </div>
+      <Col className="Result--col Result--wrapper" xxl={12}>
+        <QCLMResultTable
+          resultRecords={resultRecords}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
       </Col>
-      <Col className="Result--col" xxl={12}>
-        <div className="Result--wrapper">
-          <QCLMFeatureViewer
-            geneSequence={geneSequence}
-            geneOffset={geneOffset}
-            resultRecords={resultRecords}
-            selected={selected}
-            highlighted={highlighted}
-            onClick={onClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          />
-        </div>
+      <Col className="Result--col Result--wrapper" xxl={12}>
+        <QCLMFeatureViewer
+          geneSequence={geneSequence}
+          geneOffset={geneOffset}
+          resultRecords={resultRecords}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
       </Col>
     </Row>
   </>
-);
+)
 
 export default compose<QCLMResultInnerProps, QCLMResultOuterProps>(
   withProps<WithProcessedResults, QCLMResultOuterProps>(({ resultData }) => ({
     geneSequence: resultData.full_sequence,
     geneOffset: resultData.goi_offset,
-    resultRecords: ratioCounter(
-      resultRecordsToFlatResultRecords(resultData.results),
-    ),
+    resultRecords: ratioCounter(resultRecordsToFlatResultRecords(resultData.results)),
   })),
   withSelectedAndHighlighted,
 )(QCLMResult)

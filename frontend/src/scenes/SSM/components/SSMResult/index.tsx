@@ -29,7 +29,7 @@ import { SSMFormData } from 'shared/lib/FormData'
 import SSMFeatureViewer from './components/SSMFeatureViewer'
 import SSMResultTable from './components/SSMResultTable'
 
-import SSMInputsTable from './components/SSMInputsTable/SSMInputsTable';
+import SSMInputsTable from './components/SSMInputsTable/SSMInputsTable'
 
 type SSMResultOuterProps = {
   jobId?: string
@@ -39,7 +39,7 @@ type SSMResultOuterProps = {
 
 type SSMResultInnerProps = SSMResultOuterProps & WithSelectedAndHighlighted
 
-const SSMResult: React.SFC<SSMResultInnerProps> = ({
+const SSMResult: React.FC<SSMResultInnerProps> = ({
   jobId,
   resultData,
   formData,
@@ -47,7 +47,7 @@ const SSMResult: React.SFC<SSMResultInnerProps> = ({
   highlighted,
   onClick,
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
 }) => (
   <>
     {jobId && (
@@ -55,37 +55,31 @@ const SSMResult: React.SFC<SSMResultInnerProps> = ({
     )}
     <Divider className="Result--divider" />
     {/* Render Form Data */}
-    <Row className="Result" gutter={8}>
-      <Col className="Result--col print-only" xxl={12}>
-        <div className="Result--wrapper Wrapper-Print-Only">
-          <SSMInputsTable formData={formData} />
-        </div>
+    <Row className="Result SSSMResult" gutter={8}>
+      <Col className="Result--col print-only Result--wrapper Wrapper-Print-Only" xxl={12}>
+        <SSMInputsTable formData={formData} />
       </Col>
-      <Col className="Result--col" xxl={12}>
-        <div className="Result--wrapper">
-          <SSMResultTable
-            resultData={resultData}
-            selected={selected}
-            highlighted={highlighted}
-            onClick={onClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            minGcContent={formData.gcContentMin || -Infinity}
-            maxGcContent={formData.gcContentMax || Infinity}
-          />
-        </div>
+      <Col className="Result--col Result--wrapper" xxl={12}>
+        <SSMResultTable
+          resultData={resultData}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          minGcContent={formData.gcContentMin || -Infinity}
+          maxGcContent={formData.gcContentMax || Infinity}
+        />
       </Col>
-      <Col className="Result--col" xxl={12}>
-        <div className="Result--wrapper">
-          <SSMFeatureViewer
-            resultData={resultData}
-            selected={selected}
-            highlighted={highlighted}
-            onClick={onClick}
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-          />
-        </div>
+      <Col className="Result--col Result--wrapper" xxl={12}>
+        <SSMFeatureViewer
+          resultData={resultData}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
       </Col>
     </Row>
   </>
