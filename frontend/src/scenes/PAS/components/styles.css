@@ -17,35 +17,39 @@
  */
 
 .editable-cell {
-    position: relative;
+  position: relative;
 }
 
 .editable-cell-value-wrap {
-    padding: 5px 12px;
-    cursor: pointer;
+  padding: 5px 12px;
+  cursor: pointer;
 }
 
 .editable-row:hover .editable-cell-value-wrap {
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    padding: 4px 11px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
 }
 
 .ant-input-number {
-    width: 100% !important;
+  width: 100% !important;
 }
 
 th.PASFragmentSeqCol {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 .PASFeatureViewerCnt {
-    height: 100% !important;
-    overflow: hidden !important;
+  height: 100% !important;
+  overflow: hidden !important;
 }
 
 .PASResultTableCnt {
-    height: 100% !important;
-    overflow: hidden !important;
+  height: auto;
+  overflow: hidden;
 }
 
+.Result.PASResult {
+  height: auto;
+  max-height: none;
+}

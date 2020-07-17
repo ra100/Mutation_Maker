@@ -17,32 +17,30 @@
  */
 
 import * as React from 'react'
-import {dataToPASFormData, formDataToPasRequest} from 'services/api'
-import WorkflowScene, {WorkflowSceneExternalProps} from 'shared/components/WorkflowScene'
-import {PASFormData} from 'shared/lib/FormData'
-import {
-  responseToPASResultData
-} from 'shared/lib/ResultData'
+import { dataToPASFormData, formDataToPasRequest } from 'services/api'
+import WorkflowScene, { WorkflowSceneExternalProps } from 'shared/components/WorkflowScene'
+import { PASFormData } from 'shared/lib/FormData'
+import { responseToPASResultData } from 'shared/lib/ResultData'
 import routes from 'shared/routes'
-import {Workflow} from 'shared/workflow'
+import { Workflow } from 'shared/workflow'
 import PASForm from './components/PASForm/'
 import PASResult from './components/PASResult'
 
 const demoData: Partial<PASFormData> = {
   fivePrimeFlankingSequence: '',
   goiSequence: '',
-  inputMutations: {mutations: []},
-};
+  inputMutations: { mutations: [] },
+}
 
 type PASOuterProps = WorkflowSceneExternalProps
 
-const PAS: React.SFC<PASOuterProps> = ({
-                                         submitRequest,
-                                         requestJobResult,
-                                         jobId,
-                                         jobData,
-                                         pollInterval,
-                                       }) => (
+const PAS: React.FC<PASOuterProps> = ({
+  submitRequest,
+  requestJobResult,
+  jobId,
+  jobData,
+  pollInterval,
+}) => (
   <WorkflowScene
     jobId={jobId}
     jobData={jobData}
@@ -57,17 +55,14 @@ const PAS: React.SFC<PASOuterProps> = ({
       submitRequest(Workflow.pas, formDataToPasRequest, formData)
     }
     // tslint:disable-next-line:jsx-no-lambda
-    InputForm={({disabled, formData, onSubmit}) => (
-      <PASForm disabled={disabled} data={formData} onSubmit={onSubmit}/>
+    InputForm={({ disabled, formData, onSubmit }) => (
+      <PASForm disabled={disabled} data={formData} onSubmit={onSubmit} />
     )}
     // tslint:disable-next-line:jsx-no-lambda
-    ResultsView={({resultData, formData}) =>
-      <PASResult
-        resultData={resultData}
-        jobId={jobId}
-        formData={formData}
-      />}
+    ResultsView={({ resultData, formData }) => (
+      <PASResult resultData={resultData} jobId={jobId} formData={formData} />
+    )}
   />
-);
+)
 
 export default PAS

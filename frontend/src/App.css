@@ -70,16 +70,16 @@ body {
   font-family: 'Lucida Console', monospace;
 }
 
-.ant-row.Result {
+.Result {
   margin-bottom: 1em;
-  height: 100vh;
 }
 
 @media (min-width: 1600px) {
-  .Result .Result--wrapper {
+  .Result.MSDMResult .Result--wrapper,
+  .Result.SSSMResult .Result--wrapper {
     background-color: white;
-    height: 100vh;
-    overflow-y: scroll;
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
   }
   @media screen {
     .Result .Result--wrapper.Wrapper-Print-Only {

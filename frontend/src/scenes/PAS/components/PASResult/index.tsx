@@ -16,26 +16,27 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Alert, Divider, Row} from 'antd'
+import { Alert, Divider, Row } from 'antd'
 import * as React from 'react'
-import {compose, withProps} from 'recompose'
+import { compose, withProps } from 'recompose'
 import withSelectedAndHighlighted, {
   WithSelectedAndHighlighted,
 } from 'shared/components/withSelectedAndHighlighted'
 import {
-  IndexedPASResultFragment, PASResultData,
+  IndexedPASResultFragment,
+  PASResultData,
   resultRecordsToIndexedResultRecordsPas,
 } from 'shared/lib/ResultData'
-import {PASFormData} from 'shared/lib/FormData';
-import SaveFile from "shared/components/SaveFile";
-import PASResultTable from "./components/PASResultTable";
+import { PASFormData } from 'shared/lib/FormData'
+import SaveFile from 'shared/components/SaveFile'
+import PASResultTable from './components/PASResultTable'
 import PASFeatureViewer from './components/PASFeatureViewer'
-import PASInputsTable from "./components/PASInputsTable/PASInputsTable";
+import PASInputsTable from './components/PASInputsTable/PASInputsTable'
 
 type PASResultOuterProps = {
   jobId?: string
-  resultData: PASResultData,
-  formData: Partial<PASFormData>,
+  resultData: PASResultData
+  formData: Partial<PASFormData>
 }
 
 type WithProcessedResults = {
@@ -45,77 +46,65 @@ type WithProcessedResults = {
   resultFound: boolean
 }
 
-type PASResultInnerProps =
-  PASResultOuterProps
-  & WithProcessedResults
-  & WithSelectedAndHighlighted
+type PASResultInnerProps = PASResultOuterProps & WithProcessedResults & WithSelectedAndHighlighted
 
-const PASResult: React.SFC<PASResultInnerProps> =
-  ({
-     jobId,
-     geneSequence,
-     geneOffset,
-     resultRecords,
-     selected,
-     highlighted,
-     onClick,
-     onMouseEnter,
-     onMouseLeave,
-     resultData,
-     formData,
-     resultFound,
-   }) => (
-    resultFound ?
-      <>
-        {jobId && (
-          <SaveFile result={resultRecords} type="pas"
-                    input={resultData.input_data} formData={formData}/>
-        )}
-        <Divider className="Result--divider"/>
-        <Row className="Result print-only">
-            <div className="Result--wrapper Wrapper-Print-Only">
-              <PASInputsTable formData={formData}/>
-            </div>
-        </Row>
-        <Row className="Result">
-            <div className="Result--wrapper PASResultTableCnt">
-              <PASResultTable
-                resultRecords={resultRecords}
-                selected={selected}
-                highlighted={highlighted}
-                onClick={onClick}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-              />
-            </div>
-        </Row>
-        <Row className="Result">
-            <div className="Result--wrapper PASFeatureViewerCnt">
-              <PASFeatureViewer
-                geneSequence={geneSequence}
-                geneOffset={geneOffset}
-                resultRecords={resultRecords}
-                selected={selected}
-                highlighted={highlighted}
-                onClick={onClick}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-              />
-            </div>
-        </Row>
-      </>
-      :
-      <Alert
-        type="error"
-        showIcon
-        message="No results"
-        description={resultData.message}
-      />
-
-  );
+const PASResult: React.FC<PASResultInnerProps> = ({
+  jobId,
+  geneSequence,
+  geneOffset,
+  resultRecords,
+  selected,
+  highlighted,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+  resultData,
+  formData,
+  resultFound,
+}) =>
+  resultFound ? (
+    <>
+      {jobId && (
+        <SaveFile
+          result={resultRecords}
+          type="pas"
+          input={resultData.input_data}
+          formData={formData}
+        />
+      )}
+      <Divider className="Result--divider" />
+      <Row className="Result print-only Result--wrapper Wrapper-Print-Only">
+        <PASInputsTable formData={formData} />
+      </Row>
+      <Row className="Result PASResult Result--wrapper PASResultTableCnt">
+        <PASResultTable
+          resultRecords={resultRecords}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
+      </Row>
+      <Row className="Result PASResult Result--wrapper PASFeatureViewerCnt">
+        <PASFeatureViewer
+          geneSequence={geneSequence}
+          geneOffset={geneOffset}
+          resultRecords={resultRecords}
+          selected={selected}
+          highlighted={highlighted}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+        />
+      </Row>
+    </>
+  ) : (
+    <Alert type="error" showIcon message="No results" description={resultData.message} />
+  )
 
 export default compose<PASResultInnerProps, PASResultOuterProps>(
-  withProps<WithProcessedResults, PASResultOuterProps>(({resultData}) => ({
+  withProps<WithProcessedResults, PASResultOuterProps>(({ resultData }) => ({
     geneSequence:
       resultData.input_data.sequences.five_end_flanking_sequence +
       resultData.input_data.sequences.gene_of_interest +
@@ -123,7 +112,7 @@ export default compose<PASResultInnerProps, PASResultOuterProps>(
     geneOffset: resultData.input_data.sequences.five_end_flanking_sequence.length,
     resultRecords: resultRecordsToIndexedResultRecordsPas(resultData.results),
     inputData: resultData.input_data,
-    resultFound: resultData.results.length > 0
+    resultFound: resultData.results.length > 0,
   })),
   withSelectedAndHighlighted,
 )(PASResult)
