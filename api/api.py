@@ -25,20 +25,17 @@ import hug
 from celery import Celery
 from falcon import HTTP_400
 
+celery_broker_url = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379'),
+celery_result_backend = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379')
+CELERY = Celery('tasks', broker=celery_broker_url, backend=celery_result_backend)
 
 def init_api():
     api = hug.API(sys.modules[__name__])
-    celery_broker_url = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379'),
-    celery_result_backend = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379')
-    celery = Celery('tasks', broker=celery_broker_url, backend=celery_result_backend)
-    api.context["celery"] = celery
     return api
-
 
 @hug.directive()
 def celery(api, **kwargs):
-    return api.context["celery"]
-
+    return CELERY
 
 @hug.post('/ssm', versions=1)
 def find_ssm_primers(body, response, hug_celery):

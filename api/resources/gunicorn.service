@@ -1,0 +1,16 @@
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/mutationmaker/api
+ExecStart=gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind 192.168.0.12:8000 \
+          api:__hug_wsgi__
+
+[Install]
+WantedBy=multi-user.target

@@ -19,8 +19,12 @@ Run `make help` to show all available commands for building, running and deployi
 
 First clone or download the repository from Github.
 
-The application can be run either in [Docker containers](#running-in-docker) with the [Docker Compose](https://docs.docker.com/compose/) tool utilizing the provided [docker-compose.yml](docker-compose.yml).  
-Alternatively it can be [run locally](#running-locally) given that all of the application dependencies are installed.
+The application can be run either in [Docker containers](#running-in-docker)
+with the [Docker Compose](https://docs.docker.com/compose/) tool utilizing the provided [docker-compose.yml](docker-compose.yml).  
+
+We also provide an [example configuration](#example-deployment-on-ubuntu) when using a dedicated Ubuntu server.
+
+For development, the application can also be [run locally](#running-locally) given that all of the application dependencies are installed.
 
 # Running in Docker
 
@@ -70,11 +74,49 @@ Docker frontend container uses npm live-reload development server.
 You can also execute it as a production build by changing the frontend `target` field 
 in [docker-compose.yml](docker-compose.yml) file.
 
+# Example deployment on Ubuntu
+
+Follow these steps to setup Mutation Maker on Ubuntu with root access using systemctl services. This makes sure that all required services keep runing on server restart.
+
+## 1) Install required packages
+
+```bash
+sudo apt update; sudo apt install software-properties-common;
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.7 python3-pip redis-server nodejs npm nginx
+# If applicable, enable nginx in ufw
+sudo ufw allow 'Nginx HTTP'
+sudo ufw status
+```
+
+## 2) Clone Mutation Maker repository
+
+```bash
+sudo git clone https://github.com/Merck/Mutation_Maker /opt/mutationmaker
+
+cd /opt/mutationmaker
+sudo chmod -R a+rX .
+sudo -H pip3 install -r backend/requirements.txt
+sudo -H pip3 install -r api/requirements.txt
+```
+
+## 3) Adjust config files
+
+Use your local IP (e.g. 127.0.0.1 or where you want to bind your service):
+- for `upstream-api` in: `frontend/resources/local-nginx-frontend.conf`
+- for `--bind` in `api/resources/gunicorn.service`
+
+## 4) Register and start all services
+
+```bash
+make services
+```
+
+Status of all services should be displayed. Please report any issues [here](https://github.com/Merck/Mutation_Maker/issues).
+
 # Running locally
 
-Alternatively, all the services can be run locally using a Python environment.
-
-You will first need to install all the dependencies.
+Alternatively, all the services can be run locally in development mode using a local Python environment.
 
 ## Local dependencies
 
@@ -107,7 +149,7 @@ For platform specific instructions to install Conda, please refer to the officia
 
 Create `mutationmaker` environment using Conda:
 ```bash
-make env
+make conda-env
 ```
 
 Or install the requirements directly:
