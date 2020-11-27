@@ -218,7 +218,7 @@ make run-monitor
 - [lambda](lambda): Provides AWS Lambda endpoint running Primer3 binary locally in a Docker container by [SAM CLI](https://github.com/awslabs/aws-sam-cli).
 
 More information can be found in the respective **README** files:
-- backend: [README.md](backend/README.md)
+- backend: [README.md](backend/README.md) (backend code customization)
 - frontend: [README.md](frontend/README.md)
 - lambda: [README.md](lambda/README.md)
 

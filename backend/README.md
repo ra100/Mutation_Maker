@@ -34,7 +34,7 @@ The buffer conditions are set to support Q5 reactions. However, the minimum and 
 
 ### Changing Tm calculation parameters
 
-There's a class `TemperatureConfig` that can be instantiated with different values of the abovementioned parameters.
+The `temperature_calculator.py` module contains class `TemperatureConfig` that can be instantiated with different values of the aforementioned parameters.
 
 ```
 TemperatureConfig(
@@ -53,9 +53,9 @@ TemperatureConfig(
 )
 ```
 
-### Allowed paramater values:
+### Allowed parameter values:
 
-Th following section describes the range of available values for some of the parameters above.
+The following section describes the range of available values for the parameters above.
 
 GC value sets:
 ```
