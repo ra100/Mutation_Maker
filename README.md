@@ -17,14 +17,11 @@ Run `make help` to show all available commands for building, running and deployi
 
 # Installation
 
-First clone or download the repository from Github.
-
-The application can be run either in [Docker containers](#running-in-docker)
-with the [Docker Compose](https://docs.docker.com/compose/) tool utilizing the provided [docker-compose.yml](docker-compose.yml).  
-
-We also provide an [example configuration](#example-deployment-on-ubuntu) when using a dedicated Ubuntu server.
-
-For development, the application can also be [run locally](#running-locally) given that all of the application dependencies are installed.
+First clone or download the repository from Github.  
+The application can be run either in multiple [Docker containers](#running-in-docker)
+with the [Docker Compose](https://docs.docker.com/compose/) tool utilizing the provided [docker-compose.yml](docker-compose.yml).   
+We also provide an [example configuration](#ubuntu-deployment-example) when using a dedicated Ubuntu server.  
+For development, the application can be [run locally](#running-locally) given that all of the application dependencies are installed.
 
 # Running in Docker
 
@@ -49,7 +46,7 @@ docker-compose up --build
 This will build and start all docker containers:
 - Webserver: [http://localhost:3000](http://localhost:3000)
 - API: [http://localhost:8000](http://localhost:8000)
-- Frontend (live-reload or production build - see below)
+- Frontend (live-reload or production build - [see below](#configuring-docker-frontend:-live-reload-or-production-ready-build))
 - Celery worker
 - Redis server
 - AWS Lambda worker
@@ -74,45 +71,47 @@ Docker frontend container uses npm live-reload development server.
 You can also execute it as a production build by changing the frontend `target` field 
 in [docker-compose.yml](docker-compose.yml) file.
 
-# Example deployment on Ubuntu
+# Ubuntu deployment example
 
-Follow these steps to setup Mutation Maker on Ubuntu with root access using systemctl services. This makes sure that all required services keep runing on server restart.
+Follow these steps to setup Mutation Maker in Ubuntu with root access using systemctl services.  
+This makes sure that all required services keep running after server restart.
 
-## 1) Install required packages
+1. Install required packages
 
-```bash
-sudo apt update; sudo apt install software-properties-common;
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt install python3.7 python3-pip redis-server nodejs npm nginx
-# If applicable, enable nginx in ufw
-sudo ufw allow 'Nginx HTTP'
-sudo ufw status
-```
+    ```bash
+    sudo apt update; sudo apt install software-properties-common;
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt install python3.7 python3-pip redis-server nodejs npm nginx
+    # If applicable, enable nginx in ufw
+    sudo ufw allow 'Nginx HTTP'
+    sudo ufw status
+    ```
 
-## 2) Clone Mutation Maker repository
+2. Clone Mutation Maker repository
 
-```bash
-sudo git clone https://github.com/Merck/Mutation_Maker /opt/mutationmaker
+    ```bash
+    sudo git clone https://github.com/Merck/Mutation_Maker /opt/mutationmaker
 
-cd /opt/mutationmaker
-sudo chmod -R a+rX .
-sudo -H pip3 install -r backend/requirements.txt
-sudo -H pip3 install -r api/requirements.txt
-```
+    cd /opt/mutationmaker
+    sudo chmod -R a+rX .
+    sudo -H pip3 install -r backend/requirements.txt
+    sudo -H pip3 install -r api/requirements.txt
+    ```
 
-## 3) Adjust config files
+3. Adjust config files
 
-Use your local IP (e.g. 127.0.0.1 or where you want to bind your service):
-- for `upstream-api` in: `frontend/resources/local-nginx-frontend.conf`
-- for `--bind` in `api/resources/gunicorn.service`
+    Use your local IP (e.g. 127.0.0.1 or where you want to bind your service):
+    - for `upstream-api` in: `frontend/resources/local-nginx-frontend.conf`
+    - for `--bind` in `api/resources/gunicorn.service`
 
-## 4) Register and start all services
+4. Register and start all services
 
-```bash
-make services
-```
+    ```bash
+    make services
+    ```
 
-Status of all services should be displayed. Please report any issues [here](https://github.com/Merck/Mutation_Maker/issues).
+Status of all services should be displayed.  
+Please report any issues [here](https://github.com/Merck/Mutation_Maker/issues).
 
 # Running locally
 
@@ -201,7 +200,7 @@ make run-frontend
 make run-worker
 # AWS Lambda worker
 make run-lambda
-# Celery monitor (only for monitoring Celery queues)
+# Celery monitor (optional - only for monitoring Celery queues)
 make run-monitor
 ```
 
@@ -209,7 +208,7 @@ make run-monitor
 
 - [api](api): Server that accepts tasks from the frontend and schedules them using the `backend` worker.
 - [backend](backend): Celery worker that processes the tasks.
-- [frontend](frontend): Frontend app. It contains package [feature-viewer](frontend/feature-viewer) - fork of [calipho-sib/feature-viewer](https://github.com/calipho-sib/feature-viewer).
+- [frontend](frontend): Frontend app. It contains package [feature-viewer](frontend/feature-viewer) - fork of [calipho-sib/feature-viewer](https://github.com/calipho-sib/feature-viewer) with the following modifications:
   - added eslint and prettier and fixed/added workaround for all problems
   - added object type `arrow` for primer visualisation
   - added `showSelectedBox` and `hideSelectedBox`
@@ -217,6 +216,11 @@ make run-monitor
   - added `colorFeature` to externally control color of features
 - [webserver](webserver): Main entrypoint for the user. Simple nginx proxy of requests to the application API and frontend.
 - [lambda](lambda): Provides AWS Lambda endpoint running Primer3 binary locally in a Docker container by [SAM CLI](https://github.com/awslabs/aws-sam-cli).
+
+More information can be found in the respective **README** files:
+- backend: [README.md](backend/README.md)
+- frontend: [README.md](frontend/README.md)
+- lambda: [README.md](lambda/README.md)
 
 
 ## AWS Lambda settings
