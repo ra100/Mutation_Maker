@@ -4,7 +4,7 @@ LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 RUN apk add --no-cache \
   build-base==0.5-r1 \
   ca-certificates \
-  curl==7.66.0-r0
+  curl
 
 ENV CELERY_BROKER_URL redis://redis:6379/0
 ENV CELERY_RESULT_BACKEND redis://redis:6379/0
