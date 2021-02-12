@@ -1,5 +1,5 @@
 # First stage is used to install the dependencies and to run the development live-reload npm server
-FROM node:12.13.1-alpine as live-reload-server
+FROM node:14.15.5-alpine as live-reload-server
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 COPY ./ /frontend/
 WORKDIR /frontend/
@@ -8,7 +8,7 @@ EXPOSE 3000
 CMD npm start
 
 # Second stage is used for creating an optimized production build of the website
-FROM node:12.13.1-alpine as builder
+FROM node:14.15.5-alpine as builder
 COPY --from=live-reload-server /frontend /frontend
 WORKDIR /frontend/
 RUN npm run build
