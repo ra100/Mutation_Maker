@@ -29,7 +29,7 @@ salt_corrections = ["No", "Schildkraut_1965", "Wetmur_1991", "SantaLucia_1996", 
                     "SantaLucia_DeltaS_1998", "Owczarzy_2004", "Owczarzy_2008"]
 
 
-def create_default_qclm_temperature_config():
+def create_default_msdm_temperature_config():
     return TemperatureConfig(
         calculation_type="GC",
         gc_value_set="QuickChange",
@@ -247,7 +247,7 @@ class TemperatureConfig(JsonObject):
     tris = FloatProperty(default=20)
     mg = FloatProperty(default=2)
     dntp = FloatProperty(default=0.2)
-    # TODO: this isn't really being used in SSM anymore, check if it is needed in QCLM and remove it
+    # TODO: this isn't really being used in SSM anymore, check if it is needed in MSDM and remove it
     precision = IntegerProperty(default=0)
 
     def create_calculator(self, cached=True):

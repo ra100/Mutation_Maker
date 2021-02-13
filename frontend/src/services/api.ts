@@ -367,7 +367,7 @@ const getJobId = (job: JobResponse): string => R.last(job.result_url.split('/'))
 export const submitRequest = (endpoint: string, requestData: any): Promise<JobDescription> => {
   let path = endpoint
   if (endpoint === Workflow.msdm) {
-    path = 'qclm' // TODO remove when backend renames qclm to msdm
+    path = 'msdm'
   }
 
   return submitJob(path, requestData).then(jobResponse => ({

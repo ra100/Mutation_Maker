@@ -45,12 +45,12 @@ def find_ssm_primers(body, response, hug_celery):
     return start_celery_task(body, response, hug_celery, 'tasks.ssm', "export_ssm")
 
 
-@hug.post('/qclm', versions=1)
-def find_qclm_primers(body, response, hug_celery):
+@hug.post('/msdm', versions=1)
+def find_msdm_primers(body, response, hug_celery):
     """
-    Return task if type QuikChange Lightning Multi Site-Directed Mutagenesis (QCLM)
+    Return task if type QuikChange Lightning Multi Site-Directed Mutagenesis (MSDM)
     """
-    return start_celery_task(body, response, hug_celery, 'tasks.qclm', "export_qclm")
+    return start_celery_task(body, response, hug_celery, 'tasks.msdm', "export_msdm")
 
 
 @hug.post('/pas', versions=1)
@@ -129,9 +129,9 @@ def check_task(task_id, hug_celery):
         return async_result.traceback
 
 
-@hug.get('/export_qclm/{task_id}.xlsx', versions=1, output=hug.output_format.file)
+@hug.get('/export_msdm/{task_id}.xlsx', versions=1, output=hug.output_format.file)
 def export_task(task_id, hug_celery):
-    task = hug_celery.send_task("tasks.export_qclm", args=[task_id])
+    task = hug_celery.send_task("tasks.export_msdm", args=[task_id])
     result = task.get()
     if result is not None:
         file_like = io.BytesIO(result.encode())

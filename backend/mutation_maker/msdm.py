@@ -30,28 +30,28 @@ from Bio.Data import CodonTable
 
 from mutation_maker.basic_types import PrimerSpec
 from mutation_maker.codon_usage_table import Organism
-from mutation_maker.qclm_solution import DNASequenceForMutagenesis, Offset, AminoAcid, Codon, \
-    QCLMPrimers, QCLMSolution, ScoredPrimer
+from mutation_maker.msdm_solution import DNASequenceForMutagenesis, Offset, AminoAcid, Codon, \
+    MSDMPrimers, MSDMSolution, ScoredPrimer
 from mutation_maker.site_split import SiteSplits, SiteSequence, SiteSet
 from mutation_maker.primer_scoring import PrimerScoring
 from mutation_maker.degenerate_codon import DegenerateTriplet, DegenerateTripletWithAminos, CodonUsage
-from mutation_maker.mutation import MutationSite, QCLMMutationSiteSequence
-from mutation_maker.qclm_types import QCLMConfig, QCLMInput, QCLMMutationOutput, QCLMOutput, \
-    QCLMSequences, SetOfMutationSiteSequences
+from mutation_maker.mutation import MutationSite, MSDMMutationSiteSequence
+from mutation_maker.msdm_types import MSDMConfig, MSDMInput, MSDMMutationOutput, MSDMOutput, \
+    MSDMSequences, SetOfMutationSiteSequences
 from mutation_maker.temperature_calculator import TemperatureCalculator, HeteroDimerCalculator
-from mutation_maker.qclm_types import (PrimerOutput)
+from mutation_maker.msdm_types import (PrimerOutput)
 from mutation_maker.pas_degeneracy_recursion import Degeneracy
 from mutation_maker.degeneracy_lookup import lookup
 from mutation_maker.usage_table import UsageTable
 
 
-def calculate_mutagenic_primer_search_area(mutation: QCLMMutationSiteSequence,
-                                           qclm_config: QCLMConfig) -> Tuple[int, int]:
-    min_start = mutation.position - qclm_config.max_five_end_size
+def calculate_mutagenic_primer_search_area(mutation: MSDMMutationSiteSequence,
+                                           msdm_config: MSDMConfig) -> Tuple[int, int]:
+    min_start = mutation.position - msdm_config.max_five_end_size
     search_area_length = (
-            qclm_config.max_five_end_size +
+            msdm_config.max_five_end_size +
             mutation.length +
-            qclm_config.max_three_end_size
+            msdm_config.max_three_end_size
     )
 
     if min_start < 0:
@@ -61,8 +61,8 @@ def calculate_mutagenic_primer_search_area(mutation: QCLMMutationSiteSequence,
     return min_start, search_area_length
 
 
-def qclm_solve(workflow_input: QCLMInput):
-    solver = QCLMSolver(workflow_input.sequences, workflow_input.config)
+def msdm_solve(workflow_input: MSDMInput):
+    solver = MSDMSolver(workflow_input.sequences, workflow_input.config)
 
     mutations = workflow_input.parse_mutations(solver.goi_offset)
     output = solver.solve(workflow_input, mutations)
@@ -175,7 +175,7 @@ def solve_set_cover(config, aminos_for_sites):
 
 def get_next_site_start(current_site, starts):
     """
-    Computes start of next site in QCLM solution. If the current site is the last on in the solution,
+    Computes start of next site in MSDM solution. If the current site is the last on in the solution,
     the method returns infinite. This is because we use this method in computing overlap with the next site by comparing
     end of current site and the start of next site. So infinite gives no overlap.
     :param current_site: current site set
@@ -190,10 +190,10 @@ def get_next_site_start(current_site, starts):
     return starts[ind+1][1]
 
 
-def compute_starts(solution:QCLMSolution):
+def compute_starts(solution:MSDMSolution):
     """
     Create list of tupples:
-        - qclm site
+        - msdm site
         - minimal starting value of primer for this site
     :param solution:
     :return: ordered list by site start
@@ -219,33 +219,33 @@ def check_for_overlap(sites_boundaries, site_id, start, end):
     return False
 
 
-class QCLMSolver:
-    config: QCLMConfig
+class MSDMSolver:
+    config: MSDMConfig
     temp_calculator: TemperatureCalculator
     sequence: str
     goi_offset: int
 
-    def __init__(self, qclm_sequences: QCLMSequences, qclm_config: QCLMConfig) -> None:
-        self.config = qclm_config
-        if qclm_config.organism == "e-coli":
+    def __init__(self, msdm_sequences: MSDMSequences, msdm_config: MSDMConfig) -> None:
+        self.config = msdm_config
+        if msdm_config.organism == "e-coli":
             self.usages = CodonUsage("e-coli")
-        elif qclm_config.organism == "yeast":
+        elif msdm_config.organism == "yeast":
             self.usages = CodonUsage("yeast")
         else:
-            org = Organism(qclm_config.organism)
+            org = Organism(msdm_config.organism)
             self.usages = org.translation_table
 
-        self.temp_calculator = qclm_config.temperature_config.create_calculator()
-        self.sequence, self.goi_offset = qclm_sequences.get_full_sequence_with_offset()
+        self.temp_calculator = msdm_config.temperature_config.create_calculator()
+        self.sequence, self.goi_offset = msdm_sequences.get_full_sequence_with_offset()
         self.__hetero_bind_calculator = HeteroDimerCalculator(self.config.temperature_config.k,
                                                               self.config.temperature_config.mg,
                                                               self.config.temperature_config.dntp)
 
-    def solve(self, input_data: QCLMInput, mutations: List[MutationSite]) \
-            -> QCLMOutput:
+    def solve(self, input_data: MSDMInput, mutations: List[MutationSite]) \
+            -> MSDMOutput:
 
         """
-        Find a solution to the QCLM problem.
+        Find a solution to the MSDM problem.
 
         :param input_data:
         :param mutations: A list of requested mutations
@@ -322,7 +322,7 @@ class QCLMSolver:
             # FIND CODONS DEFINING MUTATIONS IN PRIMERS, FOR EACH SITE SEQUENCE APPEARING IN ANY CONSIDERED SITE SPLIT
             #
 
-            current_primers = QCLMPrimers(site_splits, mutated_dna_sequence, self.config, self.temp_calculator)
+            current_primers = MSDMPrimers(site_splits, mutated_dna_sequence, self.config, self.temp_calculator)
 
             # noinspection PyUnusedLocal
             seq: SiteSequence
@@ -358,10 +358,10 @@ class QCLMSolver:
 
             #
             # GROW THE PRIMERS UNTIL THEY REACH A SELECTED TEMPERATURE THRESHOLD.
-            # COLLECT A QCLM SOLUTION FOR EACH TEMPERATURE THRESHOLD.
+            # COLLECT A MSDM SOLUTION FOR EACH TEMPERATURE THRESHOLD.
             #
 
-            solutions: List[QCLMSolution] = []
+            solutions: List[MSDMSolution] = []
             score_fun = PrimerScoring(mutated_dna_sequence, self.config)
 
             eps = 1e-6
@@ -431,19 +431,19 @@ class QCLMSolver:
                                best_primers: Mapping[SiteSet, Sequence[ScoredPrimer]],
                                site_splits: SiteSplits,
                                temperature: float,
-                               mutations: List[MutationSite], config: QCLMConfig,
+                               mutations: List[MutationSite], config: MSDMConfig,
                                base: DNASequenceForMutagenesis) \
-            -> QCLMSolution:
-        """ Creates a QCLM solution from selected primers, using a site split which provides
+            -> MSDMSolution:
+        """ Creates a MSDM solution from selected primers, using a site split which provides
             the lowest score for the solution.
         """
         print("Selecting best splits")
 
-        best_solution = QCLMSolution(mutations, temperature, config)
+        best_solution = MSDMSolution(mutations, temperature, config)
         best_score = math.inf
 
         for site_split in site_splits.splits:
-            solution = QCLMSolution(mutations, temperature, config)
+            solution = MSDMSolution(mutations, temperature, config)
             for site_seq in site_split:
                 site_set = frozenset(site_seq)
 
@@ -491,14 +491,14 @@ class QCLMSolver:
             print(repr(col))
         return collections_covering_all_sites
 
-    def create_new_output(self, input_data: QCLMInput, solution: QCLMSolution) \
-            -> QCLMOutput:
+    def create_new_output(self, input_data: MSDMInput, solution: MSDMSolution) \
+            -> MSDMOutput:
         """
-        Parse QCLM solution and create output object which can be automatically translated to json.
+        Parse MSDM solution and create output object which can be automatically translated to json.
         """
 
         sites_boundaries = compute_starts(solution)
-        results: List[QCLMMutationOutput] = []
+        results: List[MSDMMutationOutput] = []
         parsed_mutations = input_data.parse_mutations(self.goi_offset)
 
 
@@ -533,7 +533,7 @@ class QCLMSolver:
                 else:
                     overlap_with_next = False
 
-                results.append(QCLMMutationOutput(
+                results.append(MSDMMutationOutput(
                     result_found=True,
                     mutations=user_mutation_strings,
                     primers=[PrimerOutput(
@@ -547,7 +547,7 @@ class QCLMSolver:
                     )]
                 ))
 
-        return QCLMOutput(
+        return MSDMOutput(
             results=results,
             full_sequence=self.sequence,
             goi_offset=self.goi_offset,
@@ -572,7 +572,7 @@ class QCLMSolver:
 
     # The input is a set of subsets of sequences of mutation sites. The function finds all combinations of
     # the subsets such that they include all mutation sites and are mutually disjoint.
-    def combine(self, options: List[List[QCLMMutationSiteSequence]]) \
+    def combine(self, options: List[List[MSDMMutationSiteSequence]]) \
             -> List[SetOfMutationSiteSequences]:
         result: List[SetOfMutationSiteSequences] = []
         self.combine_recursive(result, [], options, len(options))
@@ -580,8 +580,8 @@ class QCLMSolver:
 
     def combine_recursive(self,
                           result_acc: List[SetOfMutationSiteSequences],
-                          subresult_acc: List[QCLMMutationSiteSequence],
-                          options: List[List[QCLMMutationSiteSequence]],
+                          subresult_acc: List[MSDMMutationSiteSequence],
+                          options: List[List[MSDMMutationSiteSequence]],
                           mutations_count: int) -> None:
         if len(options) == 0:
             combo = SetOfMutationSiteSequences(subresult_acc)
@@ -596,8 +596,8 @@ class QCLMSolver:
                     new_subresult.append(option)
                 self.combine_recursive(result_acc, new_subresult, options[1:], mutations_count)
 
-    def can_be_added(self, current_combo: List[QCLMMutationSiteSequence],
-                     new_option: QCLMMutationSiteSequence) -> bool:
+    def can_be_added(self, current_combo: List[MSDMMutationSiteSequence],
+                     new_option: MSDMMutationSiteSequence) -> bool:
         for option in current_combo:
             if option.has_overlap(new_option):
                 return False
@@ -607,13 +607,13 @@ class QCLMSolver:
     # For each combination, find possible non-degenerate codons that achieve the desired mutations.
     # Params:
     # mutation: Description of one mutation site which should always be covered.
-    # others: All mutations specified as the QCLM input.
+    # others: All mutations specified as the MSDM input.
     # mutation_boundaries: Sequence ranges around each mutation site, computed by the found_boundaries() function.
     def find_combination_possibilities(self, mutation: MutationSite,
                                        other: List[MutationSite],
                                        mutation_boundaries: Dict[MutationSite,
                                                                  Tuple[int, int]]) \
-            -> List[QCLMMutationSiteSequence]:
+            -> List[MSDMMutationSiteSequence]:
         boundary_offset = self.config.max_primer_size - mutation.length - \
                           self.config.min_five_end_size - self.config.min_three_end_size
         min_position = mutation.get_start() - boundary_offset
@@ -626,7 +626,7 @@ class QCLMSolver:
         possibilities_positions = sorted([p.position for p in other_possibilities])
 
         if possibilities_count == 0:
-            raise Exception("Invalid QCLM configuration")
+            raise Exception("Invalid MSDM configuration")
 
         combos = []
 
@@ -641,12 +641,12 @@ class QCLMSolver:
 
                         continue
 
-                    combos.append(QCLMMutationSiteSequence(
+                    combos.append(MSDMMutationSiteSequence(
                         combination, self.usages, self.config.codon_usage_frequency_threshold,
                         mutation_boundaries))
         return combos
 
-    def compute_hb_panalty(self, this_primer: PrimerSpec, partial_solution: QCLMSolution, current_site: frozenset,
+    def compute_hb_panalty(self, this_primer: PrimerSpec, partial_solution: MSDMSolution, current_site: frozenset,
                            base: DNASequenceForMutagenesis):
         """
         Computes penalty for hetero dimers. The hetero dimer temperature is computed with Primer3 library.
@@ -655,7 +655,7 @@ class QCLMSolver:
         Hetero dimer temperature calculation requires sequence of 2 primers. It adds penalty for every pair of
         primers which are over safe temperature. Pairs are current primer vs all other primers from different site.
         :param this_primer: primer specification
-        :param partial_solution: partial QCLM solution against which we will compute penalty
+        :param partial_solution: partial MSDM solution against which we will compute penalty
         :param current_site: site of current primer
         :param base: DNA for mutagenesis, needed for extracting primer sequences
         :return: float penalty value
@@ -679,7 +679,7 @@ class QCLMSolver:
               have to store the codon information throughout the computation.
         """
         return [
-            {QCLMSolver.pick_random_codon(amino, usage_table, threshold) for amino in site}
+            {MSDMSolver.pick_random_codon(amino, usage_table, threshold) for amino in site}
             for site in aminos_for_sites
         ]
 

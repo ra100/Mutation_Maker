@@ -16,8 +16,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from mutation_maker.basic_types import AminoAcid, Offset
-from mutation_maker.qclm_types import SetOfMutationSiteSequences
-from mutation_maker.mutation import QCLMMutationSiteSequence
+from mutation_maker.msdm_types import SetOfMutationSiteSequences
+from mutation_maker.mutation import MSDMMutationSiteSequence
 from typing import Tuple, List, Set, FrozenSet, Sequence, Iterable, MutableMapping, NewType
 
 # A sequence of mutation sites identified by their offsets.
@@ -128,7 +128,7 @@ class SiteSplits:
         result = cls()
 
         for site_seq_set in mut_combos:
-            seq_list: List[QCLMMutationSiteSequence] = sorted(site_seq_set.mutations, key=lambda x: x.position)
+            seq_list: List[MSDMMutationSiteSequence] = sorted(site_seq_set.mutations, key=lambda x: x.position)
             split = []
             for seq in seq_list:
                 split.append([mutation_site.position for mutation_site in seq.ordered_mutations])

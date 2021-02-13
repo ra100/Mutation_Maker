@@ -205,7 +205,7 @@ class MutationSite:
 # Info on all possibilities of concrete mutations for a sequence of consecutive mutation sites.
 # With utility functions for generating options for AAs mutation combinations
 # and mutation codons.
-class QCLMMutationSiteSequence:
+class MSDMMutationSiteSequence:
     """
     Combines multiple mutation sites together, with utility function
     for generating options for AAs mutation combinations and mutation codons.

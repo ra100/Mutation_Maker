@@ -30,7 +30,7 @@ from mutation_maker.primer_scoring import PrimerScoring
 from mutation_maker.site_split import SiteSet, SiteSplits, SiteSplit
 from mutation_maker.basic_types import AminoAcid, Offset, PrimerSpec, Temperatures, Codon, DNASequenceForMutagenesis, \
     CODON_LENGTH, MAX_PRIMER3_PRIMER_SIZE
-from mutation_maker.qclm_types import QCLMConfig
+from mutation_maker.msdm_types import MSDMConfig
 from mutation_maker.temperature_calculator import TemperatureCalculator, TemperatureConfig, SelfBindingTemps, \
     SelfBindingCalculator
 from typing import Iterable, Sequence, Tuple, MutableMapping, List, \
@@ -117,8 +117,8 @@ class ScoredPrimer(NamedTuple):
     tm: float
 
 
-class QCLMSolution:
-    """ A solution for the QCLM problem.
+class MSDMSolution:
+    """ A solution for the MSDM problem.
         It contains only one mutation site split.
         There is only one primer for each codon combination for each mutation site sequence.
     """
@@ -126,23 +126,23 @@ class QCLMSolution:
     mutations: List[MutationSite]
     primers: MutableMapping[SiteSet, List[ScoredPrimer]]
     temperature: float
-    config: QCLMConfig
+    config: MSDMConfig
 
     __self_bind_calculator: SelfBindingCalculator
 
-    def __init__(self, mutations: List[MutationSite], temperature: float, qclm_config: QCLMConfig):
+    def __init__(self, mutations: List[MutationSite], temperature: float, msdm_config: MSDMConfig):
         self.primers = {}
         self.mutations = mutations
         self.temperature = temperature
-        self.config = qclm_config
-        cfgt: TemperatureConfig = qclm_config.temperature_config
+        self.config = msdm_config
+        cfgt: TemperatureConfig = msdm_config.temperature_config
         self.__self_bind_calculator = SelfBindingCalculator(cfgt.k, cfgt.mg, cfgt.dntp)
-        if qclm_config.organism == "e-coli":
+        if msdm_config.organism == "e-coli":
             self.usages = CodonUsage("e-coli")
-        elif qclm_config.organism == "yeast":
+        elif msdm_config.organism == "yeast":
             self.usages = CodonUsage("yeast")
         else:
-            org = Organism(qclm_config.organism)
+            org = Organism(msdm_config.organism)
             self.usages = org.translation_table
 
     def add_primer(self, site_set: SiteSet, primer_spec: PrimerSpec, primer_temp: float, score: float):
@@ -281,11 +281,11 @@ class QCLMSolution:
                f"reaction temperature={self.temperature}"
 
 
-class QCLMPrimers:
-    """ A structure for storing intermediate results for a QCLM solution."""
+class MSDMPrimers:
+    """ A structure for storing intermediate results for a MSDM solution."""
 
     base: DNASequenceForMutagenesis
-    config: QCLMConfig
+    config: MSDMConfig
     temp_calculator: TemperatureCalculator
 
     # Primer codons for site sequences appearing in __site_splits.
@@ -298,7 +298,7 @@ class QCLMPrimers:
     __self_binding_tm_cache: MutableMapping[PrimerSpec, SelfBindingTemps]
 
     def __init__(self, splits: SiteSplits, base: DNASequenceForMutagenesis,
-                 qclm_config: QCLMConfig, temp_calculator: TemperatureCalculator):
+                 msdm_config: MSDMConfig, temp_calculator: TemperatureCalculator):
         self.__primer_defs = {}
         self.__primers = {}
         self.__self_binding_tm_cache = {}
@@ -307,10 +307,10 @@ class QCLMPrimers:
             self.__primers[site_set] = PrimersAndTemps()
 
         self.base = base
-        self.config = qclm_config
+        self.config = msdm_config
         self.temp_calculator = temp_calculator
 
-        cfgt: TemperatureConfig = qclm_config.temperature_config
+        cfgt: TemperatureConfig = msdm_config.temperature_config
         self.__self_bind_calculator = SelfBindingCalculator(cfgt.k, cfgt.mg, cfgt.dntp)
 
     def get_primers(self) -> MutableMapping[SiteSet, PrimersAndTemps]:

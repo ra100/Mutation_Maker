@@ -10,6 +10,6 @@ node_modules
 work
 aws-deploy.sh
 .idea/
-backend/tests/unit_tests/qclm_*
+backend/tests/unit_tests/msdm_*
 build/*
 primer3_core

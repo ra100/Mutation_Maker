@@ -26,7 +26,7 @@ from Bio.Alphabet import IUPAC
 from Bio.Data import CodonTable
 
 from mutation_maker.basic_types import Offset, DNASequenceForMutagenesis
-from mutation_maker.qclm_types import QCLMInput, QCLMSequences, QCLMConfig
+from mutation_maker.msdm_types import MSDMInput, MSDMSequences, MSDMConfig
 from mutation_maker.ssm_types import SSMInput, SSMSequences, Plasmid, SSMConfig
 from mutation_maker.pas_types import PASInput, PASSequences, PASConfig, PASMutation, PASMutationSite, \
     PASMutationFormattedInput
@@ -93,7 +93,7 @@ def comp_dicts(d1, d2):
 # ======================================================================================================================#
 
 
-def get_statistics_qclm(data, metrics=None):
+def get_statistics_msdm(data, metrics=None):
     """
     Creates dictionary of statistic for mutation results.
     :param metrics:
@@ -169,8 +169,8 @@ def format_stats_ssm(stats):
             print('{:>10}'.format(key) + ": " + 'x' * stats[metric][key])
 
 
-def print_stats_qclm(data):
-    stats = get_statistics_qclm(data["results"])
+def print_stats_msdm(data):
+    stats = get_statistics_msdm(data["results"])
     format_stats(stats)
 
 
@@ -308,12 +308,12 @@ def generate_random_SSM_input(mut_cnt = 96, max_mut_per_site = 3, min_overlap_te
 
 
 # ======================================================================================================================#
-#                                               QCLM specific                                                          #
+#                                               MSDM specific                                                          #
 # ======================================================================================================================#
 
-def generate_qclm_input(ind=3, non_overlapping_primers=False) -> QCLMInput:
+def generate_msdm_input(ind=3, non_overlapping_primers=False) -> MSDMInput:
     """
-    Generates input for QCLM algorithm testing
+    Generates input for MSDM algorithm testing
     :param ind: index of mutations. We can pick from 3 different mutations list.
     :return:
     """
@@ -369,9 +369,9 @@ def generate_qclm_input(ind=3, non_overlapping_primers=False) -> QCLMInput:
                      "V152I", "Q155L", "W156T", "W156S", "A192S", "I196R", "I199L", "F215L", "R273V"]
         use_degenerate_codons = False
 
-    return QCLMInput(
-        sequences=sample_qclm_sequences(ind),
-        config=sample_qclm_config(ind, use_degeneracy_codon=use_degenerate_codons, non_overlapping_primers=non_overlapping_primers),
+    return MSDMInput(
+        sequences=sample_msdm_sequences(ind),
+        config=sample_msdm_config(ind, use_degeneracy_codon=use_degenerate_codons, non_overlapping_primers=non_overlapping_primers),
         mutations=mutations)
 
 
@@ -385,9 +385,9 @@ MIN_THREE_END_SIZE = 10
 MIN_FIVE_END_SIZE = 10
 
 
-def random_qclm_mutations(seq: QCLMSequences, no_sites=10, mutations_per_site=4) -> List[MutationsForSite]:
+def random_msdm_mutations(seq: MSDMSequences, no_sites=10, mutations_per_site=4) -> List[MutationsForSite]:
     """
-    Generates random mutations for QCLM algorithm testing
+    Generates random mutations for MSDM algorithm testing
     """
 
     first_codon = (len(seq.five_end_flanking_sequence) + MIN_FIVE_END_SIZE) // 3 + 1
@@ -422,7 +422,7 @@ def random_qclm_mutations(seq: QCLMSequences, no_sites=10, mutations_per_site=4)
     return sorted(result, key=lambda x: x.codon_index)
 
 
-def sample_qclm_sequences(ind=0) -> QCLMSequences:
+def sample_msdm_sequences(ind=0) -> MSDMSequences:
     if ind ==4:
         mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
         three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
@@ -444,15 +444,15 @@ def sample_qclm_sequences(ind=0) -> QCLMSequences:
         three_end_flanking = ""
         five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
 
-    return QCLMSequences(
+    return MSDMSequences(
         gene_of_interest=mutated_dna,
         five_end_flanking_sequence=five_end_flanking,
         three_end_flanking_sequence=three_end_flanking)
 
 
-def sample_qclm_config(ind=0, use_primer3=True, use_degeneracy_codon=True,
-                       non_overlapping_primers=False) -> QCLMConfig:
-    return QCLMConfig(
+def sample_msdm_config(ind=0, use_primer3=True, use_degeneracy_codon=True,
+                       non_overlapping_primers=False) -> MSDMConfig:
+    return MSDMConfig(
         min_gc_content=40,
         max_gc_content=60,
         temp_range_size=5,

@@ -19,54 +19,54 @@ import unittest
 
 from mutation_maker.basic_types import AminoAcid
 from mutation_maker.degenerate_codon import CodonUsage
-from mutation_maker.qclm import QCLMSolver, qclm_solve
-from mutation_maker.qclm_types import QCLMInput
-from tests.test_support import sample_qclm_sequences, random_qclm_mutations, sample_qclm_config, print_stats_qclm
+from mutation_maker.msdm import MSDMSolver, msdm_solve
+from mutation_maker.msdm_types import MSDMInput
+from tests.test_support import sample_msdm_sequences, random_msdm_mutations, sample_msdm_config, print_stats_msdm
 
 
-class QclmTest(unittest.TestCase):
+class MsdmTest(unittest.TestCase):
     e_coli = CodonUsage("e-coli")
 
     # e. coli has two codons for "F", "TTT" with 0.51 and "TTC" with 0.49
     def test_pick_random_codon(self):
         for _ in range(10):
-            codon = QCLMSolver.pick_random_codon(AminoAcid("F"), self.e_coli, 0.5)
+            codon = MSDMSolver.pick_random_codon(AminoAcid("F"), self.e_coli, 0.5)
             self.assertEqual("TTT", codon)
 
         # The probability that this fails is (1/2)^100 = 1e-31 ... good enough :)
-        codons = set(QCLMSolver.pick_random_codon(AminoAcid("F"), self.e_coli, 0.4) for _ in range(100))
+        codons = set(MSDMSolver.pick_random_codon(AminoAcid("F"), self.e_coli, 0.4) for _ in range(100))
         self.assertEqual({"TTT", "TTC"}, codons)
 
 
     def test_monte_carlo(self, n=1):
-        """ Generates random inputs for QCLM and checks whether the obtained solutions
+        """ Generates random inputs for MSDM and checks whether the obtained solutions
             fulfills input constraints. """
 
-        sequences = sample_qclm_sequences()
+        sequences = sample_msdm_sequences()
 
         for i in range(0, n):
-            mutations = random_qclm_mutations(sequences, no_sites=5)
+            mutations = random_msdm_mutations(sequences, no_sites=5)
 
             mutation_strings = [m.orig_amino + str(m.codon_index) + m.target_amino
                                 for m in mutations]
 
             print(f"\nTEST CASE NO. {i+1}, with Primer3\n")
-            config = sample_qclm_config(use_primer3=True)
-            qclm_data = QCLMInput(
+            config = sample_msdm_config(use_primer3=True)
+            msdm_data = MSDMInput(
                 sequences=sequences,
                 config=config,
                 mutations=mutation_strings)
-            self._run_test(qclm_data)
+            self._run_test(msdm_data)
 
             print(f"\nTEST CASE NO. {i+1}, without Primer3\n")
-            qclm_data.config.use_primer3 = False
-            self._run_test(qclm_data)
+            msdm_data.config.use_primer3 = False
+            self._run_test(msdm_data)
 
 
-    def _run_test(self, qclm_data):
-        result = qclm_solve(qclm_data)
+    def _run_test(self, msdm_data):
+        result = msdm_solve(msdm_data)
 
-        print_stats_qclm(result)
+        print_stats_msdm(result)
 
         return result
 

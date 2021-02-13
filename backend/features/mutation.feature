@@ -17,29 +17,29 @@
 
 Feature: Mutation class
   Mutation class is encapsulating mutations
-  
+
   Mutation classes are parsed from list of mutations in format X000Y where:
     * X is old amino acid on position 000
     * 000 is one-based amino acid position of mutation in parent sequence
     * Y is new target amino acid
 
-  Amino acids are from IUPAC one letter amino acid code 
+  Amino acids are from IUPAC one letter amino acid code
   Valid amino acids therefore are: A C D E F G H I K L M N P Q R S T V W Y
 
   Position is saved as zero-based position with optional offset
   One-based amino position is converted to zero-based base position as b = (a - 1) * 3
-  where a is one-based amino position and b is zero-based base position 
+  where a is one-based amino position and b is zero-based base position
 
   For SSM workflow we are using CodonMutation class. It contains only one target
   amino for one position.
 
-  For QCLM workflow we are using MultiAminoTargetMutation which can have multiple 
-  target amino acids plus it also contains wildcard amino acid what means that 
+  For MSDM workflow we are using MultiAminoTargetMutation which can have multiple
+  target amino acids plus it also contains wildcard amino acid what means that
   old amino acid is part of target amino acids
 
   #TODO check validity of original amino
   Validity of original amino is not checked for now.
-  
+
   Scenario: Parse valid mutation
     Given input string is A51F
     When i want to create mutation

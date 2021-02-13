@@ -21,11 +21,11 @@ from jsonobject import JsonObject, IntegerProperty, FloatProperty, \
 
 from mutation_maker.mutation import parse_codon_mutation, create_multi_amino_mutations
 from mutation_maker.temperature_calculator import (
-    TemperatureConfig, create_default_qclm_temperature_config)
-from mutation_maker.mutation import MutationSite, QCLMMutationSiteSequence
+    TemperatureConfig, create_default_msdm_temperature_config)
+from mutation_maker.mutation import MutationSite, MSDMMutationSiteSequence
 
 
-class QCLMConfig(JsonObject):
+class MSDMConfig(JsonObject):
     min_primer_size = IntegerProperty(default=23)
     opt_primer_size = IntegerProperty(default=23)
     max_primer_size = IntegerProperty(default=60)
@@ -60,7 +60,7 @@ class QCLMConfig(JsonObject):
 
     # Temperature calculator configuration
     temperature_config = ObjectProperty(TemperatureConfig,
-                                        default=create_default_qclm_temperature_config())
+                                        default=create_default_msdm_temperature_config())
 
     # Weights used for non_optimality calculation.
     temp_weight = FloatProperty(default=16)         # for 1 deg C difference from the reaction temperature
@@ -79,7 +79,7 @@ class QCLMConfig(JsonObject):
     organism=StringProperty(default="e-coli")
 
 
-class QCLMSequences(JsonObject):
+class MSDMSequences(JsonObject):
     gene_of_interest = StringProperty(required=True)
     five_end_flanking_sequence = StringProperty(default="")
     three_end_flanking_sequence = StringProperty(default="")
@@ -93,9 +93,9 @@ class QCLMSequences(JsonObject):
         return full_sequence, offset
 
 
-class QCLMInput(JsonObject):
-    sequences = ObjectProperty(QCLMSequences, required=True)
-    config = ObjectProperty(QCLMConfig, required=True)
+class MSDMInput(JsonObject):
+    sequences = ObjectProperty(MSDMSequences, required=True)
+    config = ObjectProperty(MSDMConfig, required=True)
     mutations = ListProperty(str, required=True)
 
     def parse_mutations(self, goi_offset: int) -> List[MutationSite]:
@@ -116,7 +116,7 @@ class PrimerOutput(JsonObject):
     degenerate_codons = ListProperty(str, required=True)
     overlap_with_following = BooleanProperty(default=False, required=False)
 
-class QCLMMutationOutput(JsonObject):
+class MSDMMutationOutput(JsonObject):
     # List of mutations in the format "E42L"
     mutations = ListProperty(str, required=True)
     result_found = BooleanProperty(required=True)
@@ -126,15 +126,15 @@ class QCLMMutationOutput(JsonObject):
     primers = ListProperty(PrimerOutput)
 
 
-class QCLMOutput(JsonObject):
-    input_data = ObjectProperty(QCLMInput, required=True)
+class MSDMOutput(JsonObject):
+    input_data = ObjectProperty(MSDMInput, required=True)
     full_sequence = StringProperty(required=True)
     goi_offset = IntegerProperty(required=True)
-    results = ListProperty(QCLMMutationOutput, required=True)
+    results = ListProperty(MSDMMutationOutput, required=True)
 
 
 class SetOfMutationSiteSequences:
-    def __init__(self, mutation_options_for_site_combos: List[QCLMMutationSiteSequence]) -> None:
+    def __init__(self, mutation_options_for_site_combos: List[MSDMMutationSiteSequence]) -> None:
         self.mutations = frozenset(mutation_options_for_site_combos)
         self.total_aminos = sum(map(lambda x: x.aminos_count, self.mutations))
 

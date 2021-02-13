@@ -22,7 +22,7 @@ from celery import Celery
 
 from mutation_maker.codon_usage_table import get_organism_names, get_organism_names_with_ids
 from mutation_maker.ssm import ssm_solve
-from mutation_maker.qclm import qclm_solve, QCLMInput, QCLMOutput
+from mutation_maker.msdm import msdm_solve, MSDMInput, MSDMOutput
 from mutation_maker.primer3_interoperability import Primer3, AllPrimerGenerator, NullPrimerGenerator
 from mutation_maker.ssm_types import SSMInput, SSMOutput
 from mutation_maker.pas import pas_solve
@@ -52,12 +52,12 @@ def ssm(ssm_input):
     return ssm_solve(input, main_generator, secondary_generator)
 
 
-@celery.task(name='tasks.qclm')
-def qclm(qclm_input):
-    data = parse_body(qclm_input)
-    input = QCLMInput(data)
+@celery.task(name='tasks.msdm')
+def msdm(msdm_input):
+    data = parse_body(msdm_input)
+    input = MSDMInput(data)
 
-    return qclm_solve(input)
+    return msdm_solve(input)
 
 @celery.task(name='tasks.species_table')
 def species_table(args):

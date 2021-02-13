@@ -18,7 +18,7 @@
 import unittest
 
 from mutation_maker.basic_types import AminoAcid, Offset
-from mutation_maker.qclm_solution import PrimerSpec, DNASequenceForMutagenesis
+from mutation_maker.msdm_solution import PrimerSpec, DNASequenceForMutagenesis
 from mutation_maker.site_split import SiteSequenceAminos
 
 base_sequence = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"

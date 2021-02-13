@@ -16,14 +16,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-Unit tests for QCLM overlapping primers. For this the non-overlapping solution parameters was introduced.
+Unit tests for MSDM overlapping primers. For this the non-overlapping solution parameters was introduced.
 
 """
 import random
 import unittest
 
-from mutation_maker.qclm import qclm_solve
-from tests.test_support import generate_qclm_input
+from mutation_maker.msdm import msdm_solve
+from tests.test_support import generate_msdm_input
 
 def num_only(string: str):
     return "".join([s for s in string if s.isdigit()])
@@ -45,11 +45,11 @@ def count_overlaps(primers_postions):
     return cnt_overlaps
 
 
-def extract_muations(qclm_result):
+def extract_muations(msdm_result):
     mut_positions = set()
     # here we store primers start and enc positions, as a key we use mutations, which the primer is covering
     primers_postions = {}
-    for res in qclm_result["results"]:
+    for res in msdm_result["results"]:
         # we create key from just mutation positions therefore [1:-1]
         key = "-".join(res["mutations"])
         key_pos = "-".join([num_only(m) for m in res["mutations"]])
@@ -67,7 +67,7 @@ def extract_muations(qclm_result):
     return mut_positions,primers_postions
 
 
-class QCLMCoverageTest(unittest.TestCase):
+class MSDMCoverageTest(unittest.TestCase):
 
     def test_non_overlap_false(self):
         """
@@ -75,15 +75,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect to find some overlaps
         :return:
         """
-        qclm_data = generate_qclm_input(11)
-        qclm_data.config.non_overlapping_primers = False
+        msdm_data = generate_msdm_input(11)
+        msdm_data.config.non_overlapping_primers = False
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
         mut_positions = set()
         # here we store primers start and enc positions, as a key we use mutations, which the primer is covering
@@ -123,15 +123,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(11)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(11)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
         mut_positions = set()
         # here we store primers start and enc positions, as a key we use mutations, which the primer is covering
@@ -172,15 +172,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(1)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(1)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -201,15 +201,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(2)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(2)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -230,15 +230,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(3)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(3)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -259,15 +259,15 @@ class QCLMCoverageTest(unittest.TestCase):
     #     For specified input we expect not to find any overlap
     #     :return:
     #     """
-    #     qclm_data = generate_qclm_input(4)
-    #     qclm_data.config.non_overlapping_primers = True
+    #     msdm_data = generate_msdm_input(4)
+    #     msdm_data.config.non_overlapping_primers = True
     #     exp = set()
     #
-    #             for mut in qclm_data.mutations:
+    #             for mut in msdm_data.mutations:
     #             exp.update(set(extract_position_from_key(mut)))
     #
     #         random.seed(121)
-    #         result = qclm_solve(qclm_data)
+    #         result = msdm_solve(msdm_data)
     #         print(result)
     #
     #         mut_positions, primers_postions = extract_muations(result)
@@ -288,15 +288,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(5)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(5)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -318,15 +318,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(6)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(6)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -348,15 +348,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(7)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(7)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -378,15 +378,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(8)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(8)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -408,15 +408,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(9)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(9)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -438,15 +438,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(10)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(10)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -468,15 +468,15 @@ class QCLMCoverageTest(unittest.TestCase):
         For specified input we expect not to find any overlap
         :return:
         """
-        qclm_data = generate_qclm_input(11)
-        qclm_data.config.non_overlapping_primers = True
+        msdm_data = generate_msdm_input(11)
+        msdm_data.config.non_overlapping_primers = True
         exp = set()
 
-        for mut in qclm_data.mutations:
+        for mut in msdm_data.mutations:
             exp.update(set(extract_position_from_key(mut)))
 
         random.seed(121)
-        result = qclm_solve(qclm_data)
+        result = msdm_solve(msdm_data)
         print(result)
 
         mut_positions, primers_postions = extract_muations(result)
@@ -493,26 +493,26 @@ class QCLMCoverageTest(unittest.TestCase):
 
 
 
-class QCLMNonOverlapTest(unittest.TestCase):
+class MSDMNonOverlapTest(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        super(QCLMNonOverlapTest, self).__init__(*args, **kwargs)
+        super(MSDMNonOverlapTest, self).__init__(*args, **kwargs)
 
     def runTest(self, non_overlap_flag, ind):
         self.non_overlap_flag = non_overlap_flag
-        self.qclm_data = generate_qclm_input(ind)
-        self.qclm_data.config.non_overlapping_primers = self.non_overlap_flag
+        self.msdm_data = generate_msdm_input(ind)
+        self.msdm_data.config.non_overlapping_primers = self.non_overlap_flag
         random.seed(121)
-        self.qclm_result = qclm_solve(self.qclm_data)
+        self.msdm_result = msdm_solve(self.msdm_data)
 
         self.exp = set()
-        for mut in self.qclm_data.mutations:
+        for mut in self.msdm_data.mutations:
             self.exp.update(set(extract_position_from_key(mut)))
 
         mut_positions = set()
         # here we store primers start and enc positions, as a key we use mutations, which the primer is covering
         primers_postions = {}
-        for res in self.qclm_result["results"]:
+        for res in self.msdm_result["results"]:
             # we create key from just mutation positions therefore [1:-1]
             key = "-".join(res["mutations"])
             key_pos = "-".join([m[1:-1] for m in res["mutations"]])

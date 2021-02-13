@@ -20,14 +20,14 @@ import math
 from Bio.SeqUtils import GC
 
 from mutation_maker.basic_types import PrimerSpec, DNASequenceForMutagenesis
-from mutation_maker.qclm_types import QCLMConfig
+from mutation_maker.msdm_types import MSDMConfig
 from mutation_maker.site_split import SiteSet
 
 
 class PrimerScoring:
     """ Function object for calculating a score for a primer and reaction temperature."""
 
-    def __init__(self, base: DNASequenceForMutagenesis, config: QCLMConfig):
+    def __init__(self, base: DNASequenceForMutagenesis, config: MSDMConfig):
         self.base = base
         self.config = config
 
@@ -37,7 +37,7 @@ class PrimerScoring:
 
         primer_seq = primer_spec.get_sequence(self.base)
 
-        cfg: QCLMConfig = self.config
+        cfg: MSDMConfig = self.config
 
         opt_target_gc_content = (cfg.max_gc_content + cfg.min_gc_content) / 2
 
