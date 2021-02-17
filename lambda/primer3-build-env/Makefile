@@ -6,12 +6,12 @@ PRIMER3_DIR=primer3
 
 ## Build primer3 binary in Docker
 build-primer3: prepare-primer3 build-image
-	docker run --rm -v $(BUILD_DIR):/build_dir -it $(IMAGE_NAME) make
+	docker run --rm -v $(BUILD_DIR):/build_dir -i $(IMAGE_NAME) make
 	cp $(PRIMER3_DIR)/src/primer3_core primer3_core
 
 ## Run shell in primer3 Docker image
 run-container:
-	docker run --rm -v $(BUILD_DIR):/build_dir -it $(IMAGE_NAME)
+	docker run --rm -v $(BUILD_DIR):/build_dir -i $(IMAGE_NAME)
 
 ## Build primer3 Docker image
 build-image:

@@ -71,7 +71,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./lambda:/lambda
+      # - ./lambda:/lambda
     environment:
       - SAM_CLI_TELEMETRY=0
     ports:

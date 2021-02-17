@@ -30,7 +30,9 @@ RUN source /root/.bashrc && \
 COPY requirements.txt /var/tmp/
 RUN python3 -m pip install -r /var/tmp/requirements.txt
 
-VOLUME /lambda
+RUN mkdir -p /lambda
+
+COPY . /lambda
 
 WORKDIR /lambda
 
