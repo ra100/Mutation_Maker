@@ -37,7 +37,7 @@ jobs:
           image: ${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3
           tags: latest
           registry: docker.io
-          dockerfile: Dockerfile
+          dockerfile: lambda/Dockerfile
           directory: lambda
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
