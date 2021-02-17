@@ -31,13 +31,12 @@ jobs:
           cd lambda
           make
 
-      - uses: mr-smithers-excellent/docker-build-push@v3
-        name: Build & push Docker image
+      - name: Build and Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          image: ${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3
-          tags: latest
-          registry: docker.io
-          dockerfile: lambda/Dockerfile
-          directory: lambda
+          name: ${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: lambda/Dockerfile
+          workdir: lambda
+          context: lambda
