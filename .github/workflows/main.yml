@@ -2,13 +2,13 @@
 
 name: Primer3
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,11 +36,11 @@ jobs:
         with:
           args: --docker
         env:
-          USERNAME: ${{ secrets.GITHUB_USERNAME }}
-          PASSWORD: ${{ secrets.GH_PERSONAL_TOKEN }}
-          REGISTRY: "docker.pkg.github.com"
-          BUILD_PATH: "lambda"
-          DOCKERFILE: "Dockerfile"
-          IMAGE_NAME: "mutation-maker-primer3"
-          TAG_NAME: "v0.0.1"
-          LATEST: "true"
+          USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          REGISTRY: 'docker.pkg.github.com'
+          BUILD_PATH: 'lambda'
+          DOCKERFILE: 'Dockerfile'
+          IMAGE_NAME: '${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3'
+          TAG_NAME: 'v0.0.1'
+          LATEST: 'true'
