@@ -31,16 +31,13 @@ jobs:
           cd lambda
           make
 
-      - name: Docker Build & Push to GitHub Package
-        uses: opspresso/action-docker@master
+      - uses: mr-smithers-excellent/docker-build-push@v3
+        name: Build & push Docker image
         with:
-          args: --docker
-        env:
-          USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          REGISTRY: 'docker.pkg.github.com'
-          BUILD_PATH: 'lambda'
-          DOCKERFILE: 'Dockerfile'
-          IMAGE_NAME: '${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3'
-          TAG_NAME: 'v0.0.1'
-          LATEST: 'true'
+          image: ${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3
+          tags: latest
+          registry: docker.io
+          dockerfile: Dockerfile
+          directory: lambda
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
