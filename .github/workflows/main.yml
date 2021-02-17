@@ -37,5 +37,5 @@ jobs:
           name: ${{secrets.DOCKER_USERNAME}}/mutation-maker-primer3
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          dockerfile: lambda/Dockerfile
+          dockerfile: Dockerfile
           workdir: lambda
