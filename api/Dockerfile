@@ -1,4 +1,4 @@
-FROM python:3.7.4-alpine
+FROM python:3.11.0a5-alpine
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
 ENV CELERY_BROKER_URL redis://redis:6379/0
