@@ -1,5 +1,11 @@
-aws-sam-cli==0.53.0
+aws-sam-cli==1.51.0
 awscli==1.18.76
 cookiecutter>=2.1.1 # not directly required, pinned by Snyk to avoid a vulnerability
 rsa>=4.7 # not directly required, pinned by Snyk to avoid a vulnerability
 urllib3>=1.26.5 # not directly required, pinned by Snyk to avoid a vulnerability
+dateparser>=1.1.6 # not directly required, pinned by Snyk to avoid a vulnerability
+flask>=2.2.5 # not directly required, pinned by Snyk to avoid a vulnerability
+requests>=2.31.0 # not directly required, pinned by Snyk to avoid a vulnerability
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+werkzeug>=2.3.8 # not directly required, pinned by Snyk to avoid a vulnerability
+wheel>=0.38.0 # not directly required, pinned by Snyk to avoid a vulnerability
