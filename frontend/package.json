@@ -23,7 +23,7 @@
     "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.14.152",
     "antd": "^3.26.3",
-    "axios": "^0.21.3",
+    "axios": "^1.6.4",
     "exceljs": "^3.10.0",
     "feature-viewer": "file:./feature-viewer",
     "file-saver": "^2.0.2",
