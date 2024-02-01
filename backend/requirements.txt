@@ -1,7 +1,7 @@
 behave==1.2.6
 biopython==1.73
 boto3==1.13.26
-celery==4.3.1
+celery==4.4.0rc5
 dataclasses==0.6
 flower==1.2.0
 jmespath==0.9.5
