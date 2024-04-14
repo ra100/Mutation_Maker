@@ -12,3 +12,4 @@ redis==3.2.1
 requests==2.23.0
 timeout-decorator==0.4.1
 tornado==5.1.1
+idna>=3.7 # not directly required, pinned by Snyk to avoid a vulnerability
