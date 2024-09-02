@@ -1,5 +1,5 @@
 celery==4.3.1
-gunicorn==19.9.0
+gunicorn==21.2.0
 hug==2.5.1
 redis==3.2.1
 tornado==5.1.1
