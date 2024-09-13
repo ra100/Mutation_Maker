@@ -1,4 +1,4 @@
-aws-sam-cli==0.53.0
+aws-sam-cli==1.122.0
 awscli==1.18.76
 cookiecutter>=2.1.1 # not directly required, pinned by Snyk to avoid a vulnerability
 rsa>=4.7 # not directly required, pinned by Snyk to avoid a vulnerability
