@@ -14,7 +14,7 @@ WORKDIR /frontend/
 RUN npm run build
 
 # Third stage is used for running the nginx production server using the built artifacts from the "builder" stage
-FROM nginx:1.22-alpine as production-server
+FROM nginx:1.26.2-alpine as production-server
 COPY resources/docker-nginx-frontend.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /frontend/build /usr/share/nginx/html
 EXPOSE 3000
