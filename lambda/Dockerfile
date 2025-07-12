@@ -1,30 +1,22 @@
-FROM amazonlinux:2.0.20220719.0
+FROM amazonlinux:2023.2.20231113.0
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
-# Basic Linux tools
+# Basic Linux tools and Python 3.9
 RUN yum update -y && \
     yum -y install yum-utils && \
     yum -y groupinstall development && \
-    yum -y install zlib-devel openssl-devel bzip2 bzip2-devel readline-devel sqlite3-dev && \
+    yum -y install zlib-devel openssl-devel bzip2 bzip2-devel readline-devel sqlite-devel && \
     yum -y install vim && \
     yum -y install wget && \
     yum -y install gcc && \
-    yum -y install python36
+    yum -y install python3 python3-pip python3-devel
 
 # Set locale
-ENV LC_ALL=en_US.utf8
-ENV LANG=en_US.utf8
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
-# Install Pyenv
-RUN git clone https://github.com/yyuu/pyenv.git /root/.pyenv && \
-    echo 'export PATH="/root/.pyenv/bin:$PATH"' >> /root/.bashrc && \
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
-    echo 'eval "$(pyenv init -)"' >> /root/.bashrc
-
-# Install Python 3.6 using Pyenv
-RUN source /root/.bashrc && \
-    pyenv install 3.6.1 && \
-    pyenv global 3.6.1
+# Create symbolic link for python
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # Install Python dependencies
 COPY requirements.txt /var/tmp/

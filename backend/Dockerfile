@@ -1,8 +1,8 @@
-FROM python:3.8.14-alpine
+FROM python:3.9.18-alpine
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
 RUN apk add --no-cache \
-  build-base==0.5-r1 \
+  build-base \
   ca-certificates \
   curl
 
@@ -24,7 +24,7 @@ WORKDIR ${PRIMER3HOME}
 RUN make
 
 COPY requirements.txt /var/tmp/
-RUN pip install six==1.11.0 cython==0.27.3
+RUN pip install six==1.16.0 cython==3.0.7
 RUN pip install -r /var/tmp/requirements.txt
 
 COPY . ${HOME}

@@ -18,7 +18,9 @@
 import itertools
 from typing import List, Iterable, Tuple, Set, Mapping, Sequence, FrozenSet
 
-from Bio.Alphabet import IUPAC
+# Bio.Alphabet was removed in newer Biopython versions
+# Standard amino acid letters from IUPAC protein alphabet
+AMINO_ACID_LETTERS = "ACDEFGHIKLMNPQRSTVWY"
 
 from mutation_maker.degenerate_codon import DegenerateTripletWithAminos, CodonUsage
 
@@ -54,9 +56,9 @@ class AminoMutation:
 
     def __init__(self, position: int, old_amino: str, new_amino: str,
                  original_string: str, original_position: int) -> None:
-        if old_amino not in IUPAC.IUPACProtein.letters:
+        if old_amino not in AMINO_ACID_LETTERS:
             raise ValueError("Original" + AminoMutation.invalid_letter)
-        if new_amino not in IUPAC.IUPACProtein.letters and new_amino != "X":
+        if new_amino not in AMINO_ACID_LETTERS and new_amino != "X":
             raise ValueError("Target" + AminoMutation.invalid_letter)
         if position < 0:
             raise ValueError("Position must be non-negative")
