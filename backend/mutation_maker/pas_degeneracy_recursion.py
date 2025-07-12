@@ -166,7 +166,7 @@ class Codons(object):
         frequencies = []
         for combination in combinations:
             frequencies.append(usage_table[combination])
-        product = np.product(frequencies)
+        product = np.prod(frequencies)
         return product
 
 

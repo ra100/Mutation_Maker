@@ -220,7 +220,7 @@ def get_and_check_tax_id(name):
     try:
         with open(path + 'species.table', 'r') as fin:
             all_data = fin.read()
-            tax_id_search = re.search('(?<=' + re.escape(name) + '\s)\d+', all_data)
+            tax_id_search = re.search('(?<=' + re.escape(name) + r'\s)\d+', all_data)
             if tax_id_search is not None:
                 return tax_id_search.group(0)
 
