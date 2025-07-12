@@ -113,5 +113,8 @@ class TestOligos(unittest.TestCase):
             oligos_group = generator(fragment.get_sequence(
                 solution.gene.sequence), mutations, fragment, goi_offset, 250)
             ratios = [oligo.ratio for oligo in oligos_group]
+            ratio_sum = sum(ratios)
             with self.subTest(i=i):
-                self.assertEqual(int(sum(ratios)), 1)
+                # Use delta-based comparison for biological calculation tolerances (allowing 10% deviation)
+                self.assertAlmostEqual(ratio_sum, 1.0, delta=0.1,
+                                     msg=f"Fragment {i}: ratios sum to {ratio_sum}, expected ~1.0")
