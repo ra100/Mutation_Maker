@@ -3,3 +3,5 @@ gunicorn==21.2.0
 hug==2.6.1
 redis==5.0.1
 tornado==6.4
+urllib3>=2.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
