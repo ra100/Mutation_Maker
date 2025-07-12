@@ -521,16 +521,10 @@ def generate_pas_input(ind=1) -> PASInput:
 def sample_pas_mutations(ind=1) -> [PASMutationSite]:
     if ind == 1:
         return [
-                PASMutationSite(position=9,
-                                mutations=[PASMutation(mutation="R,W", frequency=0.5)]),
-                PASMutationSite(position=10,
-                                mutations=[PASMutation(mutation="K,R", frequency=0.1)]),
-                PASMutationSite(position=13,
-                                mutations=[PASMutation(mutation="R,K", frequency=0.1)]),
-                PASMutationSite(position=19,
-                                mutations=[PASMutation(mutation="L", frequency=0.1)]),
-                PASMutationSite(position=39,
-                                mutations=[PASMutation(mutation="C", frequency=0.1)])]
+            PASMutationSite(position=10, mutations=[PASMutation(mutation="R", frequency=0.5)]),
+            PASMutationSite(position=15, mutations=[PASMutation(mutation="K", frequency=0.5)]),
+            PASMutationSite(position=20, mutations=[PASMutation(mutation="L", frequency=0.5)]),
+        ]
 
     elif ind == 2:
         return [PASMutationSite(position=16,

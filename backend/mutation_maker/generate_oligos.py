@@ -132,6 +132,13 @@ def generate_oligos_from_combinations(mutations_combinations_with_probabilitites
             codon = chosen_codons_on_sites[position][mutation]
             dna = Codons.replace_codon(dna, mutations_sites[position], codon, start, goi_offset)
         oligos.append(PASOligo(sequence=dna, ratio=concentration))
+    # Normalize ratios if needed
+    total_ratio = sum(oligo.ratio for oligo in oligos)
+    if total_ratio > 0:
+        for oligo in oligos:
+            oligo.ratio /= total_ratio
+    # Assertion: sum of ratios should be 1 (within tolerance)
+    assert abs(sum(oligo.ratio for oligo in oligos) - 1.0) < 1e-6, f"Sum of oligo ratios is not 1, got {sum(oligo.ratio for oligo in oligos)}"
     return oligos
 
 
