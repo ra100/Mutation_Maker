@@ -103,9 +103,10 @@ def grow_reverse_primer(max_primer_size: int, min_three_end_size: int, sequence:
         rw_three_end_temp = temp_calculator(rw_three_end_sequence)
 
         if rw_three_end_temp > temp_threshold and len(rw_three_end_sequence) >= min_three_end_size:
-            break
+            return SSMPrimerSpec(offset, overlap_end - offset, mutation.position - offset, rw_three_end_temp)
 
-    return SSMPrimerSpec(offset, overlap_end - offset, mutation.position - offset, rw_three_end_temp)
+    # If we get here, no suitable primer was found
+    raise RuntimeError("Could not find suitable reverse primer: parameters may be too restrictive.")
 
 
 def grow_primers(max_primer_size: int, min_three_end_size: int, sequence: str, mutations: List[AminoMutation],
