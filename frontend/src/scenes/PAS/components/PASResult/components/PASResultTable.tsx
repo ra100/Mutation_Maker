@@ -16,18 +16,20 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Table} from 'antd'
-import {ColumnProps} from 'antd/lib/table'
+import { Table } from 'antd'
+import { ColumnProps } from 'antd/lib/table'
 import * as R from 'ramda'
 import * as React from 'react'
-import {compose} from 'recompose'
+import { compose } from 'recompose'
 
-import withRowIndexKey, {WithRowIndexKey} from 'shared/components/withRowIndexKey'
-import {WithSelectedAndHighlighted} from 'shared/components/withSelectedAndHighlighted'
-import withSelectedAndHighlightedTableHandlers, {WithSelectedAndHighlightedTableHandlers} from 'shared/components/withSelectedAndHighlightedTableHandlers'
-import {Omit} from 'shared/lib/Omit'
-import {IndexedPASResultFragment,} from 'shared/lib/ResultData'
-import {PASResultFragment} from 'shared/lib/Api'
+import withRowIndexKey, { WithRowIndexKey } from 'shared/components/withRowIndexKey'
+import { WithSelectedAndHighlighted } from 'shared/components/withSelectedAndHighlighted'
+import withSelectedAndHighlightedTableHandlers, {
+  WithSelectedAndHighlightedTableHandlers,
+} from 'shared/components/withSelectedAndHighlightedTableHandlers'
+import { Omit } from 'shared/lib/Omit'
+import { IndexedPASResultFragment } from 'shared/lib/ResultData'
+import { PASResultFragment } from 'shared/lib/Api'
 
 type PASResultTableOuterProps = {
   resultRecords: IndexedPASResultFragment[]
@@ -46,8 +48,7 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
     width: '5%',
     key: 'name',
     align: 'center',
-    render: (text, record) =>
-      `Fr${record.index + 1}`
+    render: (text, record) => `Fr${record.index + 1}`,
   },
   {
     title: 'Fragment sequence (WT fragment)',
@@ -55,24 +56,21 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
     width: '25%',
     align: 'left',
     className: 'PASFragmentSeqCol',
-    render: (text, record) =>
-      record.fragment
+    render: (text, record) => record.fragment,
   },
   {
     title: 'Length (bp)',
     key: 'length',
     width: '5%',
     align: 'center',
-    render: (text, record) =>
-      record.length
+    render: (text, record) => record.length,
   },
   {
     title: 'Overlap to next fragment (bp)',
     key: 'overlap_length',
     width: '10%',
     align: 'center',
-    render: (text, record) =>
-      record.overlap_length
+    render: (text, record) => record.overlap_length,
   },
   {
     title: 'Overlap GC (%)',
@@ -85,7 +83,7 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
       } else {
         return '-'
       }
-    }
+    },
   },
   {
     title: `Overlap Tm (${'\u00b0'}C)`,
@@ -98,7 +96,7 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
       } else {
         return '-'
       }
-    }
+    },
   },
   {
     title: 'Mutations',
@@ -107,13 +105,10 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
     align: 'center',
     render: (text, record) => {
       return record.mutations
-        .filter(mutation => !mutation.wild_type)
-        .map(mutation =>
-          mutation.wild_type_amino
-          + mutation.position
-          + mutation.mutated_amino)
+        .filter((mutation) => !mutation.wild_type)
+        .map((mutation) => mutation.wild_type_amino + mutation.position + mutation.mutated_amino)
         .join(', ')
-    }
+    },
   },
   {
     title: 'WT codon',
@@ -121,25 +116,25 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
     width: '10%',
     align: 'center',
     render: (text, record) => {
-      const dictWTC: any[] = [];
-      const uniqueWTC: any[] = [];
+      const dictWTC: Record<string, string[]> = {}
+      const uniqueWTC: string[] = []
 
       record.mutations
-        .filter(mutation => !mutation.wild_type)
-        .forEach(mutation => {
+        .filter((mutation) => !mutation.wild_type)
+        .forEach((mutation) => {
           if (dictWTC[mutation.position]) {
             dictWTC[mutation.position.toString()].push(mutation.wild_type_codon)
           } else {
             dictWTC[mutation.position.toString()] = [mutation.wild_type_codon]
           }
-        });
+        })
 
-      dictWTC.forEach((key) => {
+      Object.values(dictWTC).forEach((key) => {
         uniqueWTC.push(...new Set(key))
-      });
+      })
 
       return uniqueWTC.join(', ')
-    }
+    },
   },
   {
     title: 'Library Codons',
@@ -147,63 +142,59 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
     width: '10%',
     align: 'center',
     render: (text, record) => {
-      const dictLC: any[] = [];
-      const uniqueLC: any[] = [];
+      const dictLC: Record<string, string[]> = {}
+      const uniqueLC: string[] = []
       record.mutations
-        .filter(mutation => !mutation.wild_type)
-        .forEach(mutation => {
-          const libraryCodon = mutation.wild_type_codon + '/'
-            + mutation.mutated_codon;
+        .filter((mutation) => !mutation.wild_type)
+        .forEach((mutation) => {
+          const libraryCodon = mutation.wild_type_codon + '/' + mutation.mutated_codon
           if (dictLC[mutation.position]) {
             dictLC[mutation.position.toString()].push(libraryCodon)
           } else {
             dictLC[mutation.position.toString()] = [libraryCodon]
           }
-        });
+        })
 
-      dictLC.forEach((key) => {
+      Object.values(dictLC).forEach((key) => {
         uniqueLC.push(...new Set(key))
-      });
+      })
 
       return uniqueLC.join(', ')
-    }
+    },
   },
   {
     title: '#Oligonucleotides',
     key: 'num_of_oligos',
     width: '10%',
     align: 'center',
-    render: (text, record) =>
-      record.oligos.length
+    render: (text, record) => record.oligos.length,
   },
-];
+]
 
-const PASResultTable: React.SFC<PASResultTableInnerProps> =
-  ({
-     resultRecords,
-     rowKey,
-     onRow,
-     rowClassName,
-   }) => (
-    <Table
-      className="ResultTable"
-      bordered
-      size="small"
-      rowKey={rowKey}
-      columns={columns}
-      dataSource={resultRecords}
-      pagination={false}
-      onRow={onRow}
-      rowClassName={rowClassName}
-    />
-  );
+const PASResultTable: React.SFC<PASResultTableInnerProps> = ({
+  resultRecords,
+  rowKey,
+  onRow,
+  rowClassName,
+}) => (
+  <Table
+    className="ResultTable"
+    bordered
+    size="small"
+    rowKey={rowKey}
+    columns={columns}
+    dataSource={resultRecords}
+    pagination={false}
+    onRow={onRow}
+    rowClassName={rowClassName}
+  />
+)
 
 export default compose<PASResultTableInnerProps, PASResultTableOuterProps>(
   withRowIndexKey,
   withSelectedAndHighlightedTableHandlers<PASResultFragment & { index: number }>(
-    record => [`primer${record.index.toString()}`
-      , ...record.mutations.map(R.prop('identifier'))],
-    record => [`primer${record.index.toString()}`],
-    record => !record.mutations.length,
+    (record) => [`primer${record.index.toString()}`, ...record.mutations.map(R.prop('identifier'))],
+    (record) => [`primer${record.index.toString()}`],
+    (record) => !record.mutations.length,
   ),
 )(PASResultTable)

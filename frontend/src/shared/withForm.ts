@@ -39,7 +39,7 @@ function withForm<P, D>(
           return {
             ...acc,
             [key]: Form.createFormField({
-              value: data[key],
+              value: (data as Record<string, any>)[key],
             }),
           }
         }, {})

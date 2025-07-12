@@ -27,11 +27,7 @@ import withSelectedAndHighlightedTableHandlers, {
   WithSelectedAndHighlightedTableHandlers,
 } from 'shared/components/withSelectedAndHighlightedTableHandlers'
 import { Omit } from 'shared/lib/Omit'
-import {
-  IndexedQCLMFlatResultRecord,
-  QCLMFlatResultRecord,
-  QCLMResultRecord,
-} from 'shared/lib/ResultData'
+import { IndexedQCLMFlatResultRecord, QCLMFlatResultRecord } from 'shared/lib/ResultData'
 import { skipUnlessResultFound } from 'shared/table'
 
 type QCLMResultTableOuterProps = {
@@ -43,7 +39,7 @@ type WithResultDataRecords = {}
 type QCLMResultTableInnerProps = QCLMResultTableOuterProps &
   WithResultDataRecords &
   WithRowIndexKey &
-  WithSelectedAndHighlightedTableHandlers<QCLMResultRecord>
+  WithSelectedAndHighlightedTableHandlers<QCLMFlatResultRecord>
 
 const columns: Array<ColumnProps<QCLMFlatResultRecord>> = [
   {
@@ -106,7 +102,7 @@ const QCLMResultTable: React.SFC<QCLMResultTableInnerProps> = ({
 
 export default compose<QCLMResultTableInnerProps, QCLMResultTableOuterProps>(
   withRowIndexKey,
-  withSelectedAndHighlightedTableHandlers<QCLMResultRecord & { index: number }>(
+  withSelectedAndHighlightedTableHandlers<QCLMFlatResultRecord & { index: number }>(
     (record) => [`primer${record.index.toString()}`, ...record.mutations.map(R.prop('identifier'))],
     (record) => [`primer${record.index.toString()}`],
     (record) => !record.result_found,

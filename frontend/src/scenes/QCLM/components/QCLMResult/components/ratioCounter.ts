@@ -20,7 +20,7 @@ import { Mutation } from 'shared/genes'
 import { IndexedQCLMFlatResultRecord } from 'shared/lib/ResultData'
 
 const getAminoAcidsFromIdentifier = (identifier: string): string[] =>
-  identifier.replace(/^\w\d*/,'').split('')
+  identifier.replace(/^\w\d*/, '').split('')
 
 type MutationPositionRatio = Record<number, number>
 
@@ -28,33 +28,38 @@ const getPositionMutations = (mutations: IndexedQCLMFlatResultRecord[]): Mutatio
   const positions: Record<number, Set<string>> = mutations[0].mutations.reduce((acc, mutation) => {
     acc[mutation.position] = acc[mutation.position] || new Set()
     return acc
-  }, {})
+  }, {} as Record<number, Set<string>>)
 
   mutations.forEach(({ mutations }) =>
     mutations.forEach(({ position, identifier }) => {
-      getAminoAcidsFromIdentifier(identifier).forEach(target => {
+      getAminoAcidsFromIdentifier(identifier).forEach((target) => {
         positions[position].add(target)
       })
     }),
   )
 
   return Object.entries(positions).reduce((acc, [position, targets]) => {
-    acc[position] = targets.size
+    acc[Number(position)] = targets.size
     return acc
-  }, {})
+  }, {} as Record<number, number>)
 }
 
-const getRatios = (mutations: IndexedQCLMFlatResultRecord[], ratios: MutationPositionRatio): IndexedQCLMFlatResultRecord[] =>
+const getRatios = (
+  mutations: IndexedQCLMFlatResultRecord[],
+  ratios: MutationPositionRatio,
+): IndexedQCLMFlatResultRecord[] =>
   mutations.map((mutation) => {
-    const mutationMutations = mutation.mutations.map(positionMutation => ({
+    const mutationMutations = mutation.mutations.map((positionMutation) => ({
       ...positionMutation,
-      ratio: getAminoAcidsFromIdentifier(positionMutation.identifier).length / ratios[positionMutation.position]
+      ratio:
+        getAminoAcidsFromIdentifier(positionMutation.identifier).length /
+        ratios[positionMutation.position],
     }))
 
     return {
       ...mutation,
       mutations: mutationMutations,
-      ratio: mutationMutations.reduce((acc, {ratio}) => acc * ratio, 1)
+      ratio: mutationMutations.reduce((acc, { ratio }) => acc * ratio, 1),
     }
   })
 

@@ -25,14 +25,11 @@ import FormSection from 'shared/components/FormSection'
 import { validateMutations } from 'shared/components/FormValidation'
 import MutationsInput from 'shared/components/MutationsInput'
 import ParametersFormSection from 'shared/components/ParametersFormSection'
-import {
-  endsWithStopCodonValidationRule,
-  geneValidationRule,
-} from 'shared/form'
+import { endsWithStopCodonValidationRule, geneValidationRule } from 'shared/form'
 import { getForwardPrimer, getReversePrimer, PrimersType } from 'shared/genes'
 import { SSMFormData } from 'shared/lib/FormData'
 import withForm, { WithFormInnerProps } from 'shared/withForm'
-import {getDegenerateCodons} from './aminoAcidCodons'
+import { getDegenerateCodons } from './aminoAcidCodons'
 
 type SSMFormOuterProps = {
   disabled: boolean
@@ -40,7 +37,7 @@ type SSMFormOuterProps = {
 
 type SSMFormInnerProps = SSMFormOuterProps & WithFormInnerProps<SSMFormData>
 
-const DEFAULT_PRIMERS_TYPE = PrimersType.pETseq1;
+const DEFAULT_PRIMERS_TYPE = PrimersType.pETseq1
 
 const defaultAminoAcids = [
   { name: 'F', state: '' },
@@ -63,113 +60,115 @@ const defaultAminoAcids = [
   { name: 'W', state: '' },
   { name: 'R', state: '' },
   { name: 'G', state: '' },
-];
+]
 
-const complementTable = {
-  "A": "T",
-  "C": "G",
-  "G": "C",
-  "T": "A",
-  "I": "I", // ???
-  "R": "Y",
-  "Y": "R",
-  "M": "K",
-  "K": "M",
-  "S": "S",
-  "W": "W",
-  "H": "D",
-  "B": "V",
-  "V": "B",
-  "D": "H",
-  "N": "N"
-};
+const complementTable: { [key: string]: string } = {
+  A: 'T',
+  C: 'G',
+  G: 'C',
+  T: 'A',
+  I: 'I', // ???
+  R: 'Y',
+  Y: 'R',
+  M: 'K',
+  K: 'M',
+  S: 'S',
+  W: 'W',
+  H: 'D',
+  B: 'V',
+  V: 'B',
+  D: 'H',
+  N: 'N',
+}
 
 const reverseComplement = (sequence: string): string => {
-  const reversed = sequence.split("").reverse().join("");
+  const reversed = sequence.split('').reverse().join('')
 
-  return reversed.split("").map(x => complementTable[x]).join("")
-};
-
+  return reversed
+    .split('')
+    .map((x) => complementTable[x])
+    .join('')
+}
 
 class SSMForm extends React.Component<SSMFormInnerProps> {
   state = {
     generateCodonOrAminoAcidTab: 'Degenerate Codon',
     aminoAcids: [...defaultAminoAcids],
     loading: false,
-    showGoiWarning: false
-  };
+    showGoiWarning: false,
+  }
 
   onSubmit = (event: React.FormEvent<any>) => {
-    event.preventDefault();
-    const { form, onSubmit } = this.props;
+    event.preventDefault()
+    const { form, onSubmit } = this.props
 
     form.validateFields((error: any, values: SSMFormData) => {
       if (!error) {
         onSubmit(values)
       } else {
-        message.error('Validation failed');
+        message.error('Validation failed')
         // tslint:disable-next-line no-console
         console.error(error)
       }
     })
-  };
+  }
 
   handleTabChange = (event?: any) => {
     this.setState({ generateCodonOrAminoAcidTab: event.target.value })
-  };
+  }
 
   handleAminoChange = (aminoAcids: AminoType[]) => {
-    this.setState({ aminoAcids, loading: true });
-    const { setFieldsValue } = this.props.form;
+    this.setState({ aminoAcids, loading: true })
+    const { setFieldsValue } = this.props.form
     getDegenerateCodons(
       aminoAcids.filter((amino: AminoType) => amino.state === 'include').map(R.prop('name')),
       aminoAcids.filter((amino: AminoType) => amino.state === 'avoid').map(R.prop('name')),
     )
-      .then(degenerateCodon => {
+      .then((degenerateCodon) => {
         setFieldsValue({
           degenerateCodon,
-        });
+        })
         this.setState({ loading: false })
       })
       .catch(() => {
-        console.warn('error in getDegenerateCodons promise');
+        console.warn('error in getDegenerateCodons promise')
         this.setState({ loading: false })
       })
-  };
+  }
 
   resetForm = (event: React.FormEvent<any>) => {
-    event.preventDefault();
-    const { form } = this.props;
-    this.setState({ aminoAcids: [...defaultAminoAcids] });
+    event.preventDefault()
+    const { form } = this.props
+    this.setState({ aminoAcids: [...defaultAminoAcids] })
     form.resetFields()
-  };
+  }
 
   onPrimersTypeChange = (primersType: PrimersType) => {
-    const { setFieldsValue } = this.props.form;
+    const { setFieldsValue } = this.props.form
     setFieldsValue({
       forwardPrimerValue: getForwardPrimer(primersType),
       reversePrimerValue: getReversePrimer(primersType),
     })
-  };
+  }
 
   onInputChange = (target: string) => (data: string) => {
-    const { setFieldsValue, validateFields } = this.props.form;
+    const { setFieldsValue, validateFields } = this.props.form
     setFieldsValue({
       [target]: data,
-    });
+    })
     validateFields()
-  };
+  }
 
   onGoiChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const goiStr = (event.target.value || '');
-    const hasStartCodon = goiStr.match(/^ATG/);
-    const hasStopCodon = goiStr.match(/TAA$/) || goiStr.match(/TAG$/) || goiStr.match(/TGA$/);
-    this.setState({showGoiWarning: !hasStartCodon || !hasStopCodon})
-  };
+    const goiStr = event.target.value || ''
+    const hasStartCodon = goiStr.match(/^ATG/)
+    const hasStopCodon = goiStr.match(/TAA$/) || goiStr.match(/TAG$/) || goiStr.match(/TGA$/)
+    this.setState({ showGoiWarning: !hasStartCodon || !hasStopCodon })
+  }
 
   render() {
-    const { form, disabled } = this.props;
-    const { getFieldDecorator, getFieldValue, resetFields, setFieldsValue } = form;
+    const { form, disabled } = this.props
+    const { getFieldDecorator, getFieldValue, resetFields, setFieldsValue } = form
     const goiIsSubstringOfPlasmid = (
       rule: any,
       value: string,
@@ -179,7 +178,7 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
         getFieldValue('plasmidSequence').indexOf(value) === -1
           ? ['Gene of Interest must be a substring of plasmid.']
           : [],
-      );
+      )
 
     const flankingPrimerIsSubstringOfPlasmid = (
       rule: any,
@@ -190,7 +189,7 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
         getFieldValue('plasmidSequence').indexOf(value) === -1
           ? ['Forward flanking primer must be a substring of plasmid.']
           : [],
-      );
+      )
 
     const reverseComplementFlankingPrimerIsSubstringOfPlasmid = (
       rule: any,
@@ -201,7 +200,7 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
         getFieldValue('plasmidSequence').indexOf(reverseComplement(value)) === -1
           ? ['Reverse flanking primer must be a substring of plasmid.']
           : [],
-      );
+      )
 
     return (
       <Form layout="vertical" onSubmit={this.onSubmit}>
@@ -236,7 +235,13 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
                   endsWithStopCodonValidationRule,
                 ],
               })(<Input.TextArea rows={8} onChange={this.onGoiChange} />)}
-              {this.state.showGoiWarning && <div className="has-warning noIcon"><div className="ant-form-explain">Gene of Interest should begin with ATG and end with TAA, TAG or TGA.</div></div>}
+              {this.state.showGoiWarning && (
+                <div className="has-warning noIcon">
+                  <div className="ant-form-explain">
+                    Gene of Interest should begin with ATG and end with TAA, TAG or TGA.
+                  </div>
+                </div>
+              )}
             </Form.Item>
           </Tooltip>
         </FormSection>
@@ -286,9 +291,9 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
                   { required: true, message: 'Forward Primer is required' },
                   geneValidationRule,
                   {
-                    max: 60
+                    max: 60,
                   },
-                  { validator: flankingPrimerIsSubstringOfPlasmid }
+                  { validator: flankingPrimerIsSubstringOfPlasmid },
                 ],
                 initialValue: getForwardPrimer(DEFAULT_PRIMERS_TYPE),
               })(<Input disabled={getFieldValue('primersType') !== 'custom'} />)}
@@ -299,9 +304,9 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
                   { required: true, message: 'Reverse Primer is required' },
                   geneValidationRule,
                   {
-                    max: 60
+                    max: 60,
                   },
-                  { validator: reverseComplementFlankingPrimerIsSubstringOfPlasmid }
+                  { validator: reverseComplementFlankingPrimerIsSubstringOfPlasmid },
                 ],
                 initialValue: getReversePrimer(DEFAULT_PRIMERS_TYPE),
               })(<Input disabled={getFieldValue('primersType') !== 'custom'} />)}
@@ -347,6 +352,9 @@ class SSMForm extends React.Component<SSMFormInnerProps> {
           </Form.Item>
           <Form.Item
             className={this.state.generateCodonOrAminoAcidTab !== 'Amino acids' ? 'hidden' : ''}>
+            <div>
+              <b>Degenerate Codon:</b> {this.props.form.getFieldValue('degenerateCodon')}
+            </div>
             <AminoAcidInput
               value={this.state.aminoAcids}
               onChange={this.handleAminoChange}

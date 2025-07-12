@@ -17,12 +17,14 @@
  */
 
 import * as R from 'ramda'
-import {flattenMutations, Mutation, parseMutation} from '../genes'
+import { flattenMutations, Mutation, parseMutation } from '../genes'
 import { notUndefined } from '../helpers'
 import {
-  PASResponseData, PASResultFragment,
-  QCLMMutationData, QCLMResponseData,
-  SSMResponseData
+  PASResponseData,
+  PASResultFragment,
+  QCLMMutationData,
+  QCLMResponseData,
+  SSMResponseData,
 } from './Api'
 
 // SSM
@@ -41,7 +43,7 @@ export const responseToQCLMResultData = (response: QCLMResponseData): QCLMResult
   results: response.results.map(mutationDataToQCLMResultRecord),
   full_sequence: response.full_sequence,
   goi_offset: response.goi_offset,
-  input_data: response.input_data
+  input_data: response.input_data,
 })
 
 export type QCLMResultRecord = {
@@ -57,7 +59,7 @@ export type QCLMResultDataInput = {
 export type QCLMResultData = {
   results: QCLMResultRecord[]
   full_sequence: string
-  goi_offset: number,
+  goi_offset: number
   input_data: QCLMResultDataInput
 }
 
@@ -73,11 +75,11 @@ export type QCLMPrimer = {
 
 export type QCLMFlatResultRecord = {
   mutations: Mutation[]
-  result_found: boolean,
+  result_found: boolean
   ratio?: number
 } & Partial<QCLMPrimer>
 
-export type IndexedQCLMFlatResultRecord = QCLMFlatResultRecord & { index: number, ratio: number }
+export type IndexedQCLMFlatResultRecord = QCLMFlatResultRecord & { index: number; ratio: number }
 
 const resultRecordToFlatResultRecords = (resultRecord: QCLMResultRecord): QCLMFlatResultRecord[] =>
   R.isEmpty(resultRecord.primers)
@@ -87,7 +89,7 @@ const resultRecordToFlatResultRecords = (resultRecord: QCLMResultRecord): QCLMFl
           result_found: resultRecord.result_found,
         },
       ]
-    : resultRecord.primers.map(primer => ({
+    : resultRecord.primers.map((primer) => ({
         mutations: resultRecord.mutations,
         result_found: resultRecord.result_found,
         ...primer,
@@ -97,23 +99,23 @@ export const resultRecordsToFlatResultRecords = (
   resultRecords: QCLMResultRecord[],
 ): IndexedQCLMFlatResultRecord[] =>
   resultRecords
-    .reduce((acc, record) => [...acc, ...resultRecordToFlatResultRecords(record)], [])
+    .reduce<QCLMFlatResultRecord[]>(
+      (acc, record) => [...acc, ...resultRecordToFlatResultRecords(record)],
+      [],
+    )
     .map((record, index) => ({ ...record, index, ratio: 0 }))
-
 
 // PAS
 export const resultRecordsToIndexedResultRecordsPas = (
   resultRecords: PASResultFragment[],
-): IndexedPASResultFragment[] =>
-  resultRecords
-    .map((record, index) => ({ ...record, index }))
+): IndexedPASResultFragment[] => resultRecords.map((record, index) => ({ ...record, index }))
 
 export const responseToPASResultData = (response: PASResponseData): PASResultData => ({
   results: response.results,
   input_data: response.input_data,
   full_sequence: response.full_sequence,
   goi_offset: response.goi_offset,
-  message: response.message
+  message: response.message,
 })
 
 export type PASResultData = {

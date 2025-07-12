@@ -16,12 +16,14 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import aminoToCodonMap from 'shared/DNA-codon-table.json'
+import aminoToCodonMapJson from 'shared/DNA-codon-table.json'
+
+const aminoToCodonMap: { [key: string]: string[] } = aminoToCodonMapJson
 
 const MAX_DURATION = 10 * 60 * 1000
 const MAX_NUMBER_OF_COMBINATIONS = 100
 
-const substitutions = {
+const substitutions: { [key: string]: string } = {
   A: 'A',
   AC: 'M',
   ACG: 'V',
@@ -41,7 +43,7 @@ const substitutions = {
 
 const defaultAvoid = [...aminoToCodonMap.STOP]
 
-const singleLetterCodes = {
+const singleLetterCodes: { [key: string]: string[] } = {
   A: ['A'],
   B: ['C', 'G', 'T'],
   C: ['C'],
@@ -63,7 +65,7 @@ const singleLetterCodes = {
 let combinationsCount: number
 
 const getMissingRequired = (required: string[], generated: string[]): string[] =>
-  required.filter(codon => generated.indexOf(codon) < 0)
+  required.filter((codon) => generated.indexOf(codon) < 0)
 
 const getCodonCombinations = (amino: string[]): string[] => {
   const out = new Set<string>()
@@ -98,7 +100,7 @@ const getNucleotidesOnPositions = (codons: string[]): string[] => {
 }
 
 const getDegenerateCodons = (nucleotides: string[]): string =>
-  nucleotides.map(letters => substitutions[letters]).join('')
+  nucleotides.map((letters) => substitutions[letters]).join('')
 
 const recursiveCombinations = (input: string[][], combinations: string[]): string[] => {
   if (input.length === 0) {
@@ -121,14 +123,14 @@ const recursiveCombinations = (input: string[][], combinations: string[]): strin
 
 export const generateCombinationsFromDegenerateCodon = (degenerateCodon: string): string[] =>
   recursiveCombinations(
-    degenerateCodon.split('').map(letter => singleLetterCodes[letter]),
+    degenerateCodon.split('').map((letter) => singleLetterCodes[letter]),
     [],
   )
 
 const isGrammarWithoutAvoided = (grammar: string, avoidedCodons: string[]) => {
   const generatedCodons = generateCombinationsFromDegenerateCodon(grammar)
 
-  return !avoidedCodons.find(codon => generatedCodons.indexOf(codon) > -1)
+  return !avoidedCodons.find((codon) => generatedCodons.indexOf(codon) > -1)
 }
 
 const getGeneratedCombination = (degenerate: string) =>
@@ -141,7 +143,7 @@ const joinGrammars = (grammars: string, grammarToAdd: string): string => {
   const generatedCodons = getGeneratedCombination(grammars)
   const newSet = generateCombinationsFromDegenerateCodon(grammarToAdd)
 
-  if (newSet.every(codon => generatedCodons.indexOf(codon) >= 0)) {
+  if (newSet.every((codon) => generatedCodons.indexOf(codon) >= 0)) {
     return grammars
   }
 
@@ -222,7 +224,7 @@ function recursiveCodonCombinations(include: string[][], codons: string[]): stri
 }
 
 const getAminoAcidsCodons = (acids: string[]) =>
-  acids.map<string[]>(acid => aminoToCodonMap[acid]).sort((a, b) => b.length - a.length)
+  acids.map<string[]>((acid) => aminoToCodonMap[acid]).sort((a, b) => b.length - a.length)
 
 const sortCombinationInMultipleWays = (combinations: string[][]) => {
   const result: string[][] = []

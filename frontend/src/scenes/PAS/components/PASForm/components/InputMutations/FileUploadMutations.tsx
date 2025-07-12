@@ -16,13 +16,13 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Icon, message, Upload} from 'antd'
+import { Icon, message, Upload } from 'antd'
 import * as React from 'react'
-import {read, utils} from 'xlsx'
+import { read, utils } from 'xlsx'
 
-const Dragger = Upload.Dragger;
+const Dragger = Upload.Dragger
 
-const FILE_EXTENSIONS = '.xlsx';
+const FILE_EXTENSIONS = '.xlsx'
 
 const getMutationsFromFile = (data: string | ArrayBuffer | null): object => {
   if (!data) {
@@ -30,14 +30,14 @@ const getMutationsFromFile = (data: string | ArrayBuffer | null): object => {
   }
 
   // Read XLSX file
-  const wb = read(data, {type: 'binary'});
-  const wsname = wb.SheetNames[0];
-  const ws = wb.Sheets[wsname];
-  const jsonData = utils.sheet_to_json(ws);
+  const wb = read(data, { type: 'binary' })
+  const wsname = wb.SheetNames[0]
+  const ws = wb.Sheets[wsname]
+  const jsonData = utils.sheet_to_json(ws) as Record<string, any>[]
 
   // Convert keys to lower case and string values to upper case
-  const formattedJsonData = jsonData.map((obj: object) => {
-    const mapped: any = {};
+  const formattedJsonData = jsonData.map((obj: Record<string, any>) => {
+    const mapped: Record<string, any> = {}
     for (let key in obj) {
       if (typeof obj[key] === 'string') {
         mapped[key.toLowerCase()] = obj[key].toUpperCase()
@@ -47,29 +47,32 @@ const getMutationsFromFile = (data: string | ArrayBuffer | null): object => {
     }
 
     return mapped
-  });
+  })
 
   // Validate file format
-  const header = ['site', 'mt', 'mt%'];
+  const header = ['site', 'mt', 'mt%']
   for (let column of header) {
     if (!formattedJsonData[0].hasOwnProperty(column)) {
-      message.error('File has incorrect format. ' +
-        'Array must contain collumns: Site, MT and MT%.');
-      return {mutations: []}
+      message.error(
+        'File has incorrect format. ' + 'Array must contain collumns: Site, MT and MT%.',
+      )
+      return { mutations: [] }
     }
   }
 
   // Format result
-  const mutations: object[] = [];
-  formattedJsonData.forEach((value: object, index) => {
+  const mutations: Record<string, any>[] = []
+  formattedJsonData.forEach((value: Record<string, any>, index) => {
     mutations.push({
-      key: index, target: value['site'], mt: value['mt'],
-      mtp: value['mt%']
+      key: index,
+      target: value['site'],
+      mt: value['mt'],
+      mtp: value['mt%'],
     })
-  });
+  })
 
-  return {mutations}
-};
+  return { mutations }
+}
 
 type FileUploadInputProps = {
   onChange(data: object): void
@@ -77,26 +80,25 @@ type FileUploadInputProps = {
 
 class FileUploadMutations extends React.Component<FileUploadInputProps> {
   state = {
-    fileList: []
-  };
+    fileList: [],
+  }
 
-  fileReader = new FileReader();
+  fileReader = new FileReader()
 
   constructor(props: any) {
-    super(props);
+    super(props)
     this.fileReader.onload = this.onload
   }
 
   onload = () => {
     this.props.onChange(getMutationsFromFile(this.fileReader.result))
-  };
+  }
 
   handleRequest = (option: any) => {
-
-    this.fileReader.readAsBinaryString(option.file);
-    this.setState({fileList: []});
+    this.fileReader.readAsBinaryString(option.file)
+    this.setState({ fileList: [] })
     option.onSuccess(true)
-  };
+  }
 
   render() {
     return (
@@ -106,10 +108,9 @@ class FileUploadMutations extends React.Component<FileUploadInputProps> {
         fileList={this.state.fileList}
         customRequest={this.handleRequest}>
         <p className="ant-upload-drag-icon">
-          <Icon type="inbox"/>
+          <Icon type="inbox" />
         </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload
-          .xlsx file</p>
+        <p className="ant-upload-text">Click or drag file to this area to upload .xlsx file</p>
       </Dragger>
     )
   }

@@ -79,7 +79,7 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
             return (
               <SSM
                 jobId={jobId}
-                jobData={getJob(jobId)}
+                jobData={jobId ? getJob(jobId) : undefined}
                 submitRequest={submitRequest}
                 requestJobResult={requestJobResult}
                 pollInterval={POLL_INTERVAL}
@@ -97,7 +97,7 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
             return (
               <QCLM
                 jobId={jobId}
-                jobData={getJob(jobId)}
+                jobData={jobId ? getJob(jobId) : undefined}
                 submitRequest={submitRequest}
                 requestJobResult={requestJobResult}
                 pollInterval={POLL_INTERVAL}
@@ -115,7 +115,7 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
             return (
               <PAS
                 jobId={jobId}
-                jobData={getJob(jobId)}
+                jobData={jobId ? getJob(jobId) : undefined}
                 submitRequest={submitRequest}
                 requestJobResult={requestJobResult}
                 pollInterval={POLL_INTERVAL}
@@ -169,8 +169,8 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
                       title="PAS (PCR-based Accurate Synthesis)"
                       bordered={false}>
                       <p className="workflow-card-description">
-                        Design mutagenic oligos for PCR-based gene synthesis workflows by
-                        which specific amino acids changes could be combined at multiple sites
+                        Design mutagenic oligos for PCR-based gene synthesis workflows by which
+                        specific amino acids changes could be combined at multiple sites
                         simultaneously via accurate assembly of overlapping synthetic gene
                         fragments.
                       </p>
