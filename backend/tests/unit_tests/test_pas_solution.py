@@ -22,12 +22,12 @@ from mutation_maker.pas import compute_tm_distances, extract_mutations
 from mutation_maker.temperature_calculator import TemperatureConfig
 from tests.test_support import generate_pas_input
 
-fragments = ["PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-             "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-             "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-             "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"]
+fragments = ["ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
+             "ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
+             "ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
+             "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"]
 
-in_goi = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+in_goi = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
 
 
 

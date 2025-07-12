@@ -31,8 +31,8 @@ from mutation_maker.temperature_calculator import TemperatureConfig
 def create_test_config(goi, plasmid, mutations, use_fast_approximation_algorithm):
     ssm_data = SSMInput(
         sequences=SSMSequences(
-            forward_primer="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-            reverse_primer="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
+            forward_primer="ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
+            reverse_primer="ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
             gene_of_interest=goi,
             plasmid=Plasmid(
                 plasmid_sequence=plasmid,
@@ -91,8 +91,8 @@ def solver_with_input(inputs, use_fast_approximation_algorithm):
 def generate_inputs():
     sequence = np.random.choice(["A", "C", "T", "G"], 7000, True)
 
-    goi = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-    plasmid = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+    goi = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+    plasmid = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
 
     SAFE_BOUNDS = 65
     NUM_MUTATIONS = 10

@@ -22,7 +22,8 @@ Support functions for testing methods.
 from random import randint
 from typing import List, NamedTuple
 
-from Bio.Alphabet import IUPAC
+# Bio.Alphabet has been removed from Biopython, use string of valid amino acids instead
+AMINO_ACIDS = "ACDEFGHIKLMNPQRSTVWY"
 from Bio.Data import CodonTable
 
 from mutation_maker.basic_types import Offset, DNASequenceForMutagenesis
@@ -160,7 +161,7 @@ def format_stats(stats):
 def format_stats_ssm(stats):
     print("=" * 18, " STATS ", "=" * 18)
     for metric in stats.keys():
-        if metric is "parameters_in_range":
+        if metric == "parameters_in_range":
             print('{:>10}'.format("Parameters in range: %.2f %%") %
                   (100 * stats[metric]["1.00"] / (stats[metric]["1.00"] + sum(stats[metric].values()))))
             continue
@@ -180,11 +181,11 @@ def print_stats_qclm(data):
 
 def sample_ssm_sequence():
     return SSMSequences(
-            forward_primer="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-            reverse_primer="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
-            gene_of_interest="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING",
+            forward_primer="ATGCGTACGTAGCTAGCTAGCTAGCTAGC",
+            reverse_primer="GCTAGCTAGCTAGCTAGCACGTACGCAT",
+            gene_of_interest="ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG",
             plasmid=Plasmid(
-                plasmid_sequence="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+                plasmid_sequence="ATGCGTACGTAGCTAGCTAGCTAGCTAGCATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAGCTAGCTAGCTAGCTAGCACGTACGCAT"
             )
         )
 
@@ -254,7 +255,7 @@ def generate_random_ssm_mutations(sequence, start_end, no_sites, max_mut_per_sit
     while len(sites) < no_sites:
         sites.append(randint(start_end[0] // 3 + 9, start_end[1] // 3 - 9))
 
-    all_aminos = IUPAC.IUPACProtein.letters
+    all_aminos = AMINO_ACIDS
     standard_table = CodonTable.unambiguous_dna_by_name["Standard"]
 
     for site in sorted(sites):
@@ -265,7 +266,7 @@ def generate_random_ssm_mutations(sequence, start_end, no_sites, max_mut_per_sit
             orig_amino = standard_table.forward_table[codon]
 
         for _ in range(randint(1, max_mut_per_site)):
-            target_amino = all_aminos[randint(0, len(all_aminos) - 1)]
+            target_amino = AMINO_ACIDS[randint(0, len(AMINO_ACIDS) - 1)]
             mutations.append(orig_amino + str(site) + target_amino)
 
     return mutations
@@ -404,7 +405,7 @@ def random_qclm_mutations(seq: QCLMSequences, no_sites=10, mutations_per_site=4)
     result: List[MutationsForSite] = []
     for site in sorted(sites):
         mutations = set()
-        aminos = IUPAC.IUPACProtein.letters
+        aminos = AMINO_ACIDS
         no_aminos = len(aminos)
 
         codon = seq.gene_of_interest[3 * site : 3 * (site + 1)]
@@ -424,25 +425,25 @@ def random_qclm_mutations(seq: QCLMSequences, no_sites=10, mutations_per_site=4)
 
 def sample_qclm_sequences(ind=0) -> QCLMSequences:
     if ind ==4:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind == 5 or ind == 6:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind in [7, 8]:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = ""
         five_end_flanking = ""
     elif ind == 11:
-        mutated_dna= "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna= "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = ""
         five_end_flanking = ""
     else:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = ""
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
 
     return QCLMSequences(
         gene_of_interest=mutated_dna,
@@ -628,30 +629,30 @@ def sample_pas_mutations(ind=1) -> [PASMutationSite]:
 
 def sample_pas_sequences(ind=1) -> PASSequences:
     if ind == 1:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = ""
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind==2:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind==3:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind==4:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = None
         five_end_flanking = None
     # AMINO ACID
     elif ind==5:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = None
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
     elif ind==6:
-        mutated_dna = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        three_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
-        five_end_flanking = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
 
     return PASSequences(
         gene_of_interest=mutated_dna,

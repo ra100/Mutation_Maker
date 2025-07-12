@@ -72,7 +72,7 @@ class TestOligos(unittest.TestCase):
         return ''.join(codon)
 
 
-     def test_mutations_on_sites(self):
+    def test_mutations_on_sites(self):
         """ Assures that on every site, the generated mutations coincide with user's input """
 
         pas_seq, config, is_mutations_as_codons, mutations, fragments, solution, goi_offset = self.generate_example()

@@ -36,7 +36,7 @@ class TestPASOligoOutput(unittest.TestCase):
 
 
     def test_reverse_complement_reindexing(self):
-        sequence = "PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING"
+        sequence = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         mix_ratio = 0.4
         mutations = [1]
         reds = [3]
@@ -50,13 +50,13 @@ class TestPASOligoOutput(unittest.TestCase):
 
         # check reds reversed correctly
         red = json_obj.sequence[json_obj.reds[0]:json_obj.reds[0]+3]
-        self.assertEqual(red,"AGA")
+        self.assertEqual(red,"ACG")
 
         # check blues reversed correctly
         blue = json_obj.sequence[json_obj.blues[0]:json_obj.blues[0]+3]
-        self.assertEqual(blue, "GCG")
+        self.assertEqual(blue, "CTA")
 
 class TestPASSequences(unittest.TestCase):
 
     def test_get_full_sequence_with_offset(self):
-        PASSequences(gene_of_interest="PLACE_YOUR_OWN_SEQUENCE_FOR_TESTING")
+        PASSequences(gene_of_interest="ATGCGTACGTAGCTAGCTAGCTAGCTAGC")
