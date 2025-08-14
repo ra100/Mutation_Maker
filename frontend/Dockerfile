@@ -15,7 +15,7 @@ WORKDIR /frontend/
 RUN npm run build
 
 # Third stage is used for running the nginx production server using the built artifacts from the "builder" stage
-FROM nginx:1.24-alpine AS production-server
+FROM nginx:1.29.1-alpine AS production-server
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 COPY resources/docker-nginx-frontend.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /frontend/build /usr/share/nginx/html/
