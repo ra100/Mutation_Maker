@@ -1,4 +1,4 @@
-FROM nginx:1.24-alpine
+FROM nginx:1.29.2-alpine
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
 COPY docker-nginx-proxy.conf /etc/nginx/conf.d/default.conf
