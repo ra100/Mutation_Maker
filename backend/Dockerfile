@@ -1,4 +1,4 @@
-FROM python:3.9.18-alpine
+FROM python:3.14.2-alpine
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
 RUN apk add --no-cache \
