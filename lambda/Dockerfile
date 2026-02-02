@@ -1,4 +1,4 @@
-FROM amazonlinux:2023.2.20231113.0
+FROM amazonlinux:2023.10.20260120.4
 LABEL maintainer="Mutation Maker https://github.com/Merck/Mutation_Maker"
 
 # Basic Linux tools and Python 3.9
