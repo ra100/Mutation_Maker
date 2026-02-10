@@ -43,7 +43,7 @@ npm run codegen
 ```
 tests/
   app.spec.ts       # UI tests for all workflows (32 tests)
-  api.spec.ts       # API backend tests (7 tests, require Celery worker)
+  api.spec.ts       # API backend tests (9 tests, require Celery worker)
 ```
 
 ## Test Categories
@@ -56,9 +56,9 @@ tests/
 - **Navigation Tests**: Verify routing between workflows
 - **Accessibility Tests**: Check for labels and navigation elements
 
-### API Tests (api.spec.ts) - 7 tests (skipped by default)
-- **SSM API Tests**: Submit jobs, validate mutations, sequence validation
-- **QCLM API Tests**: Submit jobs with different codon tables
+### API Tests (api.spec.ts) - 9 tests
+- **SSM API Tests**: Submit jobs, degenerate mutations, multiple mutations
+- **QCLM API Tests**: Submit jobs with different codon tables, status check
 - **PAS API Tests**: Submit jobs with mutation frequencies
 
 ## Test Data
@@ -103,7 +103,7 @@ For CI environments, the config automatically:
 
 ## Running Full Integration Tests
 
-To run the API tests, ensure all services are running:
+To run all 41 tests (including API tests), ensure all services are running:
 
 ```bash
 # Terminal 1: Redis
@@ -112,8 +112,8 @@ docker run -d -p 6379:6379 redis:alpine
 # Terminal 2: API
 cd api && gunicorn server:app --bind 0.0.0.0:8000
 
-# Terminal 3: Celery Worker
-cd backend && celery -A tasks worker --loglevel=INFO
+# Terminal 3: Celery Worker (requires PRIMER3HOME)
+cd backend && PRIMER3HOME=/path/to/primer3/src/libprimer3 celery -A tasks worker --loglevel=INFO
 
 # Terminal 4: Frontend
 cd frontend && npm start
@@ -122,11 +122,21 @@ cd frontend && npm start
 cd e2e-tests && npm test
 ```
 
+### Finding Primer3 Path
+
+The Celery worker requires Primer3. If you have `primer3-py` installed:
+
+```bash
+# Find the primer3_core binary
+find $(python -c "import primer3; import os; print(os.path.dirname(primer3.__file__))") -name "primer3_core"
+```
+
 ## Test Results
 
 ```
-Running 39 tests using 4 workers
+Running 41 tests using 4 workers
 
-  ✓  32 passed (app.spec.ts)
-  -   7 skipped (api.spec.ts - requires Celery worker)
+  ✓  41 passed (7.9s)
+    - 32 UI tests (app.spec.ts)
+    -  9 API tests (api.spec.ts)
 ```
