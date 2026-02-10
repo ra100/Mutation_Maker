@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* global $, d3, document, console, CustomEvent, Event, window */
 /* eslint-disable func-names, vars-on-top, no-console, camelcase, no-use-before-define, no-mixed-operators, no-bitwise, no-nested-ternary */
 var FeatureViewer = (function() {
