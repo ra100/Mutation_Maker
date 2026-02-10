@@ -202,3 +202,49 @@ Excluding Merck copyright as for OpenSource not create by Merck it's not valid.
 - Run `PYTHONHASHSEED=0` for consistent hash ordering in Python tests
 - Frontend uses Jest with `--env=jsdom`
 - Test files are located in `backend/tests/unit_tests/`
+
+## E2E Tests
+
+End-to-end tests are located in `e2e-tests/` using Playwright.
+
+```bash
+# Install E2E test dependencies
+cd e2e-tests && npm install
+
+# Install Playwright browsers
+npx playwright install chromium
+
+# Run E2E tests (requires running frontend on port 3000)
+npm test
+
+# Run with UI mode
+npm run test:ui
+
+# Run in headed mode
+npm run test:headed
+
+# Generate test code interactively
+npm run codegen
+```
+
+### E2E Test Structure
+
+```
+e2e-tests/
+  tests/
+    app.spec.ts       # Main application tests
+  playwright.config.ts
+  package.json
+```
+
+### Running E2E Tests
+
+The application must be running before executing E2E tests:
+
+```bash
+# Terminal 1: Start the frontend
+cd frontend && npm start
+
+# Terminal 2: Run E2E tests
+cd e2e-tests && npm test
+```

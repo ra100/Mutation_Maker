@@ -13,3 +13,6 @@ aws-deploy.sh
 backend/tests/unit_tests/qclm_*
 build/*
 primer3_core
+playwright-report
+test-results
+*.log

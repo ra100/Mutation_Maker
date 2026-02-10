@@ -20,7 +20,14 @@ from typing import List, Set, Tuple, Optional
 from dataclasses import dataclass
 from mutation_maker.basic_types import Offset, DNASequenceForMutagenesis
 from mutation_maker.pas_types import PASConfig, PASMutationSite
-from Bio.SeqUtils import GC
+
+try:
+    from Bio.SeqUtils import GC
+except ImportError:
+    from Bio.SeqUtils import gc_fraction
+
+    def GC(seq):
+        return gc_fraction(seq) * 100
 
 
 @dataclass
@@ -30,17 +37,27 @@ class FragmentConstraints:
     The end of the fragment is defined as the index of the first bp after the fragment, so that the fragment occupies
     positions start, start+1, ..., end-1.
     """
+
     min_start: int
     max_start: int
     min_end: int
     max_end: int
 
     def __hash__(self):
-        return hash(str(self.min_start) + str(self.max_start) + str(self.min_end) + str(self.max_end))
+        return hash(
+            str(self.min_start)
+            + str(self.max_start)
+            + str(self.min_end)
+            + str(self.max_end)
+        )
 
     def __eq__(self, other):
-        return self.min_start == other.min_start and self.max_start == other.max_start and \
-            self.min_end == other.min_end and self.max_end == other.max_end
+        return (
+            self.min_start == other.min_start
+            and self.max_start == other.max_start
+            and self.min_end == other.min_end
+            and self.max_end == other.max_end
+        )
 
 
 class FragmentConstraintError(Exception):
@@ -56,8 +73,12 @@ class FragmentConstraintError(Exception):
         self.message = message
 
 
-def fragment_constraints(fragment_mutations: Set[Offset], gene: DNASequenceForMutagenesis, config: PASConfig, t_min) \
-        -> Tuple[bool, FragmentConstraints]:
+def fragment_constraints(
+    fragment_mutations: Set[Offset],
+    gene: DNASequenceForMutagenesis,
+    config: PASConfig,
+    t_min,
+) -> Tuple[bool, FragmentConstraints]:
     """
     Computes constraints for a fragment containing
     :param fragment_mutations: Offsets for mutations which belong to the fragment
@@ -92,10 +113,17 @@ def fragment_constraints(fragment_mutations: Set[Offset], gene: DNASequenceForMu
     max_end = min(next_mutation_start, max_start + config.max_oligo_size)
 
     # If it's not possible to construct a fragment because of overlap size constraints, raise an exception.
-    if min_end - max_start > config.max_oligo_size or max_start < 0 or min_end > len(gene.sequence) \
-            or min_start > max_start or min_end > max_end:
-        raise FragmentConstraintError(fragment_mutations,
-                                      "fragment_constraints(): Unable to satisfy size constraints for a fragment")
+    if (
+        min_end - max_start > config.max_oligo_size
+        or max_start < 0
+        or min_end > len(gene.sequence)
+        or min_start > max_start
+        or min_end > max_end
+    ):
+        raise FragmentConstraintError(
+            fragment_mutations,
+            "fragment_constraints(): Unable to satisfy size constraints for a fragment",
+        )
 
     # Extend the fragment sequence in the direction to the start of the gene, until the overlap reaches Tmin
     calculator = config.temperature_config.create_calculator()
@@ -114,8 +142,8 @@ def fragment_constraints(fragment_mutations: Set[Offset], gene: DNASequenceForMu
 
 
 class PASProtoFragment:
-    """ Stores info about a consecutive sequence of mutation sites which can be placed on a single fragment.
-    """
+    """Stores info about a consecutive sequence of mutation sites which can be placed on a single fragment."""
+
     def __init__(self, sites: List[Offset], constraints: FragmentConstraints = None):
         """
 
@@ -144,8 +172,9 @@ class PASProtoFragment:
             return min(self.sites)
         return -1
 
-    def init_constraints(self, gene: DNASequenceForMutagenesis, config: PASConfig, tm) -> bool:
-
+    def init_constraints(
+        self, gene: DNASequenceForMutagenesis, config: PASConfig, tm
+    ) -> bool:
         ret, self.constraints = fragment_constraints(set(self.sites), gene, config, tm)
         return ret
 
@@ -165,8 +194,10 @@ class PASProtoFragment:
         return self.constraints.min_start <= position <= self.constraints.max_start
 
     def is_ready(self, start, end):
-        return self.constraints.min_start <= start <= self.constraints.max_start and \
-               self.constraints.min_end <= end <= self.constraints.max_end
+        return (
+            self.constraints.min_start <= start <= self.constraints.max_start
+            and self.constraints.min_end <= end <= self.constraints.max_end
+        )
 
     def mergeable(self, other, max_size):
         if self != other:
@@ -194,18 +225,18 @@ class PASFragment:
         return self.sites if self.sites is not None else []
 
     def get_start(self) -> Offset:
-        """ Returns the offset of the first nucleotide in bp """
+        """Returns the offset of the first nucleotide in bp"""
         return self.start
 
     def get_length(self) -> int:
-        """ Returns fragment length in bp """
+        """Returns fragment length in bp"""
         return self.length
 
     def get_end(self):
         return self.end
 
     def get_sequence(self, gene):
-        return gene[self.start:self.get_end()]
+        return gene[self.start : self.get_end()]
 
     def put_score(self, score: float):
         self.score = score
@@ -225,13 +256,14 @@ class PASFragment:
             return ""
 
         if other.get_start() > self.get_start():
-            return gene[other.get_start(): self.get_end()]
+            return gene[other.get_start() : self.get_end()]
         else:
-            return gene[self.get_start(): other.get_end()]
+            return gene[self.get_start() : other.get_end()]
 
     def __str__(self):
         return "PAS Fragment from {} to {} with length {} and mutations {}".format(
-            self.get_start(), self.get_end(), self.length, self.get_mutation_sites())
+            self.get_start(), self.get_end(), self.length, self.get_mutation_sites()
+        )
 
     __repr__ = __str__
 
@@ -240,8 +272,15 @@ class PASSolution:
     """
     A (partial) PAS workflow solution, as described in the algorithm for Problem #1 in Gene synthesis workflow.
     """
-    def __init__(self, gene: DNASequenceForMutagenesis, config: PASConfig, t_min: float, fragments: List[PASFragment],
-                 self_binding_ranges: List[Tuple[int, int, float]] = None):
+
+    def __init__(
+        self,
+        gene: DNASequenceForMutagenesis,
+        config: PASConfig,
+        t_min: float,
+        fragments: List[PASFragment],
+        self_binding_ranges: List[Tuple[int, int, float]] = None,
+    ):
         self.gene = gene
         self.config = config
         self.tm = t_min  # min. melting temperature required fragment overlaps
@@ -249,8 +288,12 @@ class PASSolution:
         # fragments sorted by the start index
         self.fragments = sorted(fragments, key=lambda f: f.start)
         if self.fragments:
-            self.start = self.fragments[0].get_start()  # the start position of the first fragment in bp
-            self.end = self.fragments[-1].get_end()  # the end position of the last fragment in bp
+            self.start = self.fragments[
+                0
+            ].get_start()  # the start position of the first fragment in bp
+            self.end = self.fragments[
+                -1
+            ].get_end()  # the end position of the last fragment in bp
         else:
             self.start = None
             self.end = None
@@ -282,22 +325,22 @@ class PASSolution:
             return None
 
     def get_start(self) -> Optional[Offset]:
-        """ Returns the start position of the first fragment in bp, zero-based """
+        """Returns the start position of the first fragment in bp, zero-based"""
         if self.fragments:
             return self.fragments[0].get_start()
         else:
             return None
 
     def get_end(self) -> Optional[Offset]:
-        """ Returns the end position of the last fragment in bp, zero-based """
+        """Returns the end position of the last fragment in bp, zero-based"""
         if self.fragments:
             return self.fragments[-1].get_end()
         else:
             return None
 
     def get_length(self) -> Optional[int]:
-        """ Returns the difference between the end of the last fragment and the start of the first fragment +1 in bp.
-            Returns 0 if the solution does not contain any fragments.
+        """Returns the difference between the end of the last fragment and the start of the first fragment +1 in bp.
+        Returns 0 if the solution does not contain any fragments.
         """
         if self.fragments:
             # last_fragment = max(self.fragments, key=lambda f: f.start)
@@ -307,7 +350,7 @@ class PASSolution:
             return 0
 
     def mark_as_complete(self):
-        """ Indicate that the solution covers the whole gene """
+        """Indicate that the solution covers the whole gene"""
         self.is_complete = True
 
     def is_acceptable(self):
@@ -338,8 +381,17 @@ class PASSolution:
 #                                           SCORING FUNCTIONS
 ######################################################################################################################
 
-def pas_fragment_score(fragment_start, fragment_end, opt_len: int, self_binding_ranges: List[Tuple[int, int, float]],
-                       len_w, self_bind_w, tm: float, safe_temp_difference) -> float:
+
+def pas_fragment_score(
+    fragment_start,
+    fragment_end,
+    opt_len: int,
+    self_binding_ranges: List[Tuple[int, int, float]],
+    len_w,
+    self_bind_w,
+    tm: float,
+    safe_temp_difference,
+) -> float:
     """
     A low-level procedure for computing score for a single PAS fragment.
     :param fragment_start:
@@ -353,19 +405,29 @@ def pas_fragment_score(fragment_start, fragment_end, opt_len: int, self_binding_
     :return:
     """
     fragment_length = fragment_end - fragment_start + 1
-    score = len_w * (fragment_length - opt_len)**2
+    score = len_w * (fragment_length - opt_len) ** 2
 
     # Find self-binding regions inside the fragment with high enough Tm
     safe_self_bind_limit = tm - safe_temp_difference
-    score += self_bind_w * \
-             sum([(r[2] - safe_self_bind_limit)**2 for r in self_binding_ranges
-                  if r[0] >= fragment_start and r[1] <= fragment_end and r[2] > safe_self_bind_limit])
+    score += self_bind_w * sum(
+        [
+            (r[2] - safe_self_bind_limit) ** 2
+            for r in self_binding_ranges
+            if r[0] >= fragment_start
+            and r[1] <= fragment_end
+            and r[2] > safe_self_bind_limit
+        ]
+    )
 
     return sqrt(score)
 
 
-def pas_fragment_scores(fragments: List[PASFragment], config: PASConfig,
-                        self_binding_ranges: List[Tuple[int, int, float]], tm: float) -> List[float]:
+def pas_fragment_scores(
+    fragments: List[PASFragment],
+    config: PASConfig,
+    self_binding_ranges: List[Tuple[int, int, float]],
+    tm: float,
+) -> List[float]:
     """
     Returns  scores for a list of PAS fragments.
     :param fragments:
@@ -382,8 +444,16 @@ def pas_fragment_scores(fragments: List[PASFragment], config: PASConfig,
     self_bind_w = config.hairpin_homodimer_weight
     scores = []
     for f in fragments:
-        score = pas_fragment_score(f.start, f.end, optim_length, self_binding_ranges, len_w, self_bind_w,
-                                   tm, config.safe_temp_difference)
+        score = pas_fragment_score(
+            f.start,
+            f.end,
+            optim_length,
+            self_binding_ranges,
+            len_w,
+            self_bind_w,
+            tm,
+            config.safe_temp_difference,
+        )
         scores.append(score)
     return scores
 
@@ -403,7 +473,9 @@ def compute_solution_score(solution: PASSolution) -> float:
     calc = solution.config.temperature_config.create_calculator()
     fragments = solution.fragments
 
-    fragment_scores = pas_fragment_scores(fragments, solution.config, solution.self_binding_ranges, solution.tm)
+    fragment_scores = pas_fragment_scores(
+        fragments, solution.config, solution.self_binding_ranges, solution.tm
+    )
 
     overlap_scores = []
     for i, frag in enumerate(fragments):
@@ -411,20 +483,29 @@ def compute_solution_score(solution: PASSolution) -> float:
 
         if i < len(solution.get_fragments()) - 1:
             # overlap length
-            diff_len_ov = frag.get_end() - solution.fragments[i + 1].get_start() + 1 - solution.config.opt_overlap_length
-            overlap_score += solution.config.temp_weight * (diff_len_ov ** 2)
+            diff_len_ov = (
+                frag.get_end()
+                - solution.fragments[i + 1].get_start()
+                + 1
+                - solution.config.opt_overlap_length
+            )
+            overlap_score += solution.config.temp_weight * (diff_len_ov**2)
 
             # overlap gc
-            overlap = solution.gene.sequence[solution.fragments[i + 1].get_start():frag.get_end()]
+            overlap = solution.gene.sequence[
+                solution.fragments[i + 1].get_start() : frag.get_end()
+            ]
             calc_gc = GC(overlap)
-            gc_opt = (solution.config.max_gc_content - solution.config.min_gc_content) / 2
+            gc_opt = (
+                solution.config.max_gc_content - solution.config.min_gc_content
+            ) / 2
             diff_gc_ov = calc_gc - gc_opt
-            overlap_score += solution.config.gc_content_weight * (diff_gc_ov ** 2)
+            overlap_score += solution.config.gc_content_weight * (diff_gc_ov**2)
 
             # overlap temperature
             temp = calc(overlap)
             diff_temp_ov = solution.config.opt_overlap_tm - temp
-            overlap_score += solution.config.temp_weight * (diff_temp_ov ** 2)
+            overlap_score += solution.config.temp_weight * (diff_temp_ov**2)
 
             overlap_scores.append(sqrt(overlap_score))
 

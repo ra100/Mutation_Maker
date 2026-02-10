@@ -17,7 +17,14 @@
 
 import math
 
-from Bio.SeqUtils import GC
+try:
+    from Bio.SeqUtils import GC
+except ImportError:
+    from Bio.SeqUtils import gc_fraction
+
+    def GC(seq):
+        return gc_fraction(seq) * 100
+
 
 from mutation_maker.basic_types import PrimerSpec, DNASequenceForMutagenesis
 from mutation_maker.qclm_types import QCLMConfig
@@ -25,16 +32,21 @@ from mutation_maker.site_split import SiteSet
 
 
 class PrimerScoring:
-    """ Function object for calculating a score for a primer and reaction temperature."""
+    """Function object for calculating a score for a primer and reaction temperature."""
 
     def __init__(self, base: DNASequenceForMutagenesis, config: QCLMConfig):
         self.base = base
         self.config = config
 
-    def __call__(self, primer_spec: PrimerSpec, site_set: SiteSet,
-                 primer_melting_temp: float, hairpin_tm: float, homodimer_tm: float,
-                 reaction_temp: float) -> float:
-
+    def __call__(
+        self,
+        primer_spec: PrimerSpec,
+        site_set: SiteSet,
+        primer_melting_temp: float,
+        hairpin_tm: float,
+        homodimer_tm: float,
+        reaction_temp: float,
+    ) -> float:
         primer_seq = primer_spec.get_sequence(self.base)
 
         cfg: QCLMConfig = self.config
@@ -42,25 +54,41 @@ class PrimerScoring:
         opt_target_gc_content = (cfg.max_gc_content + cfg.min_gc_content) / 2
 
         opt_melting = cfg.temp_weight * (primer_melting_temp - reaction_temp)
-        opt_gc_content = cfg.gc_content_weight * (opt_target_gc_content - GC(primer_seq))
+        opt_gc_content = cfg.gc_content_weight * (
+            opt_target_gc_content - GC(primer_seq)
+        )
         opt_length = cfg.primer_size_weight * (len(primer_seq) - cfg.min_primer_size)
 
         three_end_size = min(site_set) - primer_spec.offset
-        opt_three_end = cfg.three_end_size_weight * (three_end_size - cfg.min_three_end_size)
+        opt_three_end = cfg.three_end_size_weight * (
+            three_end_size - cfg.min_three_end_size
+        )
 
         five_end_size = primer_spec.offset + primer_spec.length - max(site_set)
-        opt_five_end = cfg.five_end_size_weight * (five_end_size - cfg.min_five_end_size)
+        opt_five_end = cfg.five_end_size_weight * (
+            five_end_size - cfg.min_five_end_size
+        )
 
         opt_hairpin = opt_primer_dimer = 0
 
         if cfg.use_primer3:
             safe_self_bind_limit = reaction_temp - 2 * cfg.temp_range_size
             if hairpin_tm > safe_self_bind_limit:
-                opt_hairpin = cfg.hairpin_temperature_weight * (hairpin_tm - safe_self_bind_limit)
+                opt_hairpin = cfg.hairpin_temperature_weight * (
+                    hairpin_tm - safe_self_bind_limit
+                )
 
             if homodimer_tm > safe_self_bind_limit:
-                opt_primer_dimer = cfg.primer_dimer_temperature_weight * (homodimer_tm - safe_self_bind_limit)
+                opt_primer_dimer = cfg.primer_dimer_temperature_weight * (
+                    homodimer_tm - safe_self_bind_limit
+                )
 
-        return math.sqrt(opt_melting**2 + opt_gc_content**2 + opt_length**2
-                         + opt_three_end**2 + opt_five_end**2
-                         + opt_hairpin**2 + opt_primer_dimer**2)
+        return math.sqrt(
+            opt_melting**2
+            + opt_gc_content**2
+            + opt_length**2
+            + opt_three_end**2
+            + opt_five_end**2
+            + opt_hairpin**2
+            + opt_primer_dimer**2
+        )

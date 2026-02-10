@@ -21,24 +21,53 @@ from enum import IntEnum
 from pprint import pformat
 from statistics import mean
 
-from Bio.SeqUtils import GC
+try:
+    from Bio.SeqUtils import GC
+except ImportError:
+    from Bio.SeqUtils import gc_fraction
+
+    def GC(seq):
+        return gc_fraction(seq) * 100
+
 
 from mutation_maker.codon_usage_table import Organism
 from mutation_maker.degenerate_codon import DegenerateTriplet, CodonUsage
 from mutation_maker.mutation import MutationSite
 from mutation_maker.primer_scoring import PrimerScoring
 from mutation_maker.site_split import SiteSet, SiteSplits, SiteSplit
-from mutation_maker.basic_types import AminoAcid, Offset, PrimerSpec, Temperatures, Codon, DNASequenceForMutagenesis, \
-    CODON_LENGTH, MAX_PRIMER3_PRIMER_SIZE
+from mutation_maker.basic_types import (
+    AminoAcid,
+    Offset,
+    PrimerSpec,
+    Temperatures,
+    Codon,
+    DNASequenceForMutagenesis,
+    CODON_LENGTH,
+    MAX_PRIMER3_PRIMER_SIZE,
+)
 from mutation_maker.qclm_types import QCLMConfig
-from mutation_maker.temperature_calculator import TemperatureCalculator, TemperatureConfig, SelfBindingTemps, \
-    SelfBindingCalculator
-from typing import Iterable, Sequence, Tuple, MutableMapping, List, \
-    Set, Dict, Optional, NamedTuple, Mapping
+from mutation_maker.temperature_calculator import (
+    TemperatureCalculator,
+    TemperatureConfig,
+    SelfBindingTemps,
+    SelfBindingCalculator,
+)
+from typing import (
+    Iterable,
+    Sequence,
+    Tuple,
+    MutableMapping,
+    List,
+    Set,
+    Dict,
+    Optional,
+    NamedTuple,
+    Mapping,
+)
 
 
 class PrimersAndTemps:
-    """"
+    """ "
     A unique list of primers, possibly degenerate, with melting temperatures for each primer.
     Degenerate primers can have a sorted list of temperatures reflecting the fact that the melting
     temperature can be different for different concrete codon combinations covered by a degenerate primer.
@@ -65,7 +94,7 @@ class PrimersAndTemps:
         self._primers_by_codons[primer.codons].add(primer)
 
     def remove(self, primer: PrimerSpec) -> Optional[Tuple[PrimerSpec, Temperatures]]:
-        """ Remove a primer from the collection. """
+        """Remove a primer from the collection."""
         temp = self._primers_and_temps.get(primer)
         if temp is None:
             return None
@@ -80,13 +109,17 @@ class PrimersAndTemps:
     def get_temps(self, primer: PrimerSpec):
         return self._primers_and_temps.get(primer)
 
-    def get_by_codons(self, codons: Tuple[Codon, ...]) -> Sequence[Tuple[PrimerSpec, Temperatures]]:
-        """ Get all primers which have a given codon sequence.
-        """
+    def get_by_codons(
+        self, codons: Tuple[Codon, ...]
+    ) -> Sequence[Tuple[PrimerSpec, Temperatures]]:
+        """Get all primers which have a given codon sequence."""
         if self._primers_by_codons.get(codons) is None:
             return []
         else:
-            return [(primer, self.get_temps(primer)) for primer in self._primers_by_codons[codons]]
+            return [
+                (primer, self.get_temps(primer))
+                for primer in self._primers_by_codons[codons]
+            ]
 
     def count(self) -> int:
         return len(self._primers_and_temps)
@@ -118,9 +151,9 @@ class ScoredPrimer(NamedTuple):
 
 
 class QCLMSolution:
-    """ A solution for the QCLM problem.
-        It contains only one mutation site split.
-        There is only one primer for each codon combination for each mutation site sequence.
+    """A solution for the QCLM problem.
+    It contains only one mutation site split.
+    There is only one primer for each codon combination for each mutation site sequence.
     """
 
     mutations: List[MutationSite]
@@ -130,7 +163,9 @@ class QCLMSolution:
 
     __self_bind_calculator: SelfBindingCalculator
 
-    def __init__(self, mutations: List[MutationSite], temperature: float, qclm_config: QCLMConfig):
+    def __init__(
+        self, mutations: List[MutationSite], temperature: float, qclm_config: QCLMConfig
+    ):
         self.primers = {}
         self.mutations = mutations
         self.temperature = temperature
@@ -145,29 +180,47 @@ class QCLMSolution:
             org = Organism(qclm_config.organism)
             self.usages = org.translation_table
 
-    def add_primer(self, site_set: SiteSet, primer_spec: PrimerSpec, primer_temp: float, score: float):
-
+    def add_primer(
+        self,
+        site_set: SiteSet,
+        primer_spec: PrimerSpec,
+        primer_temp: float,
+        score: float,
+    ):
         if not self.primers.get(site_set):
             if bool(self.primers):
-                overlapping = site_set & set.union(*[set(s) for s in self.primers.keys()])
+                overlapping = site_set & set.union(
+                    *[set(s) for s in self.primers.keys()]
+                )
                 assert not overlapping
             self.primers[site_set] = []
 
-        assert len([p for p in self.primers[site_set] if p.spec.codons == primer_spec.codons]) == 0
+        assert (
+            len(
+                [
+                    p
+                    for p in self.primers[site_set]
+                    if p.spec.codons == primer_spec.codons
+                ]
+            )
+            == 0
+        )
         # TODO move penalisation of heterodimers here because we use tuples....
         self.primers[site_set].append(ScoredPrimer(primer_spec, score, primer_temp))
 
     def site_split(self) -> SiteSplit:
-        """ Get the site split used by this solution """
+        """Get the site split used by this solution"""
         return [sorted(site_set) for site_set in self.primers.keys()]
 
     def mutation_coverage(self) -> float:
-        """ Returns a ratio (in [0,1]), of number of aminos generated by the solution primers and
-            the number of amino acid mutations requested.
+        """Returns a ratio (in [0,1]), of number of aminos generated by the solution primers and
+        the number of amino acid mutations requested.
         """
 
-        aminos_for_sites = [(set(AminoAcid(a) for a in mut.new_aminos) | {AminoAcid(mut.old_amino)})
-                            for mut in self.mutations]
+        aminos_for_sites = [
+            (set(AminoAcid(a) for a in mut.new_aminos) | {AminoAcid(mut.old_amino)})
+            for mut in self.mutations
+        ]
 
         mut_site_offsets = [Offset(m.position) for m in self.mutations]
         index_of_site = {offset: i for (i, offset) in enumerate(mut_site_offsets)}
@@ -178,18 +231,22 @@ class QCLMSolution:
             site_list = sorted(site_set)
             for primer in primers:
                 for i, codon in enumerate(primer.spec.codons):
-                    aminos = DegenerateTriplet.degenerate_codon_to_aminos(codon, self.usages.table.forward_table)
+                    aminos = DegenerateTriplet.degenerate_codon_to_aminos(
+                        codon, self.usages.table.forward_table
+                    )
                     aminos_covered[index_of_site[site_list[i]]].update(aminos)
 
         total_aminos = sum(len(amino_set) for amino_set in aminos_for_sites)
 
-        total_aminos_covered = sum(len(amino_set & amino_set_covered) for (amino_set, amino_set_covered)
-                                   in zip(aminos_for_sites, aminos_covered))
+        total_aminos_covered = sum(
+            len(amino_set & amino_set_covered)
+            for (amino_set, amino_set_covered) in zip(aminos_for_sites, aminos_covered)
+        )
 
         return total_aminos_covered / total_aminos
 
     def temperature_interval(self) -> Tuple[float, float]:
-        """ Returns the interval of melting temperatures for the solution primers. """
+        """Returns the interval of melting temperatures for the solution primers."""
 
         primer_temps = self.primer_temperatures()
         return min(primer_temps), max(primer_temps)
@@ -198,10 +255,10 @@ class QCLMSolution:
         return [p.tm for site_set in self.primers for p in self.primers[site_set]]
 
     def score(self) -> float:
-        """ Compute a score for the solution. """
+        """Compute a score for the solution."""
 
         # Compute the mean score for all primers:
-        s = 0.
+        s = 0.0
         n = 0
 
         for site_set in self.primers:
@@ -217,10 +274,13 @@ class QCLMSolution:
         # Mutation coverage part
         mutation_non_coverage = 1 - self.mutation_coverage()
 
-        return self.config.mutation_coverage_weight * mutation_non_coverage + mean_primer_score
+        return (
+            self.config.mutation_coverage_weight * mutation_non_coverage
+            + mean_primer_score
+        )
 
     def get_breaking_primers(self, base: str) -> List[PrimerFailure]:
-        """ Get the solution primers which break input constraints. """
+        """Get the solution primers which break input constraints."""
 
         result = []
         cfg = self.config
@@ -232,15 +292,30 @@ class QCLMSolution:
                 errors = 0
 
                 # Check length constraints
-                if cfg.primer_size_weight > 0 and not cfg.min_primer_size <= primer.spec.length <= cfg.max_primer_size:
+                if (
+                    cfg.primer_size_weight > 0
+                    and not cfg.min_primer_size
+                    <= primer.spec.length
+                    <= cfg.max_primer_size
+                ):
                     errors += PrimerError.LENGTH
 
                 five_end_size = min(site_set) - primer.spec.offset
-                if cfg.five_end_size_weight and not cfg.min_five_end_size <= five_end_size <= cfg.max_five_end_size:
+                if (
+                    cfg.five_end_size_weight
+                    and not cfg.min_five_end_size
+                    <= five_end_size
+                    <= cfg.max_five_end_size
+                ):
                     errors += PrimerError.FIVE_END_SIZE
 
                 three_end_size = primer.spec.offset + primer.spec.length - max(site_set)
-                if cfg.three_end_size_weight and not cfg.min_three_end_size <= three_end_size <= cfg.max_three_end_size:
+                if (
+                    cfg.three_end_size_weight
+                    and not cfg.min_three_end_size
+                    <= three_end_size
+                    <= cfg.max_three_end_size
+                ):
                     errors += PrimerError.THREE_END_SIZE
 
                 # Check whether the primer melting temperature is within the limits
@@ -249,8 +324,12 @@ class QCLMSolution:
                         errors += PrimerError.TM
 
                 # Check hairpin and primer-dimer temperatures
-                mutated_dna_sequence_with_primer_sites = DNASequenceForMutagenesis(base, sorted(site_set))
-                primer_sequence = primer.spec.get_sequence(mutated_dna_sequence_with_primer_sites)
+                mutated_dna_sequence_with_primer_sites = DNASequenceForMutagenesis(
+                    base, sorted(site_set)
+                )
+                primer_sequence = primer.spec.get_sequence(
+                    mutated_dna_sequence_with_primer_sites
+                )
 
                 if cfg.use_primer3:
                     self_tm = self.__self_bind_calculator(primer_sequence)
@@ -264,7 +343,12 @@ class QCLMSolution:
                         errors += PrimerError.HOMODIMER_TM
 
                 # Check GC content
-                if cfg.gc_content_weight > 0 and not cfg.min_gc_content <= GC(primer_sequence) <= cfg.max_gc_content:
+                if (
+                    cfg.gc_content_weight > 0
+                    and not cfg.min_gc_content
+                    <= GC(primer_sequence)
+                    <= cfg.max_gc_content
+                ):
                     errors += PrimerError.GC_CONTENT
 
                 if errors != 0:
@@ -273,16 +357,19 @@ class QCLMSolution:
         return result
 
     def __repr__(self):
+        no_primers = sum(
+            len(site_set_primers) for site_set_primers in self.primers.values()
+        )
 
-        no_primers = sum(len(site_set_primers) for site_set_primers in self.primers.values())
-
-        return f"Solution: site_split={self.site_split()}, no_primers={no_primers}, score={self.score():.1f}, " \
-               f"mutation_coverage={self.mutation_coverage():.2f}, primer Tm interval={self.temperature_interval()}, " \
-               f"reaction temperature={self.temperature}"
+        return (
+            f"Solution: site_split={self.site_split()}, no_primers={no_primers}, score={self.score():.1f}, "
+            f"mutation_coverage={self.mutation_coverage():.2f}, primer Tm interval={self.temperature_interval()}, "
+            f"reaction temperature={self.temperature}"
+        )
 
 
 class QCLMPrimers:
-    """ A structure for storing intermediate results for a QCLM solution."""
+    """A structure for storing intermediate results for a QCLM solution."""
 
     base: DNASequenceForMutagenesis
     config: QCLMConfig
@@ -297,8 +384,13 @@ class QCLMPrimers:
     __self_bind_calculator: SelfBindingCalculator
     __self_binding_tm_cache: MutableMapping[PrimerSpec, SelfBindingTemps]
 
-    def __init__(self, splits: SiteSplits, base: DNASequenceForMutagenesis,
-                 qclm_config: QCLMConfig, temp_calculator: TemperatureCalculator):
+    def __init__(
+        self,
+        splits: SiteSplits,
+        base: DNASequenceForMutagenesis,
+        qclm_config: QCLMConfig,
+        temp_calculator: TemperatureCalculator,
+    ):
         self.__primer_defs = {}
         self.__primers = {}
         self.__self_binding_tm_cache = {}
@@ -317,9 +409,9 @@ class QCLMPrimers:
         return self.__primers
 
     def range(self, site_set: SiteSet) -> Tuple[int, int]:
-        """ Returns [min, max) range of the primers for a given site set.
-            It means that the offset 'off' of any nucleotide in any of
-            these primers satisfies inequality min <= off < max.
+        """Returns [min, max) range of the primers for a given site set.
+        It means that the offset 'off' of any nucleotide in any of
+        these primers satisfies inequality min <= off < max.
         """
         min_start = sys.maxsize
         max_limit = 0
@@ -333,10 +425,12 @@ class QCLMPrimers:
 
         return min_start, max_limit
 
-    def add_minimal_primers(self, site_set: SiteSet, codons: Iterable[Codon], min_start: int):
-        """ Add primer definitions of minimal length given their mutation sites and codons.
-            Creates a minimum length primer for each possible offset of the primer.
-            The input set of mutation sites must be present in at least one stored site split.
+    def add_minimal_primers(
+        self, site_set: SiteSet, codons: Iterable[Codon], min_start: int
+    ):
+        """Add primer definitions of minimal length given their mutation sites and codons.
+        Creates a minimum length primer for each possible offset of the primer.
+        The input set of mutation sites must be present in at least one stored site split.
         """
         assert self.__primer_defs.get(site_set) is not None
         self.__primer_defs[site_set].add(tuple(codons))
@@ -354,9 +448,13 @@ class QCLMPrimers:
 
         # Set the min/max primer offset so that it conforms to the input requirements
         # and the primer does not hit the previous mutation site.
-        min_primer_offset = max(first_site - self.config.max_five_end_size, min_start, 0)
+        min_primer_offset = max(
+            first_site - self.config.max_five_end_size, min_start, 0
+        )
         if prev_site_index >= 0:
-            min_primer_offset = max(min_primer_offset, site_offsets[prev_site_index] + CODON_LENGTH)
+            min_primer_offset = max(
+                min_primer_offset, site_offsets[prev_site_index] + CODON_LENGTH
+            )
 
         max_primer_offset = first_site - self.config.min_five_end_size
 
@@ -369,11 +467,16 @@ class QCLMPrimers:
             if length > self.config.max_primer_size:
                 continue
 
-            if next_site_index < len(site_offsets) and start + length > site_offsets[next_site_index]:
+            if (
+                next_site_index < len(site_offsets)
+                and start + length > site_offsets[next_site_index]
+            ):
                 # we hit the next mutation site
                 break
 
-            if start + length > len(self.base.sequence):  # we hit the end of the mutated DNA
+            if start + length > len(
+                self.base.sequence
+            ):  # we hit the end of the mutated DNA
                 break
 
             primer_spec = PrimerSpec(start, length, codons)
@@ -396,21 +499,33 @@ class QCLMPrimers:
         for ind, seq in enumerate(sorted_site_sequences):
             primers_for_seq = self.__primers[seq]
             # Get the limit for the end of the primers, if we compute a solution with non-overlapping primers
-            primer_end_limit = self.range(sorted_site_sequences[ind+1])[0] \
-                               if self.config.non_overlapping_primers and ind < len(sorted_site_sequences) - 1 \
-                               else sys.maxsize
+            primer_end_limit = (
+                self.range(sorted_site_sequences[ind + 1])[0]
+                if self.config.non_overlapping_primers
+                and ind < len(sorted_site_sequences) - 1
+                else sys.maxsize
+            )
 
-            for primer_spec, temp in primers_for_seq.get_primers_and_temps().copy().items():
+            for primer_spec, temp in (
+                primers_for_seq.get_primers_and_temps().copy().items()
+            ):
                 # Find the shortest 5' extension of the primer with Tm over temp_threshold
                 if temp[0] >= temp_threshold:
-                    continue    # The original primer already crossed the threshold
+                    continue  # The original primer already crossed the threshold
 
-                extended = PrimerSpec(primer_spec.offset, primer_spec.length + 1, primer_spec.codons)
+                extended = PrimerSpec(
+                    primer_spec.offset, primer_spec.length + 1, primer_spec.codons
+                )
                 three_end_size = primer_spec.offset + primer_spec.length - max(seq)
 
-                while self._primer_not_too_long(extended, seq, end_limit=primer_end_limit):
+                while self._primer_not_too_long(
+                    extended, seq, end_limit=primer_end_limit
+                ):
                     tm = self._primer_temperature(extended)
-                    if tm >= temp_threshold and three_end_size >= self.config.min_three_end_size:
+                    if (
+                        tm >= temp_threshold
+                        and three_end_size >= self.config.min_three_end_size
+                    ):
                         break
                     extended.length += 1
                     three_end_size += 1
@@ -425,18 +540,23 @@ class QCLMPrimers:
     def _primer_temperature(self, primer_spec: PrimerSpec) -> float:
         return self.temp_calculator(primer_spec.get_mismatch_sequence(self.base))
 
-    def _primer_not_too_long(self, primer_spec: PrimerSpec, site_set: SiteSet, end_limit: int) -> bool:
-        """ Check whether a primer does dot run into limits of the following constraints:
-            - the size of mutated DNA sequence
-            - region of the DNA sequence which the primer can cover
-            - maximum allowed primer length
-            - maximum allowed three- or five end sizes
+    def _primer_not_too_long(
+        self, primer_spec: PrimerSpec, site_set: SiteSet, end_limit: int
+    ) -> bool:
+        """Check whether a primer does dot run into limits of the following constraints:
+        - the size of mutated DNA sequence
+        - region of the DNA sequence which the primer can cover
+        - maximum allowed primer length
+        - maximum allowed three- or five end sizes
         """
         if primer_spec.offset + primer_spec.length >= end_limit:
             return False
 
         dna_seq_length = len(self.base.sequence)
-        if primer_spec.offset < 0 or primer_spec.offset + primer_spec.length > dna_seq_length:
+        if (
+            primer_spec.offset < 0
+            or primer_spec.offset + primer_spec.length > dna_seq_length
+        ):
             return False
 
         if primer_spec.length > self.config.max_primer_size:
@@ -448,23 +568,34 @@ class QCLMPrimers:
         five_end_size = first_site - primer_spec.offset
         three_end_size = primer_spec.offset + primer_spec.length - last_site
 
-        if three_end_size > self.config.max_three_end_size or five_end_size > self.config.max_five_end_size:
+        if (
+            three_end_size > self.config.max_three_end_size
+            or five_end_size > self.config.max_five_end_size
+        ):
             return False
 
-        sites_covered = len([o for o in self.base.mutation_sites
-                            if primer_spec.offset - CODON_LENGTH <= o < primer_spec.offset + primer_spec.length])
+        sites_covered = len(
+            [
+                o
+                for o in self.base.mutation_sites
+                if primer_spec.offset - CODON_LENGTH
+                <= o
+                < primer_spec.offset + primer_spec.length
+            ]
+        )
 
         if sites_covered != len(primer_spec.codons):
             return False
 
         return True
 
-    def collect_best_primers(self, score_fun: PrimerScoring, temperature: float) \
-            -> Mapping[SiteSet, Sequence[ScoredPrimer]]:
-        """ Select primers with the lowest score for each pair of (site set, codon list).
-            Primers with infinity scores are not included, even if these are the ony ones for
-            a (site set, codon list) combination.
-            The output is split w.r.t. the site sets.
+    def collect_best_primers(
+        self, score_fun: PrimerScoring, temperature: float
+    ) -> Mapping[SiteSet, Sequence[ScoredPrimer]]:
+        """Select primers with the lowest score for each pair of (site set, codon list).
+        Primers with infinity scores are not included, even if these are the ony ones for
+        a (site set, codon list) combination.
+        The output is split w.r.t. the site sets.
         """
 
         result = {site_set: [] for site_set in self.__primers.keys()}
@@ -477,17 +608,27 @@ class QCLMPrimers:
                 for primer in self.__primers[site_set].get_by_codons(codons):
                     primer_spec, temp = primer
 
-                    self_bind_temps: SelfBindingTemps = self._get_self_binding_temps(primer_spec)
+                    self_bind_temps: SelfBindingTemps = self._get_self_binding_temps(
+                        primer_spec
+                    )
 
-                    primer_score = score_fun(primer_spec, site_set, temp[0],
-                                             self_bind_temps.hairpin_tm, self_bind_temps.homodimer_tm, temperature)
+                    primer_score = score_fun(
+                        primer_spec,
+                        site_set,
+                        temp[0],
+                        self_bind_temps.hairpin_tm,
+                        self_bind_temps.homodimer_tm,
+                        temperature,
+                    )
                     if primer_score < best_score:
                         best_primer = primer
                         best_score = primer_score
 
                 if best_score < math.inf:
                     primer_spec, temp = best_primer
-                    result[site_set].append(ScoredPrimer(spec=primer_spec, score=best_score, tm=temp[0]))
+                    result[site_set].append(
+                        ScoredPrimer(spec=primer_spec, score=best_score, tm=temp[0])
+                    )
 
         return result
 
@@ -498,8 +639,9 @@ class QCLMPrimers:
                 primer_seq = primer_spec.get_sequence(self.base)
                 self_tm = self.__self_bind_calculator(primer_seq)
 
-                self.__self_binding_tm_cache[primer_spec] = \
-                    SelfBindingTemps(self_tm.hairpin_tm, self_tm.homodimer_tm)
+                self.__self_binding_tm_cache[primer_spec] = SelfBindingTemps(
+                    self_tm.hairpin_tm, self_tm.homodimer_tm
+                )
 
             return self.__self_binding_tm_cache[primer_spec]
         else:

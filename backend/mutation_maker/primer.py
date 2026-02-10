@@ -17,19 +17,27 @@
 
 from typing import Sized, Tuple
 
-from Bio.SeqUtils import GC
+try:
+    from Bio.SeqUtils import GC
+except ImportError:
+    from Bio.SeqUtils import gc_fraction
+
+    def GC(seq):
+        return gc_fraction(seq) * 100
+
 
 from mutation_maker.mutation import AminoMutation
 from mutation_maker.temperature_calculator import TemperatureCalculator
 
 
-def mutate_sequence(sequence: str, sequence_position: int,
-                    mutation, mutation_position):
+def mutate_sequence(sequence: str, sequence_position: int, mutation, mutation_position):
     mutation_offset = mutation_position - sequence_position
     mutation_length = len(mutation)
-    return sequence[:mutation_offset] + \
-        str(mutation) + \
-        sequence[mutation_offset + mutation_length:]
+    return (
+        sequence[:mutation_offset]
+        + str(mutation)
+        + sequence[mutation_offset + mutation_length :]
+    )
 
 
 def get_gc_clamp(sequence):
@@ -47,6 +55,7 @@ class Primer(Sized):
     Represents a primer sequence together with its position, length, direction
     sequence in normal order.
     """
+
     FORWARD = "forward"
     REVERSE = "reverse"
 
@@ -67,9 +76,9 @@ class Primer(Sized):
         self.start = start
         self.length = length
         if self.direction == Primer.FORWARD:
-            self.normal_order_sequence = parent_sequence[start:start + length]
+            self.normal_order_sequence = parent_sequence[start : start + length]
         elif self.direction == Primer.REVERSE:
-            self.normal_order_sequence = parent_sequence[start - length + 1:start + 1]
+            self.normal_order_sequence = parent_sequence[start - length + 1 : start + 1]
 
         self.normal_start = self._get_normal_start()
         self.normal_end = self._get_normal_end()
@@ -113,29 +122,44 @@ class Primer(Sized):
         if self.direction == Primer.REVERSE:
             return get_gc_clamp(self.normal_order_sequence)
 
-    def get_three_end_melting_temperature(self, mutation: AminoMutation,
-                                          temperature_calculator: TemperatureCalculator) -> float:
+    def get_three_end_melting_temperature(
+        self, mutation: AminoMutation, temperature_calculator: TemperatureCalculator
+    ) -> float:
         three_end = self.get_three_end_sequence(mutation)
         return temperature_calculator(three_end)
 
-    def get_three_end_temperature_with_size(self, size: int,
-                                            temperature_calculator: TemperatureCalculator) -> float:
+    def get_three_end_temperature_with_size(
+        self, size: int, temperature_calculator: TemperatureCalculator
+    ) -> float:
         if size > 0:
             three_end = self.get_three_end_with_size(size)
             return temperature_calculator(three_end)
         return -1
 
-    def get_melting_temperature(self, temperature_calculator: TemperatureCalculator) -> float:
+    def get_melting_temperature(
+        self, temperature_calculator: TemperatureCalculator
+    ) -> float:
         return temperature_calculator(self.normal_order_sequence)
 
-    def get_melting_temperature_of_mutated_primer(self, temperature_calculator: TemperatureCalculator,
-                                                  mutation_position: int, mutation_sequence: str) -> float:
-        return temperature_calculator(self.get_mutated_sequence(mutation_position,
-                                                                mutation_sequence))
+    def get_melting_temperature_of_mutated_primer(
+        self,
+        temperature_calculator: TemperatureCalculator,
+        mutation_position: int,
+        mutation_sequence: str,
+    ) -> float:
+        return temperature_calculator(
+            self.get_mutated_sequence(mutation_position, mutation_sequence)
+        )
 
-    def get_mutated_sequence(self, mutation_position: int, mutation_sequence: str) -> str:
-        return mutate_sequence(self.normal_order_sequence, self.get_normal_start(),
-                               mutation_sequence, mutation_position)
+    def get_mutated_sequence(
+        self, mutation_position: int, mutation_sequence: str
+    ) -> str:
+        return mutate_sequence(
+            self.normal_order_sequence,
+            self.get_normal_start(),
+            mutation_sequence,
+            mutation_position,
+        )
 
     def get_three_end_sequence(self, mutation: AminoMutation) -> str:
         size = self.get_three_end_size_from_mutation(mutation)
