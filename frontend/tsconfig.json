@@ -31,15 +31,13 @@
   },
   "exclude": [
     "node_modules",
-    "node_modules/feature-viewer",
     "build",
     "scripts",
     "acceptance-tests",
     "webpack",
     "jest",
     "src/setupTests.ts",
-    "feature-viewer",
-    "feature-viewer/**"
+    "feature-viewer"
   ],
   "include": [
     "src"
