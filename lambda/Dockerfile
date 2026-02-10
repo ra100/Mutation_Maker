@@ -18,6 +18,9 @@ ENV LANG=C.UTF-8
 # Create symbolic link for python
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
+# Upgrade pip to avoid packaging conflicts with system packages
+RUN python3 -m pip install --upgrade pip setuptools wheel
+
 # Install Python dependencies
 COPY requirements.txt /var/tmp/
 RUN python3 -m pip install -r /var/tmp/requirements.txt
