@@ -1,5 +1,5 @@
-celery==5.3.4
-gunicorn==21.2.0
+celery==5.4.0
+gunicorn==23.0.0
 hug==2.6.1
-redis==5.0.1
-tornado==6.4
+redis==5.2.1
+tornado==6.4.2
