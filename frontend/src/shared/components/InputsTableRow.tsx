@@ -24,7 +24,7 @@ type InputsTableRowProps = {
   value?: any
 }
 
-const InputsTableRow: React.SFC<InputsTableRowProps> = ({
+const InputsTableRow: React.FC<InputsTableRowProps> = ({
   label, value
 }) => (
     <>

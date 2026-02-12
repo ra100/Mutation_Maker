@@ -31,7 +31,7 @@ type WorkflowStepsProps = {
   makeOnClick(step: WorkflowStep): (() => void) | undefined
 }
 
-const WorkflowSteps: React.SFC<WorkflowStepsProps> = ({
+const WorkflowSteps: React.FC<WorkflowStepsProps> = ({
   loading,
   finished,
   failure,

@@ -167,7 +167,7 @@ const makeGetBoundaries =
     return combinedBoundaries(allBoundaries)
   }
 
-const QCLMFeatureViewer: React.SFC<QCLMFeatureViewerProps> = ({
+const QCLMFeatureViewer: React.FC<QCLMFeatureViewerProps> = ({
   geneSequence,
   geneOffset,
   resultRecords,

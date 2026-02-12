@@ -28,7 +28,7 @@ type PASInputsTableProps = {
   formData: Partial<PASFormData>
 }
 
-const PASInputsTable: React.SFC<PASInputsTableProps> = ({ formData}) => (
+const PASInputsTable: React.FC<PASInputsTableProps> = ({ formData}) => (
   <div className="Print-Only">
     <InputsTableRow label="Input Sequence Type"
                     value={formData.inputSequenceType}/>
