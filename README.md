@@ -81,7 +81,7 @@ This makes sure that all required services keep running after server restart.
     ```bash
     sudo apt update; sudo apt install software-properties-common;
     sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt install python3.7 python3-pip redis-server nodejs npm nginx
+    sudo apt install python3.11 python3-pip redis-server nodejs npm nginx
     # If applicable, enable nginx in ufw
     sudo ufw allow 'Nginx HTTP'
     sudo ufw status
