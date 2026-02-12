@@ -1,5 +1,7 @@
 celery==5.4.0
-gunicorn==23.0.0
+fastapi>=0.115.0
+gunicorn>=25.0.0
 hug==2.6.1
 redis==5.2.1
 tornado==6.4.2
+uvicorn>=0.34.0
