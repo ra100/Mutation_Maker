@@ -6,6 +6,6 @@ Resources:
     Properties:
         CodeUri: deploy-package/
         Handler: lambda_function.lambda_handler
-        Runtime: python3.6
+        Runtime: python3.11
         MemorySize: 512
         Timeout: 900

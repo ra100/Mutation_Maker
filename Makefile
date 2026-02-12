@@ -7,7 +7,7 @@ default: help
 
 ## Create Conda environment and install all backend dependencies
 conda-env:
-	@$(CONDA_INIT); conda activate $(CONDA_ENV_NAME) 2>/dev/null || conda create -y -n $(CONDA_ENV_NAME) python=3.7
+	@$(CONDA_INIT); conda activate $(CONDA_ENV_NAME) 2>/dev/null || conda create -y -n $(CONDA_ENV_NAME) python=3.11
 	@echo "Installing requirements..."
 	$(CONDA_INIT); conda activate $(CONDA_ENV_NAME) && \
 		pip install -r backend/requirements.txt -r api/requirements.txt -r lambda/requirements.txt

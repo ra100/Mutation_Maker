@@ -1,6 +1,6 @@
 behave==1.2.6
-biopython==1.85
-boto3==1.36.25
+biopython==1.86
+boto3>=1.42.0
 celery==5.4.0
 flower==2.0.1
 jmespath==1.0.1
