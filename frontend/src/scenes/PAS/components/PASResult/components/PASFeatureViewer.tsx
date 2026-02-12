@@ -180,7 +180,7 @@ const makeGetBoundaries = (resultRecords: IndexedPASResultFragment[]) => (
   return combinedBoundaries(allBoundaries)
 };
 
-const PASFeatureViewer: React.SFC<PASFeatureViewerProps> = ({
+const PASFeatureViewer: React.FC<PASFeatureViewerProps> = ({
   geneSequence,
   geneOffset,
   resultRecords,

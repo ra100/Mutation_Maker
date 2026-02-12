@@ -39,7 +39,7 @@ type FormSectionTitleProps = {
   tooltip?: string
 }
 
-const FormSectionTitle: React.SFC<FormSectionTitleProps> =
+const FormSectionTitle: React.FC<FormSectionTitleProps> =
   ({ index, title, children, tooltip }) =>(
   <Row className="FormSection">
     <Col span={1} className="FormSection-number--col">
@@ -58,7 +58,7 @@ const FormSectionTitle: React.SFC<FormSectionTitleProps> =
   </Row>
 );
 
-const FormSection: React.SFC<FormSectionProps> = ({ index, title, children, collapse = true, open = true, tooltip }) => (
+const FormSection: React.FC<FormSectionProps> = ({ index, title, children, collapse = true, open = true, tooltip }) => (
   <React.Fragment>
     {collapse &&
       <Collapse defaultActiveKey={open ? ['1'] : undefined}>

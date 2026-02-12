@@ -25,7 +25,7 @@ type QCLMInputsTableProps = {
  formData: Partial<QCLMFormData>
 }
 
-const QCLMInputsTable: React.SFC<QCLMInputsTableProps> = ({
+const QCLMInputsTable: React.FC<QCLMInputsTableProps> = ({
   formData
 }) => (
   <div className="Print-Only">

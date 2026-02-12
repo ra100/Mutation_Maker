@@ -40,7 +40,7 @@ const getCurrentRootPath = () => {
   return chunks.length > 1 ? chunks[1] : '/'
 }
 
-const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, requestJobResult }) => (
+const App: React.FC<AppInnerProps> = ({ jobState, getJob, submitRequest, requestJobResult }) => (
   <Layout>
     <Layout.Header>
       <Menu
@@ -130,7 +130,7 @@ const App: React.SFC<AppInnerProps> = ({ jobState, getJob, submitRequest, reques
           render={(routeParams) => {
             return (
               <div className="workflow-cards">
-                <Row gutter={24} type="flex" justify="center">
+                <Row gutter={24} justify="center">
                   <Col md={8} sm={12} xs={24}>
                     <Card
                       className="workflow-card"

@@ -172,7 +172,7 @@ const makeGetBoundaries = (resultData: SSMResultData) => (
   }
 }
 
-const SSMFeatureViewer: React.SFC<SSMFeatureViewerProps> = ({
+const SSMFeatureViewer: React.FC<SSMFeatureViewerProps> = ({
   resultData,
   scrollOffset,
   selected,
