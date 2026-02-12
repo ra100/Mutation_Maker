@@ -16,9 +16,10 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from api import init_api
+from server_fastapi import app
 
 print("Mutation Maker version: 1.0.0")
 
-api = init_api()
-app = api.http.server()
+import uvicorn
+
+uvicorn.run(app, host="0.0.0.0", port=8000)
