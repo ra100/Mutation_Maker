@@ -43,7 +43,7 @@ const popoverContentColumns: Array<ColumnProps<ReportRecord>> = [
   },
 ]
 
-const PrimerReportPopover: React.SFC<PrimerReportPopoverInnerProps> = ({ records }) => {
+const PrimerReportPopover: React.FC<PrimerReportPopoverInnerProps> = ({ records }) => {
   const popoverContent = (
     <Table
       rowKey="key"

@@ -34,7 +34,7 @@ const demoData: Partial<SSMFormData> = {
 
 type SSMOuterProps = WorkflowSceneExternalProps
 
-const SSM: React.SFC<SSMOuterProps> = ({
+const SSM: React.FC<SSMOuterProps> = ({
                                          submitRequest,
                                          requestJobResult,
                                          jobId,

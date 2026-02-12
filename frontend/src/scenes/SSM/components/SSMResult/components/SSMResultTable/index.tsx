@@ -188,7 +188,7 @@ const primerTableColumns = (
   }
 ]
 
-const SSMResultTable: React.SFC<PrimerTableInnerProps> = ({
+const SSMResultTable: React.FC<PrimerTableInnerProps> = ({
   resultData,
   minGcContent,
   maxGcContent,

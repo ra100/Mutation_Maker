@@ -81,7 +81,7 @@ const columns: Array<ColumnProps<QCLMFlatResultRecord>> = [
   },
 ]
 
-const QCLMResultTable: React.SFC<QCLMResultTableInnerProps> = ({
+const QCLMResultTable: React.FC<QCLMResultTableInnerProps> = ({
   resultRecords,
   rowKey,
   onRow,

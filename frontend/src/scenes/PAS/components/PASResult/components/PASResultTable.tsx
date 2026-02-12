@@ -171,7 +171,7 @@ const columns: Array<ColumnProps<IndexedPASResultFragment>> = [
   },
 ]
 
-const PASResultTable: React.SFC<PASResultTableInnerProps> = ({
+const PASResultTable: React.FC<PASResultTableInnerProps> = ({
   resultRecords,
   rowKey,
   onRow,

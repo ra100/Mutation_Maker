@@ -25,7 +25,7 @@ type SSMInputsTableProps = {
  formData: Partial<SSMFormData>
 }
 
-const SSMInputsTable: React.SFC<SSMInputsTableProps> = ({
+const SSMInputsTable: React.FC<SSMInputsTableProps> = ({
   formData
 }) => (
   <div className="Print-Only">

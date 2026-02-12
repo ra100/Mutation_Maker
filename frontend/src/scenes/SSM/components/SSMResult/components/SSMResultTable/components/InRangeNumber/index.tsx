@@ -27,7 +27,7 @@ type InRangeNumberProps = {
   value: number
 }
 
-const InRangeNumber: React.SFC<InRangeNumberProps> = ({ min, max, value }) =>
+const InRangeNumber: React.FC<InRangeNumberProps> = ({ min, max, value }) =>
   value < min || value > max ? (
     <Tooltip title={`Number is not in range ${min} - ${max}`}>
       <span className="InRangeNumber-invalid">{value}</span>

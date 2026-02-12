@@ -34,7 +34,7 @@ const demoData: Partial<QCLMFormData> = {
 
 type QCLMOuterProps = WorkflowSceneExternalProps
 
-const QCLM: React.SFC<QCLMOuterProps> = ({
+const QCLM: React.FC<QCLMOuterProps> = ({
   submitRequest,
   requestJobResult,
   jobId,
