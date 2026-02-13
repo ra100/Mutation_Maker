@@ -16,7 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Icon, message, Upload } from 'antd'
+import { InboxOutlined } from '@ant-design/icons'
+import { message, Upload } from 'antd'
 import * as React from 'react'
 import { read, utils } from 'xlsx'
 
@@ -108,7 +109,7 @@ class FileUploadMutations extends React.Component<FileUploadInputProps> {
         fileList={this.state.fileList}
         customRequest={this.handleRequest}>
         <p className="ant-upload-drag-icon">
-          <Icon type="inbox" />
+          <InboxOutlined />
         </p>
         <p className="ant-upload-text">Click or drag file to this area to upload .xlsx file</p>
       </Dragger>

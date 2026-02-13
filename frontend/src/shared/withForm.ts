@@ -16,38 +16,44 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Form } from 'antd'
-import { WrappedFormUtils, FormComponentProps } from 'antd/lib/form/Form'
+import { Form, FormInstance } from 'antd'
+import React from 'react'
 
-// TODO: fix types, "FormComponentProps<any> &" might not be right
-export type WithFormOuterProps<D> = FormComponentProps<any> & {
+export type WithFormOuterProps<D> = {
   data: Partial<D>
   onSubmit(data: D): void
 }
 
 export type WithFormInnerProps<D> = WithFormOuterProps<D> & {
-  form: WrappedFormUtils
+  form: FormInstance
 }
 
 function withForm<P, D>(
-  component: React.ComponentClass<P & WithFormInnerProps<D>> | React.SFC<P & WithFormInnerProps<D>>,
-) {
-  return Form.create<P & WithFormOuterProps<D>>({
-    mapPropsToFields({ data }: P & WithFormOuterProps<D>) {
-      if (data) {
-        return Object.keys(data).reduce((acc, key) => {
-          return {
-            ...acc,
-            [key]: Form.createFormField({
-              value: (data as Record<string, any>)[key],
-            }),
-          }
-        }, {})
-      }
+  Component: React.ComponentType<P & WithFormInnerProps<D>>,
+): React.FC<P & WithFormOuterProps<D>> {
+  const WrappedComponent: React.FC<P & WithFormOuterProps<D>> = (props) => {
+    const [form] = Form.useForm()
 
-      return undefined
-    },
-  })(component)
+    React.useEffect(() => {
+      if (props.data) {
+        form.setFieldsValue(props.data as any)
+      }
+    }, [props.data, form])
+
+    const handleSubmit = (values: D) => {
+      props.onSubmit(values)
+    }
+
+    return (
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Component {...props} form={form} />
+      </Form>
+    )
+  }
+
+  WrappedComponent.displayName = `withForm(${Component.displayName || Component.name || 'Component'})`
+
+  return WrappedComponent
 }
 
 export default withForm

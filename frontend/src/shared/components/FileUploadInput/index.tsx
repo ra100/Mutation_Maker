@@ -16,10 +16,11 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Icon, Upload } from 'antd'
+import { InboxOutlined } from '@ant-design/icons'
+import { Upload } from 'antd'
 import * as React from 'react'
 
-const Dragger = Upload.Dragger;
+const Dragger = Upload.Dragger
 
 const FILE_EXTENSIONS = '.fa, .fasta, .gb';
 
@@ -74,7 +75,7 @@ class FileUploadInput extends React.Component<FileUploadInputProps> {
         fileList={this.state.fileList}
         customRequest={this.handleRequest}>
         <p className="ant-upload-drag-icon">
-          <Icon type="inbox" />
+          <InboxOutlined />
         </p>
         <p className="ant-upload-text">Click or drag file to this area to upload .fa, .fasta or .gb files</p>
       </Dragger>

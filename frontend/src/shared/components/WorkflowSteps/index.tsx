@@ -16,10 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {
-  Icon,
-  Steps
-} from 'antd'
+import { CheckOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Steps } from 'antd'
 import * as React from 'react'
 import { WorkflowStep } from '../withCurrentStepState'
 
@@ -40,10 +38,10 @@ const WorkflowSteps: React.FC<WorkflowStepsProps> = ({
 }) => {
   const getIcon = (step: WorkflowStep) => {
     if (finished) {
-      return <Icon type="check" />
+      return <CheckOutlined />
     }
 
-    return currentStep === step && loading && <Icon type="loading" />
+    return currentStep === step && loading && <LoadingOutlined />
   };
 
   const stepStyle = {
