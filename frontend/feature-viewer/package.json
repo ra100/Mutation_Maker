@@ -17,6 +17,7 @@
     }
   ],
   "main": "index.js",
+  "type": "module",
   "scripts": {},
   "prettier": {
     "printWidth": 100,
