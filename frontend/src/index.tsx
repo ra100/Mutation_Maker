@@ -16,19 +16,19 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 import 'antd/dist/antd.css'
 import registerServiceWorker from './registerServiceWorker'
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root')!)
+root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  document.getElementById('root'),
 )
 
 registerServiceWorker()

@@ -16,7 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Icon, Popover, Table } from 'antd'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import { Popover, Table } from 'antd'
 import { ColumnProps } from 'antd/lib/table'
 import * as React from 'react'
 import { withProps } from 'recompose'
@@ -56,7 +57,7 @@ const PrimerReportPopover: React.FC<PrimerReportPopoverInnerProps> = ({ records 
 
   return (
     <Popover title="Report" content={popoverContent}>
-      <Icon type="info-circle-o" />
+      <InfoCircleOutlined />
     </Popover>
   )
 }

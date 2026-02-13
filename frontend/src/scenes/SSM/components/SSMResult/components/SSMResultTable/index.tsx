@@ -16,7 +16,8 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Icon, Table } from 'antd'
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons'
+import { Table } from 'antd'
 import * as React from 'react'
 import withRowIndexKey, { WithRowIndexKey } from 'shared/components/withRowIndexKey'
 import { SSMMutationData, SSMPrimerData } from 'shared/lib/Api'
@@ -174,12 +175,12 @@ const primerTableColumns = (
     render: (text, record) =>
       record.result_found ? (
         record.parameters_in_range ? (
-          <Icon style={{ color: 'green' }} type="check" />
+          <CheckOutlined style={{ color: 'green' }} />
         ) : (
-          <Icon style={{ color: 'red' }} type="close" />
+          <CloseOutlined style={{ color: 'red' }} />
         )
       ) : null,
-    },
+  },
   {
     title: 'Score (lower is better)',
     key: 'non_optimality',
