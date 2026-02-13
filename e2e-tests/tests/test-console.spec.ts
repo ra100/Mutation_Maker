@@ -1,4 +1,4 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test('check console errors', async ({ page }) => {
   const errors: string[] = []
@@ -15,5 +15,5 @@ test('check console errors', async ({ page }) => {
   await page.waitForTimeout(3000)
   
   console.log('Console errors:', errors)
-  throw new Error('Console errors found: ' + errors.join('\n'))
+  expect(errors).toEqual([])
 })
