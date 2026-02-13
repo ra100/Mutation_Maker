@@ -1,24 +1,8 @@
-/*   Copyright (c) 2020 Merck Sharp & Dohme Corp. a subsidiary of Merck & Co., Inc., Kenilworth, NJ, USA.
- *
- *   This file is part of the Mutation Maker, An Open Source Oligo Design Software For Mutagenesis and De Novo Gene Synthesis Experiments.
- *
- *   Mutation Maker is free software: you can redistribute it and/or modify
- *   it under the terms of the GNU General Public License as published by
- *   the Free Software Foundation, either version 3 of the License, or
- *   (at your option) any later version.
- *
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU General Public License for more details.
- *
- *   You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import { Button, Form, Input, message, Radio, Select, Tooltip } from 'antd'
 import * as R from 'ramda'
 import * as React from 'react'
+import { Controller, UseFormReturn, useWatch } from 'react-hook-form'
 import AminoAcidInput, { AminoType } from 'shared/components/AminoAcidInput'
 import FileUploadInput from 'shared/components/FileUploadInput'
 import FormSection from 'shared/components/FormSection'
@@ -67,7 +51,7 @@ const complementTable: { [key: string]: string } = {
   C: 'G',
   G: 'C',
   T: 'A',
-  I: 'I', // ???
+  I: 'I',
   R: 'Y',
   Y: 'R',
   M: 'K',
@@ -83,329 +67,320 @@ const complementTable: { [key: string]: string } = {
 
 const reverseComplement = (sequence: string): string => {
   const reversed = sequence.split('').reverse().join('')
-
   return reversed
     .split('')
     .map((x) => complementTable[x])
     .join('')
 }
 
-class SSMForm extends React.Component<SSMFormInnerProps> {
-  state = {
-    generateCodonOrAminoAcidTab: 'Degenerate Codon',
-    aminoAcids: [...defaultAminoAcids],
-    loading: false,
-    showGoiWarning: false,
+const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
+  const [generateCodonOrAminoAcidTab, setGenerateCodonOrAminoAcidTab] = React.useState('Degenerate Codon')
+  const [aminoAcids, setAminoAcids] = React.useState([...defaultAminoAcids])
+  const [loading, setLoading] = React.useState(false)
+  const [showGoiWarning, setShowGoiWarning] = React.useState(false)
+
+  const {
+    control,
+    setValue,
+    getValues,
+    reset,
+    formState: { errors },
+  } = form as UseFormReturn<SSMFormData>
+
+  const plasmidSequence = useWatch({ control, name: 'plasmidSequence' })
+  const primersType = useWatch({ control, name: 'primersType', defaultValue: DEFAULT_PRIMERS_TYPE })
+  const goiSequence = useWatch({ control, name: 'goiSequence' })
+  const degenerateCodon = useWatch({ control, name: 'degenerateCodon', defaultValue: 'NNK' })
+
+  const handleTabChange = (event?: any) => {
+    setGenerateCodonOrAminoAcidTab(event.target.value)
   }
 
-  onSubmit = (event: React.FormEvent<any>) => {
-    event.preventDefault()
-    const { form, onSubmit } = this.props
-
-    form.validateFields((error: any, values: SSMFormData) => {
-      if (!error) {
-        onSubmit(values)
-      } else {
-        message.error('Validation failed')
-        // tslint:disable-next-line no-console
-        console.error(error)
-      }
-    })
-  }
-
-  handleTabChange = (event?: any) => {
-    this.setState({ generateCodonOrAminoAcidTab: event.target.value })
-  }
-
-  handleAminoChange = (aminoAcids: AminoType[]) => {
-    this.setState({ aminoAcids, loading: true })
-    const { setFieldsValue } = this.props.form
+  const handleAminoChange = (newAminoAcids: AminoType[]) => {
+    setAminoAcids(newAminoAcids)
+    setLoading(true)
     getDegenerateCodons(
-      aminoAcids.filter((amino: AminoType) => amino.state === 'include').map(R.prop('name')),
-      aminoAcids.filter((amino: AminoType) => amino.state === 'avoid').map(R.prop('name')),
+      newAminoAcids.filter((amino: AminoType) => amino.state === 'include').map(R.prop('name')),
+      newAminoAcids.filter((amino: AminoType) => amino.state === 'avoid').map(R.prop('name')),
     )
       .then((degenerateCodon) => {
-        setFieldsValue({
-          degenerateCodon,
-        })
-        this.setState({ loading: false })
+        setValue('degenerateCodon', degenerateCodon)
+        setLoading(false)
       })
       .catch(() => {
         console.warn('error in getDegenerateCodons promise')
-        this.setState({ loading: false })
+        setLoading(false)
       })
   }
 
-  resetForm = (event: React.FormEvent<any>) => {
+  const resetForm = (event: React.FormEvent<any>) => {
     event.preventDefault()
-    const { form } = this.props
-    this.setState({ aminoAcids: [...defaultAminoAcids] })
-    form.resetFields()
+    setAminoAcids([...defaultAminoAcids])
+    reset()
   }
 
-  onPrimersTypeChange = (primersType: PrimersType) => {
-    const { setFieldsValue } = this.props.form
-    setFieldsValue({
-      forwardPrimerValue: getForwardPrimer(primersType),
-      reversePrimerValue: getReversePrimer(primersType),
-    })
+  const onPrimersTypeChange = (newPrimersType: PrimersType) => {
+    setValue('forwardPrimerValue', getForwardPrimer(newPrimersType))
+    setValue('reversePrimerValue', getReversePrimer(newPrimersType))
   }
 
-  onInputChange = (target: string) => (data: string) => {
-    const { setFieldsValue, validateFields } = this.props.form
-    setFieldsValue({
-      [target]: data,
-    })
-    validateFields()
+  const onInputChange = (target: string) => (data: string) => {
+    setValue(target as keyof SSMFormData, data as any)
   }
 
-  onGoiChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onGoiChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const goiStr = event.target.value || ''
     const hasStartCodon = goiStr.match(/^ATG/)
     const hasStopCodon = goiStr.match(/TAA$/) || goiStr.match(/TAG$/) || goiStr.match(/TGA$/)
-    this.setState({ showGoiWarning: !hasStartCodon || !hasStopCodon })
+    setShowGoiWarning(!hasStartCodon || !hasStopCodon)
   }
 
-  render() {
-    const { form, disabled } = this.props
-    const { getFieldDecorator, getFieldValue, resetFields, setFieldsValue } = form
-    const goiIsSubstringOfPlasmid = (
-      rule: any,
-      value: string,
-      callback: (errors: string[]) => void,
-    ) =>
-      callback(
-        getFieldValue('plasmidSequence').indexOf(value) === -1
-          ? ['Gene of Interest must be a substring of plasmid.']
-          : [],
-      )
+  const goiIsSubstringOfPlasmid = (value: string) => {
+    const plasmid = getValues('plasmidSequence')
+    return plasmid.indexOf(value) === -1 ? 'Gene of Interest must be a substring of plasmid.' : undefined
+  }
 
-    const flankingPrimerIsSubstringOfPlasmid = (
-      rule: any,
-      value: string,
-      callback: (errors: string[]) => void,
-    ) =>
-      callback(
-        getFieldValue('plasmidSequence').indexOf(value) === -1
-          ? ['Forward flanking primer must be a substring of plasmid.']
-          : [],
-      )
+  const flankingPrimerIsSubstringOfPlasmid = (value: string) => {
+    const plasmid = getValues('plasmidSequence')
+    return plasmid.indexOf(value) === -1 ? 'Forward flanking primer must be a substring of plasmid.' : undefined
+  }
 
-    const reverseComplementFlankingPrimerIsSubstringOfPlasmid = (
-      rule: any,
-      value: string,
-      callback: (errors: string[]) => void,
-    ) =>
-      callback(
-        getFieldValue('plasmidSequence').indexOf(reverseComplement(value)) === -1
-          ? ['Reverse flanking primer must be a substring of plasmid.']
-          : [],
-      )
+  const reverseComplementFlankingPrimerIsSubstringOfPlasmid = (value: string) => {
+    const plasmid = getValues('plasmidSequence')
+    return plasmid.indexOf(reverseComplement(value)) === -1
+      ? 'Reverse flanking primer must be a substring of plasmid.'
+      : undefined
+  }
 
-    return (
-      <Form layout="vertical" onSubmit={this.onSubmit}>
-        <FormSection index={1} title="Plasmid">
-          <Tooltip title="Enter or Upload Plasmid sequence containing flanking primers and Gene of Interest sequence. Only A, C, G and T are allowed in the sequence.">
-            <React.Fragment />
-            <Form.Item label="Plasmid Sequence" className="GeneTextArea" hasFeedback>
-              <FileUploadInput onChange={this.onInputChange('plasmidSequence')} />
-              {getFieldDecorator('plasmidSequence', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Plasmid Sequence is required',
-                  },
-                  geneValidationRule,
-                ],
-              })(<Input.TextArea rows={6} />)}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
+  const validateMutationField = (value: string) => {
+    const goi = getValues('goiSequence')
+    const result = validateMutations(value, goi)
+    return result.length > 0 ? result[0] : undefined
+  }
 
-        <FormSection index={2} title="Sequence">
-          <Tooltip title="Enter or Upload Gene of Interest sequence. Only A, C, G and T are allowed in the sequence. The Gene of Interest must be a substring of the Plasmid.">
-            <React.Fragment />
-            <Form.Item label="Gene of Interest Sequence" className="GeneTextArea" hasFeedback>
-              <FileUploadInput onChange={this.onInputChange('goiSequence')} />
-              {getFieldDecorator('goiSequence', {
-                rules: [
-                  { required: true, message: 'Gene of Interest Sequence is required' },
-                  { validator: goiIsSubstringOfPlasmid },
-                  geneValidationRule,
-                  endsWithStopCodonValidationRule,
-                ],
-              })(<Input.TextArea rows={8} onChange={this.onGoiChange} />)}
-              {this.state.showGoiWarning && (
-                <div className="has-warning noIcon">
-                  <div className="ant-form-explain">
-                    Gene of Interest should begin with ATG and end with TAA, TAG or TGA.
-                  </div>
-                </div>
-              )}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
-
-        <FormSection index={3} title="Mutations">
-          <Tooltip title="Enter mutations in following format [Amino Acid Codon][Location][X] , X represents a degenerate codon">
-            <React.Fragment />
-            <Form.Item label="Mutations" className="MutationsTextArea" hasFeedback>
-              {getFieldDecorator('mutations', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Mutations are required',
-                  },
-                  {
-                    type: 'string',
-                    pattern: /^\s*([A-Z][0-9]*[A-Z])(\s+[A-Z][0-9]*[A-Z]\s*)*$/i,
-                  },
-                  {
-                    validator: (rule, value, callback) =>
-                      validateMutations(
-                        value,
-                        this.props.form.getFieldValue('goiSequence'),
-                        callback,
-                      ),
-                  },
-                ],
-              })(<MutationsInput cols={11} />)}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
-
-        <FormSection index={4} title="Flanking primers">
-          <Tooltip title="Select forward and reverse flanking primers from a list or enter custom primer sequences. Flanking primers and custom primers have to be searchable in plasmid sequence. Only A, C, G and T are allowed in the custom flanking primer sequence.">
-            <React.Fragment />
-            <Form.Item label="Primers Type" hasFeedback>
-              {getFieldDecorator('primersType', { initialValue: DEFAULT_PRIMERS_TYPE })(
-                <Select onChange={this.onPrimersTypeChange}>
-                  <Select.Option key={PrimersType.pETseq1}>pET SeqF1 / SeqR1</Select.Option>
-                  <Select.Option key={PrimersType.custom}>Custom</Select.Option>
-                </Select>,
-              )}
-            </Form.Item>
-            <Form.Item label="Forward Primer" hasFeedback>
-              {getFieldDecorator('forwardPrimerValue', {
-                rules: [
-                  { required: true, message: 'Forward Primer is required' },
-                  geneValidationRule,
-                  {
-                    max: 60,
-                  },
-                  { validator: flankingPrimerIsSubstringOfPlasmid },
-                ],
-                initialValue: getForwardPrimer(DEFAULT_PRIMERS_TYPE),
-              })(<Input disabled={getFieldValue('primersType') !== 'custom'} />)}
-            </Form.Item>
-            <Form.Item label="Reverse Primer" hasFeedback>
-              {getFieldDecorator('reversePrimerValue', {
-                rules: [
-                  { required: true, message: 'Reverse Primer is required' },
-                  geneValidationRule,
-                  {
-                    max: 60,
-                  },
-                  { validator: reverseComplementFlankingPrimerIsSubstringOfPlasmid },
-                ],
-                initialValue: getReversePrimer(DEFAULT_PRIMERS_TYPE),
-              })(<Input disabled={getFieldValue('primersType') !== 'custom'} />)}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
-        <FormSection index={5} title="Parameters" tooltip="Enter primers parameters" open={false}>
-          <ParametersFormSection
-            getFieldDecorator={getFieldDecorator}
-            getFieldValue={getFieldValue}
-            resetFields={resetFields}
-            setFieldsValue={setFieldsValue}
-          />
-        </FormSection>
-
-        <FormSection index={6} title="Degenerate codons or Amino acids" open={false}>
-          <Radio.Group defaultValue="Degenerate Codon" onChange={this.handleTabChange}>
-            <Radio.Button value="Degenerate Codon">Degenerate Codon</Radio.Button>
-            <Radio.Button value="Amino acids">Amino acids</Radio.Button>
-            <p className="codon-info">Select what you want to enter</p>
-          </Radio.Group>
+  return (
+    <>
+      <FormSection index={1} title="Plasmid">
+        <Tooltip title="Enter or Upload Plasmid sequence containing flanking primers and Gene of Interest sequence.">
           <Form.Item
+            label="Plasmid Sequence"
+            className="GeneTextArea"
             hasFeedback
-            className={
-              this.state.generateCodonOrAminoAcidTab !== 'Degenerate Codon' ? 'hidden' : ''
-            }>
-            <Tooltip title="Type a degenerate codon. It must consist of exactly three letters from A, B, C, D, G, H, K, M, N, R, S, T, V, W, Y.">
-              {getFieldDecorator('degenerateCodon', {
-                initialValue: 'NNK',
-                rules: [
-                  {
-                    required: true,
-                    message: 'Degenerate codon is required',
-                  },
-                  {
-                    pattern: /^[ABCDGHKMNRSTUVWY]{3}(,[ABCDGHKMNRSTUVWY]{3})*$/,
-                    message:
-                      'Must consist of exactly three letters from A, B, C, D, G, H, K, M, N, R, S, T, U, V, W, Y without spaces',
-                  },
-                ],
-              })(<Input />)}
-            </Tooltip>
-          </Form.Item>
-          <Form.Item
-            className={this.state.generateCodonOrAminoAcidTab !== 'Amino acids' ? 'hidden' : ''}>
-            <div>
-              <b>Degenerate Codon:</b> {this.props.form.getFieldValue('degenerateCodon')}
-            </div>
-            <AminoAcidInput
-              value={this.state.aminoAcids}
-              onChange={this.handleAminoChange}
-              loading={this.state.loading}
+            validateStatus={errors.plasmidSequence ? 'error' : undefined}
+            help={errors.plasmidSequence?.message}
+          >
+            <FileUploadInput onChange={onInputChange('plasmidSequence')} />
+            <Controller
+              name="plasmidSequence"
+              control={control}
+              rules={{
+                required: 'Plasmid Sequence is required',
+                validate: { geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true },
+              }}
+              render={({ field }) => <Input.TextArea {...field} rows={6} />}
             />
           </Form.Item>
-        </FormSection>
+        </Tooltip>
+      </FormSection>
 
-        <FormSection index={7} title="File name" open={false}>
-          <Tooltip title="Type name of the export report">
-            <React.Fragment />
-            <Form.Item label="Enter file name" hasFeedback>
-              {getFieldDecorator('fileName')(<Input />)}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
-
-        <FormSection index={8} title="Oligo prefix" open={false}>
-          <Tooltip title="Type oligo prefix to be used in the export report, please use max 19 characters. This name is used for naming tab in report excel file which has hard limit.">
-            <React.Fragment />
-            <Form.Item label="Enter oligo prefix" hasFeedback>
-              {getFieldDecorator('oligoPrefix')(<Input />)}
-            </Form.Item>
-          </Tooltip>
-        </FormSection>
-
-        <FormSection collapse={false}>
-          <Form.Item className="DataInputForm-submitRow">
-            <Button.Group>
-              <Tooltip title="Design primers">
-                <Button type="primary" htmlType="submit" icon="save" id="submit_ssm_btn">
-                  Submit
-                </Button>
-              </Tooltip>
-              <Tooltip title="Clear the form">
-                <Button
-                  type="default"
-                  id="rest_ssm_btn"
-                  htmlType="reset"
-                  icon="reload"
-                  disabled={disabled}
-                  onClick={this.resetForm}>
-                  Reset
-                </Button>
-              </Tooltip>
-            </Button.Group>
+      <FormSection index={2} title="Sequence">
+        <Tooltip title="Enter or Upload Gene of Interest sequence.">
+          <Form.Item
+            label="Gene of Interest Sequence"
+            className="GeneTextArea"
+            hasFeedback
+            validateStatus={errors.goiSequence ? 'error' : undefined}
+            help={errors.goiSequence?.message}
+          >
+            <FileUploadInput onChange={onInputChange('goiSequence')} />
+            <Controller
+              name="goiSequence"
+              control={control}
+              rules={{
+                required: 'Gene of Interest Sequence is required',
+                validate: {
+                  substring: goiIsSubstringOfPlasmid,
+                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
+                  stopCodon: (v) => endsWithStopCodonValidationRule.validator?.(null as any, v, () => null) || true,
+                },
+              }}
+              render={({ field }) => <Input.TextArea {...field} rows={8} onChange={(e) => { field.onChange(e); onGoiChange(e) }} />}
+            />
+            {showGoiWarning && (
+              <div className="has-warning noIcon">
+                <div className="ant-form-explain">
+                  Gene of Interest should begin with ATG and end with TAA, TAG or TGA.
+                </div>
+              </div>
+            )}
           </Form.Item>
-        </FormSection>
-      </Form>
-    )
-  }
+        </Tooltip>
+      </FormSection>
+
+      <FormSection index={3} title="Mutations">
+        <Tooltip title="Enter mutations in following format [Amino Acid Codon][Location][X]">
+          <Form.Item
+            label="Mutations"
+            className="MutationsTextArea"
+            hasFeedback
+            validateStatus={errors.mutations ? 'error' : undefined}
+            help={errors.mutations?.message}
+          >
+            <Controller
+              name="mutations"
+              control={control}
+              rules={{
+                required: 'Mutations are required',
+                pattern: { value: /^\s*([A-Z][0-9]*[A-Z])(\s+[A-Z][0-9]*[A-Z]\s*)*$/i, message: 'Invalid mutation format' },
+                validate: validateMutationField,
+              }}
+              render={({ field }) => <MutationsInput {...field} cols={11} />}
+            />
+          </Form.Item>
+        </Tooltip>
+      </FormSection>
+
+      <FormSection index={4} title="Flanking primers">
+        <Tooltip title="Select forward and reverse flanking primers from a list or enter custom primer sequences.">
+          <Form.Item label="Primers Type" hasFeedback>
+            <Controller
+              name="primersType"
+              control={control}
+              defaultValue={DEFAULT_PRIMERS_TYPE}
+              render={({ field }) => (
+                <Select {...field} onChange={(val) => { field.onChange(val); onPrimersTypeChange(val) }}>
+                  <Select.Option key={PrimersType.pETseq1}>pET SeqF1 / SeqR1</Select.Option>
+                  <Select.Option key={PrimersType.custom}>Custom</Select.Option>
+                </Select>
+              )}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Forward Primer"
+            hasFeedback
+            validateStatus={errors.forwardPrimerValue ? 'error' : undefined}
+            help={errors.forwardPrimerValue?.message}
+          >
+            <Controller
+              name="forwardPrimerValue"
+              control={control}
+              defaultValue={getForwardPrimer(DEFAULT_PRIMERS_TYPE)}
+              rules={{
+                required: 'Forward Primer is required',
+                max: { value: 60, message: 'Max 60 characters' },
+                validate: {
+                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
+                  substring: flankingPrimerIsSubstringOfPlasmid,
+                },
+              }}
+              render={({ field }) => <Input {...field} disabled={primersType !== 'custom'} />}
+            />
+          </Form.Item>
+          <Form.Item
+            label="Reverse Primer"
+            hasFeedback
+            validateStatus={errors.reversePrimerValue ? 'error' : undefined}
+            help={errors.reversePrimerValue?.message}
+          >
+            <Controller
+              name="reversePrimerValue"
+              control={control}
+              defaultValue={getReversePrimer(DEFAULT_PRIMERS_TYPE)}
+              rules={{
+                required: 'Reverse Primer is required',
+                max: { value: 60, message: 'Max 60 characters' },
+                validate: {
+                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
+                  substring: reverseComplementFlankingPrimerIsSubstringOfPlasmid,
+                },
+              }}
+              render={({ field }) => <Input {...field} disabled={primersType !== 'custom'} />}
+            />
+          </Form.Item>
+        </Tooltip>
+      </FormSection>
+
+      <FormSection index={5} title="Parameters" tooltip="Enter primers parameters" open={false}>
+        <ParametersFormSection form={form} />
+      </FormSection>
+
+      <FormSection index={6} title="Degenerate codons or Amino acids" open={false}>
+        <Radio.Group defaultValue="Degenerate Codon" onChange={handleTabChange}>
+          <Radio.Button value="Degenerate Codon">Degenerate Codon</Radio.Button>
+          <Radio.Button value="Amino acids">Amino acids</Radio.Button>
+          <p className="codon-info">Select what you want to enter</p>
+        </Radio.Group>
+        <Form.Item
+          hasFeedback
+          className={generateCodonOrAminoAcidTab !== 'Degenerate Codon' ? 'hidden' : ''}
+          validateStatus={errors.degenerateCodon ? 'error' : undefined}
+          help={errors.degenerateCodon?.message}
+        >
+          <Tooltip title="Type a degenerate codon.">
+            <Controller
+              name="degenerateCodon"
+              control={control}
+              defaultValue="NNK"
+              rules={{
+                required: 'Degenerate codon is required',
+                pattern: {
+                  value: /^[ABCDGHKMNRSTUVWY]{3}(,[ABCDGHKMNRSTUVWY]{3})*$/,
+                  message: 'Must consist of exactly three letters from A, B, C, D, G, H, K, M, N, R, S, T, U, V, W, Y',
+                },
+              }}
+              render={({ field }) => <Input {...field} />}
+            />
+          </Tooltip>
+        </Form.Item>
+        <Form.Item className={generateCodonOrAminoAcidTab !== 'Amino acids' ? 'hidden' : ''}>
+          <div>
+            <b>Degenerate Codon:</b> {degenerateCodon}
+          </div>
+          <AminoAcidInput value={aminoAcids} onChange={handleAminoChange} loading={loading} />
+        </Form.Item>
+      </FormSection>
+
+      <FormSection index={7} title="File name" open={false}>
+        <Tooltip title="Type name of the export report">
+          <Form.Item label="Enter file name" hasFeedback>
+            <Controller name="fileName" control={control} render={({ field }) => <Input {...field} />} />
+          </Form.Item>
+        </Tooltip>
+      </FormSection>
+
+      <FormSection index={8} title="Oligo prefix" open={false}>
+        <Tooltip title="Type oligo prefix to be used in the export report">
+          <Form.Item label="Enter oligo prefix" hasFeedback>
+            <Controller name="oligoPrefix" control={control} render={({ field }) => <Input {...field} />} />
+          </Form.Item>
+        </Tooltip>
+      </FormSection>
+
+      <FormSection collapse={false}>
+        <Form.Item className="DataInputForm-submitRow">
+          <Button.Group>
+            <Tooltip title="Design primers">
+              <Button type="primary" htmlType="submit" icon={<SaveOutlined />} id="submit_ssm_btn">
+                Submit
+              </Button>
+            </Tooltip>
+            <Tooltip title="Clear the form">
+              <Button
+                type="default"
+                id="rest_ssm_btn"
+                htmlType="reset"
+                icon={<ReloadOutlined />}
+                disabled={disabled}
+                onClick={resetForm}
+              >
+                Reset
+              </Button>
+            </Tooltip>
+          </Button.Group>
+        </Form.Item>
+      </FormSection>
+    </>
+  )
 }
 
 export default withForm<SSMFormOuterProps, SSMFormData>(SSMForm)

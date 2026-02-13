@@ -17,57 +17,87 @@
  */
 
 import { Col, Input, Row } from 'antd'
-import { WrappedFormUtils } from 'antd/lib/form/Form'
 import * as R from 'ramda'
 import * as React from 'react'
+import { Controller, UseFormReturn, FieldValues } from 'react-hook-form'
 
-type MinOptMaxInputsProps = Pick<
-  WrappedFormUtils,
-  'getFieldDecorator' | 'getFieldValue' | 'resetFields'
-> & {
+type MinOptMaxInputsProps = {
+  form: UseFormReturn<FieldValues>
   fieldPrefix: string
   defaults?: {
     min?: number
     opt?: number
     max?: number
-  },
+  }
   disabled?: boolean
   optimalPresent?: boolean
 }
 
 const MinOptMaxInputs = ({
-  getFieldDecorator,
-  getFieldValue,
-  resetFields,
+  form,
   fieldPrefix,
   defaults = {},
   disabled = false,
   optimalPresent = false,
 }: MinOptMaxInputsProps) => {
   const onBlurReset = (fieldName: string) => () => {
-    if (R.isEmpty(getFieldValue(fieldName))) {
-      resetFields([fieldName])
+    const value = form.getValues(fieldName)
+    if (R.isEmpty(value)) {
+      form.setValue(fieldName, defaults[fieldName.replace(fieldPrefix, '').toLowerCase() as keyof typeof defaults] as any)
     }
   }
 
   return (
     <Row className="MinOptMaxInputs" gutter={10}>
       <Col span={optimalPresent ? 8 : 12}>
-        {getFieldDecorator(`${fieldPrefix}Min`, { initialValue: defaults.min })(
-          <Input type="number" addonBefore="MIN" onBlur={onBlurReset(`${fieldPrefix}Min`)} disabled={disabled} />,
-        )}
-      </Col>
-      {optimalPresent &&
-        <Col span={8}>
-          {getFieldDecorator(`${fieldPrefix}Opt`, { initialValue: defaults.opt })(
-            <Input type="number" addonBefore="OPT" onBlur={onBlurReset(`${fieldPrefix}Opt`)} disabled={disabled} />,
+        <Controller
+          name={`${fieldPrefix}Min`}
+          control={form.control}
+          defaultValue={defaults.min}
+          render={({ field }) => (
+            <Input
+              {...field}
+              type="number"
+              addonBefore="MIN"
+              onBlur={onBlurReset(`${fieldPrefix}Min`)}
+              disabled={disabled}
+            />
           )}
+        />
+      </Col>
+      {optimalPresent && (
+        <Col span={8}>
+          <Controller
+            name={`${fieldPrefix}Opt`}
+            control={form.control}
+            defaultValue={defaults.opt}
+            render={({ field }) => (
+              <Input
+                {...field}
+                type="number"
+                addonBefore="OPT"
+                onBlur={onBlurReset(`${fieldPrefix}Opt`)}
+                disabled={disabled}
+              />
+            )}
+          />
         </Col>
-      }
+      )}
       <Col span={optimalPresent ? 8 : 12}>
-        {getFieldDecorator(`${fieldPrefix}Max`, { initialValue: defaults.max })(
-          <Input type="number" addonBefore="MAX" onBlur={onBlurReset(`${fieldPrefix}Max`)} disabled={disabled} />,
-        )}
+        <Controller
+          name={`${fieldPrefix}Max`}
+          control={form.control}
+          defaultValue={defaults.max}
+          render={({ field }) => (
+            <Input
+              {...field}
+              type="number"
+              addonBefore="MAX"
+              onBlur={onBlurReset(`${fieldPrefix}Max`)}
+              disabled={disabled}
+            />
+          )}
+        />
       </Col>
     </Row>
   )

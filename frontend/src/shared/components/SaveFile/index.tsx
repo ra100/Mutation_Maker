@@ -16,7 +16,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Button } from 'antd'
+import { DownloadOutlined } from '@ant-design/icons';
+
+import { Button } from 'antd';
 import * as R from 'ramda'
 import * as React from 'react'
 import * as XLSX from 'xlsx'
@@ -350,10 +352,10 @@ class SaveFile extends React.Component<SaveFileProps> {
 
   render() {
     return (
-      <Button className="no-print" type="primary" icon="download" onClick={this.handleClick}>
+      <Button className="no-print" type="primary" icon={<DownloadOutlined />} onClick={this.handleClick}>
         Download as XLSX
       </Button>
-    )
+    );
   }
 }
 
