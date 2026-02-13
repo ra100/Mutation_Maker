@@ -17,6 +17,7 @@
  */
 
 import { Layout, Menu, Button, Card, Col, Row } from 'antd'
+import type { MenuProps } from 'antd'
 import * as React from 'react'
 import { Route, RouteComponentProps, Switch, withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -40,6 +41,35 @@ const getCurrentRootPath = () => {
   return chunks.length > 1 ? chunks[1] : '/'
 }
 
+const menuItems: MenuProps['items'] = [
+  {
+    key: 'ssm',
+    label: <Link to={`/${Workflow.ssm}`}>SSSM</Link>,
+  },
+  {
+    key: 'qclm',
+    label: <Link to={`/${Workflow.qclm}`}>MSDM</Link>,
+  },
+  {
+    key: 'pas',
+    label: <Link to={`/${Workflow.pas}`}>PAS</Link>,
+  },
+  {
+    key: 'issues',
+    className: 'version',
+    label: (
+      <div>
+        <a href="https://github.com/Merck/Mutation_Maker/issues">Report an issue</a>
+      </div>
+    ),
+  },
+  {
+    key: 'version',
+    className: 'version',
+    label: <div>Version: 1.0.0</div>,
+  },
+]
+
 const App: React.FC<AppInnerProps> = ({ jobState, getJob, submitRequest, requestJobResult }) => (
   <Layout>
     <Layout.Header>
@@ -47,25 +77,9 @@ const App: React.FC<AppInnerProps> = ({ jobState, getJob, submitRequest, request
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={[getCurrentRootPath()]}
-        style={{ lineHeight: '64px' }}>
-        <Menu.Item key="ssm">
-          <Link to={`/${Workflow.ssm}`}>SSSM</Link>
-        </Menu.Item>
-        <Menu.Item key="qclm">
-          <Link to={`/${Workflow.qclm}`}>MSDM</Link>
-        </Menu.Item>
-        <Menu.Item key="pas">
-          <Link to={`/${Workflow.pas}`}>PAS</Link>
-        </Menu.Item>
-        <Menu.Item className="version">
-          <div>
-            <a href="https://github.com/Merck/Mutation_Maker/issues">Report an issue</a>
-          </div>
-        </Menu.Item>
-        <Menu.Item className="version">
-          <div>Version: 1.0.0</div>
-        </Menu.Item>
-      </Menu>
+        items={menuItems}
+        style={{ lineHeight: '64px' }}
+      />
     </Layout.Header>
 
     <Layout.Content className="container">
