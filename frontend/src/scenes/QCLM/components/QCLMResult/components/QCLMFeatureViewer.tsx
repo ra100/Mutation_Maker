@@ -18,7 +18,6 @@
 
 import * as R from 'ramda'
 import * as React from 'react'
-import FeatureViewer, { FeatureViewerOptions } from 'feature-viewer'
 import { Boundaries, combinedBoundaries, mutationBoundaries } from 'shared/boundaries'
 import FeatureViewerComponent from 'shared/components/FeatureViewerComponent'
 import { WithSelectedAndHighlighted } from 'shared/components/withSelectedAndHighlighted'
@@ -28,6 +27,10 @@ import { codonToAminoAcid, gcContent, Mutation, toCodons } from 'shared/genes'
 import { notUndefined } from 'shared/helpers'
 import { Omit } from 'shared/lib/Omit'
 import { IndexedQCLMFlatResultRecord } from 'shared/lib/ResultData'
+
+type FeatureViewerClass = any
+type FeatureViewer = any
+type FeatureViewerOptions = any
 
 type QCLMFeatureViewerProps = {
   geneSequence: string
@@ -45,8 +48,8 @@ const addSequenceDescription =
 
 const initializeQCLMFeatureViewer =
   (geneSequence: string, geneOffset: number, resultRecords: IndexedQCLMFlatResultRecord[]) =>
-  (componentId: string, options: FeatureViewerOptions | undefined): FeatureViewer => {
-    const featureViewer = new FeatureViewer(geneSequence, `#${componentId}`, options)
+  (FeatureViewerClass: FeatureViewerClass, componentId: string, options: FeatureViewerOptions | undefined): FeatureViewer => {
+    const featureViewer = new FeatureViewerClass(geneSequence, `#${componentId}`, options)
 
     const aminoacidOffset = geneOffset % 3
 

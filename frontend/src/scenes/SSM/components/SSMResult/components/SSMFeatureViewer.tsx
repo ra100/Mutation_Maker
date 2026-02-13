@@ -16,7 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import FeatureViewer, { FeatureViewerOptions } from 'feature-viewer'
 import * as R from 'ramda'
 import * as React from 'react'
 import { Boundaries, mutationBoundaries } from 'shared/boundaries'
@@ -28,6 +27,10 @@ import { codonToAminoAcid, gcContent, parseMutation, toCodons } from 'shared/gen
 import { notUndefined } from 'shared/helpers'
 import { Omit } from 'shared/lib/Omit'
 import { SSMResultData } from 'shared/lib/ResultData'
+
+type FeatureViewerClass = any
+type FeatureViewer = any
+type FeatureViewerOptions = any
 
 type SSMFeatureViewerProps = {
   resultData: SSMResultData
@@ -42,11 +45,12 @@ const addSequenceDescription = (sequence: string) => (data: any): any => (
 )
 
 const initializeSSMFeatureViewer = (ssmResultData: SSMResultData) => (
+  FeatureViewerClass: FeatureViewerClass,
   componentId: string,
   options: FeatureViewerOptions | undefined,
 ): FeatureViewer => {
   const { full_sequence: sequence, results: mutationsData, goi_offset: goiOffset } = ssmResultData
-  const featureViewer = new FeatureViewer(sequence, `#${componentId}`, options)
+  const featureViewer = new FeatureViewerClass(sequence, `#${componentId}`, options)
 
   const aminoacidOffset = goiOffset % 3
 

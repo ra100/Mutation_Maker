@@ -16,7 +16,6 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import FeatureViewer, { FeatureViewerOptions } from 'feature-viewer'
 import * as R from 'ramda'
 import * as React from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -25,15 +24,19 @@ import { WithSelectedAndHighlighted } from 'shared/components/withSelectedAndHig
 import FeatureViewerTheme from 'shared/FeatureViewerTheme'
 import { parseMutation } from 'shared/genes'
 import { notUndefined } from 'shared/helpers'
+import loadFeatureViewer from 'shared/lib/FeatureViewerLoader'
 import './styles.css'
+
+type FeatureViewer = any
+type FeatureViewerOptions = any
 
 const featureViewerOptions: FeatureViewerOptions = {
   showAxis: true,
   showSequence: true,
-  brushActive: true, // zoom
-  toolbar: true, // current zoom & mouse position
+  brushActive: true,
+  toolbar: true,
   bubbleHelp: true,
-  zoomMax: 10, // define the maximum range of the zoom
+  zoomMax: 10,
 }
 
 type FeatureViewerComponentProps = {
@@ -41,6 +44,7 @@ type FeatureViewerComponentProps = {
   geneOffset: number
   scrollOffset?: number
   initializeFeatureViewer(
+    FeatureViewerClass: any,
     componentId: string,
     options: FeatureViewerOptions | undefined,
   ): FeatureViewer
@@ -86,29 +90,35 @@ class FeatureViewerComponent extends React.Component<
 
   state: FeatureViewerComponentState = {}
 
-  initializeFeatureViewer = (componentId: string) => {
-    const { geneSequence, initializeFeatureViewer } = this.props
+  initializeFeatureViewer = async (componentId: string) => {
+    try {
+      const FeatureViewerClass = await loadFeatureViewer()
+      
+      const { geneSequence, initializeFeatureViewer } = this.props
 
-    const featureViewerOptionsWithHandlers = {
-      ...featureViewerOptions,
-      onClick: this.props.onClick,
-      onMouseEnter: this.props.onMouseEnter,
-      onMouseLeave: this.props.onMouseLeave,
+      const featureViewerOptionsWithHandlers = {
+        ...featureViewerOptions,
+        onClick: this.props.onClick,
+        onMouseEnter: this.props.onMouseEnter,
+        onMouseLeave: this.props.onMouseLeave,
+      }
+
+      const featureViewer = initializeFeatureViewer(FeatureViewerClass, componentId, featureViewerOptionsWithHandlers)
+
+      featureViewer.onZoom(({ detail }: any) => {
+        this.setState({ zoom: { start: detail.start + 1, end: detail.end } })
+      })
+
+      this.setState({
+        featureViewer,
+        zoom: {
+          start: 1,
+          end: geneSequence.length,
+        },
+      })
+    } catch (err) {
+      console.error('Failed to load FeatureViewer:', err)
     }
-
-    const featureViewer = initializeFeatureViewer(componentId, featureViewerOptionsWithHandlers)
-
-    featureViewer.onZoom(({ detail }) => {
-      this.setState({ zoom: { start: detail.start + 1, end: detail.end } })
-    })
-
-    this.setState({
-      featureViewer,
-      zoom: {
-        start: 1,
-        end: geneSequence.length,
-      },
-    })
   }
 
   componentDidMount() {
