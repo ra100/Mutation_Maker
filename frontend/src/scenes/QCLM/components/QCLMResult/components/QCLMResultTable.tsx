@@ -91,7 +91,7 @@ const QCLMResultTable: React.FC<QCLMResultTableInnerProps> = ({
     className="ResultTable"
     bordered
     size="small"
-    rowKey={rowKey}
+    rowKey={(record, index) => rowKey(record, index ?? 0)}
     columns={columns}
     dataSource={resultRecords}
     pagination={false}

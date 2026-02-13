@@ -20,11 +20,23 @@ export const geneValidationRule = {
   type: 'string',
   pattern: /^[ACGTacgt]+$/,
   message: 'Only A, C, G and T are allowed',
+  validator: (_rule: any, value: string, _callback: (error?: string) => void) => {
+    if (value && !/^[ACGTacgt]+$/.test(value)) {
+      return 'Only A, C, G and T are allowed'
+    }
+    return true
+  },
 };
 
 export const endsWithStopCodonValidationRule = {
   pattern: /(TAA|TGA|TAG|taa|tga|tag)$/,
   message: 'Gene of Interest must end with TAA, TGA or TAG',
+  validator: (_rule: any, value: string, _callback: (error?: string) => void) => {
+    if (value && !/(TAA|TGA|TAG|taa|tga|tag)$/.test(value)) {
+      return 'Gene of Interest must end with TAA, TGA or TAG'
+    }
+    return true
+  },
 };
 
 export const proteinValidationRule = {
@@ -32,4 +44,10 @@ export const proteinValidationRule = {
   pattern: /^[FLIMVSGTAYHQNKDECWRPflimvsgtayhqnkdecwrp]+$/,
   message: 'Only the following values are allowed: ' +
     'F, L, I, M, V, S, G, T, A, Y, H, Q, N, K, D, E, C, W, R, P',
+  validator: (_rule: any, value: string, _callback: (error?: string) => void) => {
+    if (value && !/^[FLIMVSGTAYHQNKDECWRPflimvsgtayhqnkdecwrp]+$/.test(value)) {
+      return 'Only the following values are allowed: F, L, I, M, V, S, G, T, A, Y, H, Q, N, K, D, E, C, W, R, P'
+    }
+    return true
+  },
 };

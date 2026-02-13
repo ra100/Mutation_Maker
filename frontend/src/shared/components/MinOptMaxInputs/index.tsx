@@ -19,10 +19,10 @@
 import { Col, Input, Row } from 'antd'
 import * as R from 'ramda'
 import * as React from 'react'
-import { Controller, UseFormReturn, FieldValues } from 'react-hook-form'
+import { Controller, UseFormReturn } from 'react-hook-form'
 
 type MinOptMaxInputsProps = {
-  form: UseFormReturn<FieldValues>
+  form: UseFormReturn<any>
   fieldPrefix: string
   defaults?: {
     min?: number
@@ -43,7 +43,7 @@ const MinOptMaxInputs = ({
   const onBlurReset = (fieldName: string) => () => {
     const value = form.getValues(fieldName)
     if (R.isEmpty(value)) {
-      form.setValue(fieldName, defaults[fieldName.replace(fieldPrefix, '').toLowerCase() as keyof typeof defaults] as any)
+      form.setValue(fieldName, defaults[fieldName.replace(fieldPrefix, '').toLowerCase() as keyof typeof defaults])
     }
   }
 

@@ -21,15 +21,13 @@ import * as React from 'react'
 
 import {groupsOf} from 'shared/groupsOf'
 import {TextAreaProps} from "antd/lib/input";
-import {HTMLTextareaProps} from "antd/lib/input/TextArea";
 
 const transformMutations = (cols: number) => (mutations: string): string => {
   const groups = groupsOf(cols, mutations.split(/\s+/));
   return groups.map(group => group.join('\t').toUpperCase()).join('\n')
 };
 
-type MutationsInputProps = TextAreaProps &
-  HTMLTextareaProps & {
+type MutationsInputProps = TextAreaProps & {
     cols: number
   }
 
@@ -39,7 +37,7 @@ class MutationsInput extends React.Component<MutationsInputProps> {
 
     return (
       <Input.TextArea
-        autoSize={props.autosize || { minRows: 3 }}
+        autoSize={props.autoSize || { minRows: 3 }}
         value={value && transformMutations(cols)(value.toString())}
         {...props}
       />

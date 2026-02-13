@@ -18,7 +18,7 @@
 
 import * as React from 'react'
 import { DeleteOutlined } from '@ant-design/icons'
-import { Button, Form, message, Radio, Tooltip } from 'antd'
+import { Button, Form, Radio, Tooltip } from 'antd'
 import { Controller, UseFormReturn } from 'react-hook-form'
 import FormSection from 'shared/components/FormSection'
 import MutationsTable from './MutationsTable'
@@ -177,7 +177,7 @@ const InputMutations: React.FC<InputMutationsProps> = ({
           </span>
         }
       >
-        <Form.Item validateStatus={form.formState.errors.inputMutations ? 'error' : undefined} help={form.formState.errors.inputMutations?.message}>
+        <Form.Item validateStatus={form.formState.errors.inputMutations ? 'error' : undefined} help={form.formState.errors.inputMutations?.message?.toString()}>
           <FileUploadMutations onChange={handleInputMutationsUpload('inputMutations')} />
           <Controller
             name="inputMutations"
@@ -187,16 +187,19 @@ const InputMutations: React.FC<InputMutationsProps> = ({
               required: 'Input mutations are required',
               validate: mutationsValidator,
             }}
-            render={({ field }) => (
-              <MutationsTable
-                {...field}
-                mutations={mutations}
-                onChange={(newMutations: any) => {
-                  handleInputMutationsChange(newMutations)
-                  field.onChange(newMutations)
-                }}
-              />
-            )}
+            render={({ field }) => {
+              const MutationsTableAny = MutationsTable as any
+              return (
+                <MutationsTableAny
+                  key={field.name}
+                  mutations={mutations}
+                  onChange={(newMutations: any) => {
+                    handleInputMutationsChange(newMutations)
+                    field.onChange(newMutations)
+                  }}
+                />
+              )
+            }}
           />
         </Form.Item>
       </Tooltip>

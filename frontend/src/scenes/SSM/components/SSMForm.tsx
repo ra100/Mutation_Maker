@@ -1,8 +1,8 @@
 import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
-import { Button, Form, Input, message, Radio, Select, Tooltip } from 'antd'
+import { Button, Form, Input, Radio, Select, Tooltip } from 'antd'
 import * as R from 'ramda'
 import * as React from 'react'
-import { Controller, UseFormReturn, useWatch } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import AminoAcidInput, { AminoType } from 'shared/components/AminoAcidInput'
 import FileUploadInput from 'shared/components/FileUploadInput'
 import FormSection from 'shared/components/FormSection'
@@ -85,12 +85,10 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
     getValues,
     reset,
     formState: { errors },
-  } = form as UseFormReturn<SSMFormData>
+  } = form
 
-  const plasmidSequence = useWatch({ control, name: 'plasmidSequence' })
-  const primersType = useWatch({ control, name: 'primersType', defaultValue: DEFAULT_PRIMERS_TYPE })
-  const goiSequence = useWatch({ control, name: 'goiSequence' })
-  const degenerateCodon = useWatch({ control, name: 'degenerateCodon', defaultValue: 'NNK' })
+  const primersType = useWatch({ control, name: 'primersType' }) as PrimersType | undefined
+  const degenerateCodon = useWatch({ control, name: 'degenerateCodon' }) as string | undefined
 
   const handleTabChange = (event?: any) => {
     setGenerateCodonOrAminoAcidTab(event.target.value)
@@ -154,8 +152,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
 
   const validateMutationField = (value: string) => {
     const goi = getValues('goiSequence')
-    const result = validateMutations(value, goi)
-    return result.length > 0 ? result[0] : undefined
+    return validateMutations(value, goi)
   }
 
   return (
@@ -167,7 +164,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
             className="GeneTextArea"
             hasFeedback
             validateStatus={errors.plasmidSequence ? 'error' : undefined}
-            help={errors.plasmidSequence?.message}
+            help={errors.plasmidSequence?.message?.toString()}
           >
             <FileUploadInput onChange={onInputChange('plasmidSequence')} />
             <Controller
@@ -175,7 +172,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
               control={control}
               rules={{
                 required: 'Plasmid Sequence is required',
-                validate: { geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true },
+                validate: { geneValidation: (v) => geneValidationRule.validator(null as any, v, () => null) },
               }}
               render={({ field }) => <Input.TextArea {...field} rows={6} />}
             />
@@ -190,7 +187,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
             className="GeneTextArea"
             hasFeedback
             validateStatus={errors.goiSequence ? 'error' : undefined}
-            help={errors.goiSequence?.message}
+            help={errors.goiSequence?.message?.toString()}
           >
             <FileUploadInput onChange={onInputChange('goiSequence')} />
             <Controller
@@ -200,8 +197,8 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
                 required: 'Gene of Interest Sequence is required',
                 validate: {
                   substring: goiIsSubstringOfPlasmid,
-                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
-                  stopCodon: (v) => endsWithStopCodonValidationRule.validator?.(null as any, v, () => null) || true,
+                  geneValidation: (v) => geneValidationRule.validator(null as any, v, () => null),
+                  stopCodon: (v) => endsWithStopCodonValidationRule.validator(null as any, v, () => null),
                 },
               }}
               render={({ field }) => <Input.TextArea {...field} rows={8} onChange={(e) => { field.onChange(e); onGoiChange(e) }} />}
@@ -224,7 +221,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
             className="MutationsTextArea"
             hasFeedback
             validateStatus={errors.mutations ? 'error' : undefined}
-            help={errors.mutations?.message}
+            help={errors.mutations?.message?.toString()}
           >
             <Controller
               name="mutations"
@@ -248,7 +245,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
               control={control}
               defaultValue={DEFAULT_PRIMERS_TYPE}
               render={({ field }) => (
-                <Select {...field} onChange={(val) => { field.onChange(val); onPrimersTypeChange(val) }}>
+                <Select {...field} onChange={(val) => { field.onChange(val); onPrimersTypeChange(val as PrimersType) }}>
                   <Select.Option key={PrimersType.pETseq1}>pET SeqF1 / SeqR1</Select.Option>
                   <Select.Option key={PrimersType.custom}>Custom</Select.Option>
                 </Select>
@@ -259,7 +256,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
             label="Forward Primer"
             hasFeedback
             validateStatus={errors.forwardPrimerValue ? 'error' : undefined}
-            help={errors.forwardPrimerValue?.message}
+            help={errors.forwardPrimerValue?.message?.toString()}
           >
             <Controller
               name="forwardPrimerValue"
@@ -269,18 +266,18 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
                 required: 'Forward Primer is required',
                 max: { value: 60, message: 'Max 60 characters' },
                 validate: {
-                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
+                  geneValidation: (v) => geneValidationRule.validator(null as any, v, () => null),
                   substring: flankingPrimerIsSubstringOfPlasmid,
                 },
               }}
-              render={({ field }) => <Input {...field} disabled={primersType !== 'custom'} />}
+              render={({ field }) => <Input {...field} disabled={primersType !== PrimersType.custom} />}
             />
           </Form.Item>
           <Form.Item
             label="Reverse Primer"
             hasFeedback
             validateStatus={errors.reversePrimerValue ? 'error' : undefined}
-            help={errors.reversePrimerValue?.message}
+            help={errors.reversePrimerValue?.message?.toString()}
           >
             <Controller
               name="reversePrimerValue"
@@ -290,11 +287,11 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
                 required: 'Reverse Primer is required',
                 max: { value: 60, message: 'Max 60 characters' },
                 validate: {
-                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
+                  geneValidation: (v) => geneValidationRule.validator(null as any, v, () => null),
                   substring: reverseComplementFlankingPrimerIsSubstringOfPlasmid,
                 },
               }}
-              render={({ field }) => <Input {...field} disabled={primersType !== 'custom'} />}
+              render={({ field }) => <Input {...field} disabled={primersType !== PrimersType.custom} />}
             />
           </Form.Item>
         </Tooltip>
@@ -314,7 +311,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
           hasFeedback
           className={generateCodonOrAminoAcidTab !== 'Degenerate Codon' ? 'hidden' : ''}
           validateStatus={errors.degenerateCodon ? 'error' : undefined}
-          help={errors.degenerateCodon?.message}
+          help={errors.degenerateCodon?.message?.toString()}
         >
           <Tooltip title="Type a degenerate codon.">
             <Controller

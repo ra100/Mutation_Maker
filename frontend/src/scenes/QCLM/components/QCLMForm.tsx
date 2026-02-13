@@ -1,7 +1,7 @@
 import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import { Button, Col, Form, Input, Row, Slider, Switch, Tooltip } from 'antd'
 import * as React from 'react'
-import { Controller, UseFormReturn } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 import FileUploadInput from 'shared/components/FileUploadInput'
 import FormSection from 'shared/components/FormSection'
 import { validateMutations } from 'shared/components/FormValidation'
@@ -31,7 +31,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
     getValues,
     reset,
     formState: { errors },
-  } = form as UseFormReturn<QCLMFormData>
+  } = form
 
   const resetForm = (event: React.FormEvent<any>) => {
     event.preventDefault()
@@ -48,8 +48,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
 
   const validateMutationField = (value: string) => {
     const goi = getValues('goiSequence')
-    const result = validateMutations(value, goi)
-    return result.length > 0 ? result[0] : undefined
+    return validateMutations(value, goi)
   }
 
   return (
@@ -60,7 +59,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
             <Controller
               name="fivePrimeFlankingSequence"
               control={control}
-              rules={{ validate: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true }}
+              rules={{ validate: (v) => geneValidationRule.validator(null as any, v, () => null) }}
               render={({ field }) => <Input.TextArea {...field} rows={2} />}
             />
           </Form.Item>
@@ -71,7 +70,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
             className="GeneTextArea"
             hasFeedback
             validateStatus={errors.goiSequence ? 'error' : undefined}
-            help={errors.goiSequence?.message}
+            help={errors.goiSequence?.message?.toString()}
           >
             <FileUploadInput onChange={onInputChange('goiSequence')} />
             <Controller
@@ -80,8 +79,8 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
               rules={{
                 required: 'Gene of Interest Sequence is required',
                 validate: {
-                  geneValidation: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true,
-                  stopCodon: (v) => endsWithStopCodonValidationRule.validator?.(null as any, v, () => null) || true,
+                  geneValidation: (v) => geneValidationRule.validator(null as any, v, () => null),
+                  stopCodon: (v) => endsWithStopCodonValidationRule.validator(null as any, v, () => null),
                 },
               }}
               render={({ field }) => <Input.TextArea {...field} rows={8} onChange={(e) => { field.onChange(e); onGoiChange(e) }} />}
@@ -98,7 +97,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
             <Controller
               name="threePrimeFlankingSequence"
               control={control}
-              rules={{ validate: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true }}
+              rules={{ validate: (v) => geneValidationRule.validator(null as any, v, () => null) }}
               render={({ field }) => <Input.TextArea {...field} rows={2} />}
             />
           </Form.Item>
@@ -112,7 +111,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
             className="MutationsTextArea"
             hasFeedback
             validateStatus={errors.mutations ? 'error' : undefined}
-            help={errors.mutations?.message}
+            help={errors.mutations?.message?.toString()}
           >
             <Controller
               name="mutations"
@@ -267,7 +266,7 @@ const QCLMForm: React.FC<QCLMFormInnerProps> = ({ form, disabled }) => {
 
         <Row gutter={10}>
           <Tooltip title="Enter maximum temperature difference between entire primers">
-            <Form.Item label="Max Temperature Difference" hasFeedback validateStatus={errors.maxTemperatureDifference ? 'error' : undefined} help={errors.maxTemperatureDifference?.message}>
+            <Form.Item label="Max Temperature Difference" hasFeedback validateStatus={errors.maxTemperatureDifference ? 'error' : undefined} help={errors.maxTemperatureDifference?.message?.toString()}>
               <Controller
                 name="maxTemperatureDifference"
                 control={control}
