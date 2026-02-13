@@ -18,15 +18,15 @@
 
 import { Form } from 'antd'
 import React from 'react'
-import { FormProvider, useForm, UseFormReturn, FieldValues } from 'react-hook-form'
+import { FormProvider, useForm, UseFormReturn, FieldValues, DefaultValues } from 'react-hook-form'
 
-export type WithFormOuterProps<D> = {
+export type WithFormOuterProps<D extends FieldValues> = {
   data: Partial<D>
   onSubmit(data: D): void
 }
 
-export type WithFormInnerProps<D> = WithFormOuterProps<D> & {
-  form: UseFormReturn<D, FieldValues>
+export type WithFormInnerProps<D extends FieldValues> = WithFormOuterProps<D> & {
+  form: UseFormReturn<D>
 }
 
 function withForm<P, D extends FieldValues>(
@@ -34,12 +34,12 @@ function withForm<P, D extends FieldValues>(
 ): React.FC<P & WithFormOuterProps<D>> {
   const WrappedComponent: React.FC<P & WithFormOuterProps<D>> = (props) => {
     const form = useForm<D>({
-      defaultValues: props.data as D,
+      defaultValues: props.data as DefaultValues<D>,
     })
 
     React.useEffect(() => {
       if (props.data) {
-        form.reset(props.data as D)
+        form.reset(props.data as DefaultValues<D>)
       }
     }, [props.data, form])
 
@@ -50,7 +50,7 @@ function withForm<P, D extends FieldValues>(
     return (
       <Form layout="vertical" onFinish={handleSubmit}>
         <FormProvider {...form}>
-          <Component {...props} form={form} />
+          <Component {...props} form={form as UseFormReturn<D>} />
         </FormProvider>
       </Form>
     )

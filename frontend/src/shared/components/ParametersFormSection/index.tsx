@@ -18,11 +18,11 @@
 
 import { Col, Form, Input, Row, Slider, Switch, Tooltip } from 'antd'
 import * as React from 'react'
-import { Controller, UseFormReturn, FieldValues, useWatch } from 'react-hook-form'
+import { Controller, useWatch, UseFormReturn } from 'react-hook-form'
 import MinOptMaxInputs from 'shared/components/MinOptMaxInputs'
 
 type ParametersFormSectionProps = {
-  form: UseFormReturn<FieldValues>
+  form: UseFormReturn<any>
 }
 
 const stepsZeroSixteen = {

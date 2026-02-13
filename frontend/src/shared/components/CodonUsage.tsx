@@ -21,7 +21,7 @@ import { Form, Input, InputNumber, Radio, Select, Tooltip } from 'antd'
 import FormSection from 'shared/components/FormSection'
 import * as _ from 'lodash'
 import Axios from 'axios'
-import { Controller, UseFormReturn, useWatch } from 'react-hook-form'
+import { Controller, UseFormReturn } from 'react-hook-form'
 
 const { Option } = Select
 
@@ -38,7 +38,6 @@ const CodonUsage: React.FC<CodonUsageProps> = ({ index, form }) => {
   const timeout = React.useRef<number>(0)
 
   const { control, setValue } = form
-  const codonUsage = useWatch({ control, name: 'codonUsage', defaultValue: 'e-coli' })
 
   const clearTimeout = () => {
     if (timeout.current) {
@@ -142,7 +141,7 @@ const CodonUsage: React.FC<CodonUsageProps> = ({ index, form }) => {
         </Form.Item>
       </Tooltip>
       <Tooltip title="Enter threshold of frequency percentage. Only codons above entered threshold will be used.">
-        <Form.Item label="Codon Usage Frequency Threshold Percentage" validateStatus={form.formState.errors.codonUsageFrequencyThresholdPct ? 'error' : undefined} help={form.formState.errors.codonUsageFrequencyThresholdPct?.message}>
+        <Form.Item label="Codon Usage Frequency Threshold Percentage" validateStatus={form.formState.errors.codonUsageFrequencyThresholdPct ? 'error' : undefined} help={form.formState.errors.codonUsageFrequencyThresholdPct?.message?.toString()}>
           <Controller
             name="codonUsageFrequencyThresholdPct"
             control={control}

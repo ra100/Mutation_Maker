@@ -21,7 +21,7 @@
   },
   "proxy": "http://localhost:8000",
   "dependencies": {
-    "@ant-design/compatible": "^5.1.4",
+    "@ant-design/compatible": "^1.1.2",
     "@ant-design/icons": "^4.8.3",
     "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.17.23",

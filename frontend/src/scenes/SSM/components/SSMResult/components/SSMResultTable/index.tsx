@@ -23,7 +23,6 @@ import withRowIndexKey, { WithRowIndexKey } from 'shared/components/withRowIndex
 import { SSMMutationData, SSMPrimerData } from 'shared/lib/Api'
 import { Omit } from 'shared/lib/Omit'
 import { SSMResultData } from 'shared/lib/ResultData'
-import { skipUnlessResultFound } from 'shared/table'
 import { WithSelectedAndHighlighted } from 'shared/components/withSelectedAndHighlighted'
 import withSelectedAndHighlightedTableHandlers, {
   WithSelectedAndHighlightedTableHandlers,
@@ -55,31 +54,34 @@ const primerMetadataSubTable = (
     title: 'Size',
     key: `${keyPrefix}Size`,
     width: '4em',
-    render: skipUnlessResultFound((text, record) => getPrimerMetadata(record).length),
+    render: (text: any, record: SSMMutationData) => 
+      record.result_found ? getPrimerMetadata(record).length : { props: { colSpan: 0 } },
   },
   {
     title: 'GC',
     key: `${keyPrefix}Gc`,
     width: '4em',
-    render: skipUnlessResultFound((text, record) => (
-      <InRangeNumber
-        min={metadata.minGcContent}
-        max={metadata.maxGcContent}
-        value={getPrimerMetadata(record).gc_content}
-      />
-    )),
+    render: (text: any, record: SSMMutationData) =>
+      record.result_found ? (
+        <InRangeNumber
+          min={metadata.minGcContent}
+          max={metadata.maxGcContent}
+          value={getPrimerMetadata(record).gc_content}
+        />
+      ) : { props: { colSpan: 0 } },
   },
   {
     title: '3End Tm',
     key: `${keyPrefix}ThreeEndTm`,
     width: '4em',
-    render: skipUnlessResultFound((text, record) => (
-      <InRangeNumber
-        min={metadata.minThreeEndTemperature}
-        max={metadata.maxThreeEndTemperature}
-        value={getPrimerMetadata(record).three_end_temperature}
-      />
-    )),
+    render: (text: any, record: SSMMutationData) =>
+      record.result_found ? (
+        <InRangeNumber
+          min={metadata.minThreeEndTemperature}
+          max={metadata.maxThreeEndTemperature}
+          value={getPrimerMetadata(record).three_end_temperature}
+        />
+      ) : { props: { colSpan: 0 } },
   },
 ]
 
@@ -89,105 +91,115 @@ const primerTableColumns = (
     minGcContent: number
     maxGcContent: number
   },
-): Array<ColumnProps<SSMMutationData>> => [
-  {
-    title: 'Mutation',
-    key: 'mutation',
-    dataIndex: 'mutation',
-    width: '6em',
-  },
-  {
-    title: 'Fwd Primer',
-    key: 'fwdPrimer',
-    children: [
-      {
-        title: 'Sequence',
-        key: 'fwdSequence',
-        className: 'sequence',
-        render: (text, record) =>
-          record.result_found
-            ? record.forward_primer.sequence
-            : {
-                children: 'Primer Not Found',
-                props: { colSpan: 4 },
-              },
-      },
+): Array<ColumnProps<SSMMutationData>> => {
+  const fwdColumns: ColumnProps<SSMMutationData>[] = [
+    {
+      title: 'Sequence',
+      key: 'fwdSequence',
+      className: 'sequence',
+      render: (text: any, record: SSMMutationData) =>
+        record.result_found
+          ? record.forward_primer.sequence
+          : {
+              children: 'Primer Not Found',
+              props: { colSpan: 4 },
+            },
+    },
+    ...primerMetadataSubTable('fwd', result => result.forward_primer, {
+      ...metadata,
+      minThreeEndTemperature: ssmResultData.min_forward_temperature,
+      maxThreeEndTemperature: ssmResultData.max_forward_temperature,
+    }),
+  ]
 
-      ...primerMetadataSubTable('fwd', result => result.forward_primer, {
-        ...metadata,
-        minThreeEndTemperature: ssmResultData.min_forward_temperature,
-        maxThreeEndTemperature: ssmResultData.max_forward_temperature,
-      }),
-    ],
-  },
-  {
-    title: 'Rev Primer',
-    key: 'revPrimer',
-    children: [
-      {
-        title: 'Sequence',
-        key: 'revSequence',
-        className: 'sequence',
-        render: (text, record) =>
-          record.result_found
-            ? record.reverse_primer.sequence
-            : {
-                children: 'Primer Not Found',
-                props: { colSpan: 4 },
-              },
-      },
-      ...primerMetadataSubTable('rev', result => result.reverse_primer, {
-        ...metadata,
-        minThreeEndTemperature: ssmResultData.min_reverse_temperature,
-        maxThreeEndTemperature: ssmResultData.max_reverse_temperature,
-      }),
-    ],
-  },
-  {
-    title: 'Overlap',
-    key: 'overlap',
-    children: [
-      {
-        title: 'Size',
-        key: 'overlapSize',
-        width: '4em',
-        render: (text, record) =>
-          record.result_found ? record.overlap.length : { children: '', props: { colSpan: 2 } },
-      },
-      {
-        title: 'Tm',
-        key: 'overlapTemperature',
-        width: '4em',
-        render: skipUnlessResultFound((text, record) => (
+  const revColumns: ColumnProps<SSMMutationData>[] = [
+    {
+      title: 'Sequence',
+      key: 'revSequence',
+      className: 'sequence',
+      render: (text: any, record: SSMMutationData) =>
+        record.result_found
+          ? record.reverse_primer.sequence
+          : {
+              children: 'Primer Not Found',
+              props: { colSpan: 4 },
+            },
+    },
+    ...primerMetadataSubTable('rev', result => result.reverse_primer, {
+      ...metadata,
+      minThreeEndTemperature: ssmResultData.min_reverse_temperature,
+      maxThreeEndTemperature: ssmResultData.max_reverse_temperature,
+    }),
+  ]
+
+  const overlapColumns: ColumnProps<SSMMutationData>[] = [
+    {
+      title: 'Size',
+      key: 'overlapSize',
+      width: '4em',
+      render: (text: any, record: SSMMutationData) =>
+        record.result_found ? record.overlap.length : { children: '', props: { colSpan: 2 } },
+    },
+    {
+      title: 'Tm',
+      key: 'overlapTemperature',
+      width: '4em',
+      render: (text: any, record: SSMMutationData) => {
+        if (!record.result_found) return { props: { colSpan: 0 } }
+        return (
           <InRangeNumber
             min={ssmResultData.min_overlap_temperature}
             max={ssmResultData.max_overlap_temperature}
-            value={record.overlap.temperature}
+            value={record.overlap?.temperature}
           />
-        )),
-      },
-    ],
-  },
-  {
-    title: 'In range',
-    key: 'parameters_in_range',
-    width: '5em',
-    render: (text, record) =>
-      record.result_found ? (
-        record.parameters_in_range ? (
-          <CheckOutlined style={{ color: 'green' }} />
-        ) : (
-          <CloseOutlined style={{ color: 'red' }} />
         )
-      ) : null,
-  },
-  {
-    title: 'Score (lower is better)',
-    key: 'non_optimality',
-    width: '6em',
-    render: (text, record) => record.non_optimality
-  }
-]
+      },
+    },
+  ]
+
+  return [
+    {
+      title: 'Mutation',
+      key: 'mutation',
+      dataIndex: 'mutation',
+      width: '6em',
+    },
+    {
+      title: 'Fwd Primer',
+      key: 'fwdPrimer',
+      children: fwdColumns as any,
+    },
+    {
+      title: 'Rev Primer',
+      key: 'revPrimer',
+      children: revColumns as any,
+    },
+    {
+      title: 'Overlap',
+      key: 'overlap',
+      children: overlapColumns as any,
+    },
+    {
+      title: 'In range',
+      key: 'parameters_in_range',
+      width: '5em',
+      render: (text: any, record: SSMMutationData) =>
+        record.result_found ? (
+          record.parameters_in_range ? (
+            <CheckOutlined style={{ color: 'green' }} />
+          ) : (
+            <CloseOutlined style={{ color: 'red' }} />
+          )
+        ) : null,
+    },
+    {
+      title: 'Score (lower is better)',
+      key: 'non_optimality',
+      width: '6em',
+      render: (text: any, record: SSMMutationData) => record.non_optimality
+    },
+  ]
+}
 
 const SSMResultTable: React.FC<PrimerTableInnerProps> = ({
   resultData,
@@ -203,7 +215,7 @@ const SSMResultTable: React.FC<PrimerTableInnerProps> = ({
     className="ResultTable"
     bordered
     size="small"
-    rowKey={rowKey}
+    rowKey={(record, index) => rowKey(record, index ?? 0)}
     columns={primerTableColumns(resultData, { minGcContent, maxGcContent })}
     dataSource={resultData.results}
     pagination={false}

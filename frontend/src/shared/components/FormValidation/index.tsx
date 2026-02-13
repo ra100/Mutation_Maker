@@ -18,8 +18,7 @@
 
 import {aminoAcidToCodons} from "../../genes";
 
-// @TODO make it not throw "Uncaught (in promise)"
-export const validateMutations = (mutations: string, sequence: string, callback: any) => {
+export const validateMutations = (mutations: string, sequence: string): string | true => {
   try {
       const separated = mutations.trim().replace(/\s+/g, ' ').split(' ');
       const wrongMutations: string[] = [];
@@ -34,63 +33,49 @@ export const validateMutations = (mutations: string, sequence: string, callback:
       }
 
       if (wrongMutations.length > 0) {
-        return callback(`Mutations ${wrongMutations.join(', ')} not found in sequence`)
+        return `Mutations ${wrongMutations.join(', ')} not found in sequence`
       }
 
-      return callback()
+      return true
       }
   catch (err) {
       console.log(err)
-      return callback()
+      return true
     }
 };
 
-export const validateSequence = (rule: any, sequence: any, callback: any,
-                                 isSequenceTypeDNA: boolean) => {
-  // Required
-  if (sequence && sequence.length === 0) {
-    callback('Input Sequence is required');
-    return
-  }
-
-  // const sequenceType = this.props.form.getFieldValue('inputSequenceType');
-  if (sequence && sequence.length > 0) { // Validate Codons
+export const validateSequence = (sequence: any, isSequenceTypeDNA: boolean): string | true => {
+  if (sequence && sequence.length > 0) {
     if (isSequenceTypeDNA) {
       if (!(sequence || '').match(/^[ACGTacgt]+$/)) {
-        callback('Only A, C, G and T are allowed');
-        return
+        return 'Only A, C, G and T are allowed'
       }
     }
-    else { // Validate Amino Acids
+    else {
       if (!(sequence || '').match(
         /^[FLIMVSGTAYHQNKDECWRPflimvsgtayhqnkdecwrp]+$/)) {
-        callback('Only the following values are allowed: '
-          + 'F, L, I, M, V, S, G, T, A, Y, H, Q, N, K, D, E, C, W, R, P');
-        return
+        return 'Only the following values are allowed: '
+          + 'F, L, I, M, V, S, G, T, A, Y, H, Q, N, K, D, E, C, W, R, P'
       }
     }
   }
-  callback()
+  return true
 };
 
-export const validateAvoidMotifs = (rule: any, values: any, callback: any) => {
-  // Optional
+export const validateAvoidMotifs = (values: any): string | true => {
   if (!values) {
-    callback();
-    return
+    return true
   }
 
-  // Allowed custom values
   const customMotifsRegex = /^[ABCDGHKMNRSTVWYabcdghkmnrstvwy]+$/;
-  // Exclude motifs selection list
   const motifsJSON = require('../../motifs.json');
   const customInputs = values.filter((value: any) => !motifsJSON.includes(value));
   const invalidInputs = customInputs.filter((value: any) => !value.match(customMotifsRegex));
   if (invalidInputs.length === 0) {
-    callback()
+    return true
   } else {
-    callback('Only the following values are allowed: ' +
-      'A, B, C, D, G, H, K, M, N, R, S, T, V, W, Y')
+    return 'Only the following values are allowed: ' +
+      'A, B, C, D, G, H, K, M, N, R, S, T, V, W, Y'
   }
 };
 

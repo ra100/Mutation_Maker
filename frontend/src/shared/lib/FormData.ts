@@ -69,6 +69,7 @@ export type SSMFormData = {
   forwardPrimerValue: string
   reversePrimerType: string
   reversePrimerValue: string
+  primersType: string
   degenerateCodon: string
   aminoAcids: object[]
 } & FormParameters
@@ -131,6 +132,7 @@ export type PASFormData = {
   codonUsageFrequencyThresholdPct: number
 
   oligoLengthMin: number
+  oligoLengthOpt: number
   oligoLengthMax: number
 
   overlappingTmMin: number
@@ -142,6 +144,7 @@ export type PASFormData = {
   overlappingLengthMax: number
 
   gcContentMin: number
+  gcContentOpt: number
   gcContentMax: number
 
   fileName: string

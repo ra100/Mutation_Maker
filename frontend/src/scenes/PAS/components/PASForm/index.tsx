@@ -1,7 +1,7 @@
 import { ReloadOutlined, SaveOutlined } from '@ant-design/icons'
 import { Button, Col, Form, Input, Radio, Row, Select, Switch, Tooltip } from 'antd'
 import * as React from 'react'
-import { Controller, UseFormReturn, useWatch } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import FileUploadInput from 'shared/components/FileUploadInput'
 import FormSection from 'shared/components/FormSection'
 import MinOptMaxInputs from 'shared/components/MinOptMaxInputs'
@@ -25,7 +25,6 @@ const motifsOptions: any[] = motifsJSON.map((element: string) => <Option key={el
 const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
   const [showGoiWarning, setShowGoiWarning] = React.useState(false)
   const [isMutationsReset, setIsMutationsReset] = React.useState(false)
-  const [sectionIndex, setSectionIndex] = React.useState(1)
 
   const {
     control,
@@ -33,7 +32,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
     getValues,
     reset,
     formState: { errors },
-  } = form as UseFormReturn<PASFormData>
+  } = form
 
   const inputSequenceType = useWatch({ control, name: 'inputSequenceType', defaultValue: 'dna' })
 
@@ -85,7 +84,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
 
   const sequenceValidator = (value: string) => {
     const inputType = getValues('inputSequenceType')
-    return validateSequence(null as any, value, () => null, inputType === 'dna')
+    return validateSequence(value, inputType === 'dna')
   }
 
   React.useEffect(() => {
@@ -103,7 +102,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
             <Controller
               name="fivePrimeFlankingSequence"
               control={control}
-              rules={{ validate: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true }}
+              rules={{ validate: (v) => geneValidationRule.validator(null as any, v, () => null) }}
               render={({ field }) => <Input.TextArea {...field} rows={2} />}
             />
           </Form.Item>
@@ -127,7 +126,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
           placement="topRight"
           title={'Enter or Upload Gene of Interest sequence. Allowed values: ' + (inputSequenceType === 'dna' ? 'A, C, G and T' : 'F, L, I, M, V, S, G, T, A, Y, H, Q, N, K, D, E, C, W, R, P')}
         >
-          <Form.Item className="GeneTextArea" hasFeedback validateStatus={errors.goiSequence ? 'error' : undefined} help={errors.goiSequence?.message}>
+          <Form.Item className="GeneTextArea" hasFeedback validateStatus={errors.goiSequence ? 'error' : undefined} help={errors.goiSequence?.message?.toString()}>
             <FileUploadInput onChange={onFileUpload('goiSequence')} />
             <Controller
               name="goiSequence"
@@ -150,7 +149,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
             <Controller
               name="threePrimeFlankingSequence"
               control={control}
-              rules={{ validate: (v) => geneValidationRule.validator?.(null as any, v, () => null) || true }}
+              rules={{ validate: (v) => geneValidationRule.validator(null as any, v, () => null) }}
               render={({ field }) => <Input.TextArea {...field} rows={2} />}
             />
           </Form.Item>
@@ -186,7 +185,7 @@ const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {
             <Controller
               name="avoidMotifs"
               control={control}
-              rules={{ validate: (v) => validateAvoidMotifs(null as any, v, () => null) || true }}
+              rules={{ validate: (v) => validateAvoidMotifs(v) }}
               render={({ field }) => (
                 <Select {...field} mode="tags" placeholder="None">
                   {motifsOptions}
