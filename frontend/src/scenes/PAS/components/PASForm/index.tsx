@@ -11,6 +11,7 @@ import withForm, { WithFormInnerProps } from 'shared/withForm'
 import CodonUsage from 'shared/components/CodonUsage'
 import InputMutations from './components/InputMutations'
 import { validateAvoidMotifs, validateSequence } from 'shared/components/FormValidation'
+import motifsJSON from 'shared/motifs.json'
 
 type PASFormOuterProps = {
   disabled: boolean
@@ -19,7 +20,6 @@ type PASFormOuterProps = {
 type PASFormInnerProps = PASFormOuterProps & WithFormInnerProps<PASFormData>
 
 const { Option } = Select
-const motifsJSON = require('shared/motifs.json')
 const motifsOptions: any[] = motifsJSON.map((element: string) => <Option key={element}>{element}</Option>)
 
 const PASForm: React.FC<PASFormInnerProps> = ({ form, disabled, data }) => {

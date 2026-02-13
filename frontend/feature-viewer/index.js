@@ -10,9 +10,13 @@
  @class FeatureViewer
  */
 
-global.jQuery = $ = require('jquery')
-d3 = require('d3')
+import jQuery from 'jquery'
+import * as d3 from 'd3'
+
+global.jQuery = jQuery
+global.$ = jQuery
+global.d3 = d3
 
 var FeatureViewer = require('./src/feature-viewer.js')
 
-module.exports = FeatureViewer
+export default FeatureViewer

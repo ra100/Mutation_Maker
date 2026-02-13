@@ -19,8 +19,11 @@
 import * as R from 'ramda'
 import { notUndefined } from './helpers'
 
-export const codonTable = require('./DNA-codon-table.json')
-export const aminoAcids = require('./amino-acids.json')
+import codonTableJson from './DNA-codon-table.json'
+import aminoAcidsJson from './amino-acids.json'
+
+export const codonTable = codonTableJson
+export const aminoAcids = aminoAcidsJson
 
 export type Primer = {
   start: number

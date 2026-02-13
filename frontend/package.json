@@ -12,6 +12,7 @@
     "url": "https://github.com/Merck/Mutation_Maker/issues"
   },
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",

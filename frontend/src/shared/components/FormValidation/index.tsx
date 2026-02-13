@@ -17,6 +17,7 @@
  */
 
 import {aminoAcidToCodons} from "../../genes";
+import motifsJSON from '../../motifs.json';
 
 export const validateMutations = (mutations: string, sequence: string): string | true => {
   try {
@@ -68,7 +69,6 @@ export const validateAvoidMotifs = (values: any): string | true => {
   }
 
   const customMotifsRegex = /^[ABCDGHKMNRSTVWYabcdghkmnrstvwy]+$/;
-  const motifsJSON = require('../../motifs.json');
   const customInputs = values.filter((value: any) => !motifsJSON.includes(value));
   const invalidInputs = customInputs.filter((value: any) => !value.match(customMotifsRegex));
   if (invalidInputs.length === 0) {

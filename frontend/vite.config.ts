@@ -13,8 +13,12 @@ export default defineConfig({
       'feature-viewer': path.resolve(__dirname, './feature-viewer/index.js')
     }
   },
+  define: {
+    'process.env': {},
+    global: 'globalThis',
+  },
   optimizeDeps: {
-    include: ['feature-viewer'],
+    include: ['feature-viewer', 'recompose', 'jquery', 'd3'],
     esbuild: {
       loader: 'cjs'
     }
