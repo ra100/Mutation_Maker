@@ -22,8 +22,11 @@ import { notUndefined } from './helpers'
 import codonTableJson from './DNA-codon-table.json'
 import aminoAcidsJson from './amino-acids.json'
 
-export const codonTable = codonTableJson
-export const aminoAcids = aminoAcidsJson
+type CodonTable = Record<string, string[]>
+type AminoAcidsMap = Record<string, { symbol3?: string; name: string }>
+
+export const codonTable: CodonTable = codonTableJson
+export const aminoAcids: AminoAcidsMap = aminoAcidsJson
 
 export type Primer = {
   start: number

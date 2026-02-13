@@ -10,7 +10,6 @@ export default defineConfig({
       scenes: path.resolve(__dirname, './src/scenes'),
       services: path.resolve(__dirname, './src/services'),
       typings: path.resolve(__dirname, './src/typings'),
-      'feature-viewer': path.resolve(__dirname, './feature-viewer/index.js')
     }
   },
   define: {
@@ -18,7 +17,7 @@ export default defineConfig({
     global: 'globalThis',
   },
   optimizeDeps: {
-    include: ['feature-viewer', 'recompose', 'jquery', 'd3'],
+    include: ['recompose'],
     esbuild: {
       loader: 'cjs'
     }
@@ -32,7 +31,7 @@ export default defineConfig({
   build: {
     outDir: 'build',
     commonjsOptions: {
-      include: [/node_modules/, /feature-viewer/]
+      include: [/node_modules/]
     }
   }
 })

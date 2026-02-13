@@ -19,7 +19,6 @@
 import * as R from 'ramda'
 import * as React from 'react'
 
-import FeatureViewer, { FeatureViewerOptions } from 'feature-viewer'
 // import { Boundaries, combinedBoundaries, mutationBoundaries } from 'shared/boundaries'
 import { Boundaries, combinedBoundaries } from 'shared/boundaries'
 import FeatureViewerComponent from 'shared/components/FeatureViewerComponent'
@@ -31,6 +30,10 @@ import { codonToAminoAcid, gcContent, toCodons } from 'shared/genes'
 import { notUndefined } from 'shared/helpers'
 import { Omit } from 'shared/lib/Omit'
 import {IndexedPASResultFragment} from 'shared/lib/ResultData'
+
+type FeatureViewerClass = any
+type FeatureViewer = any
+type FeatureViewerOptions = any
 
 type PASFeatureViewerProps = {
   geneSequence: string
@@ -50,8 +53,8 @@ const initializePASFeatureViewer = (
   geneSequence: string,
   geneOffset: number,
   resultRecords: IndexedPASResultFragment[],
-) => (componentId: string, options: FeatureViewerOptions | undefined): FeatureViewer => {
-  const featureViewer = new FeatureViewer(geneSequence, `#${componentId}`, options)
+) => (FeatureViewerClass: FeatureViewerClass, componentId: string, options: FeatureViewerOptions | undefined): FeatureViewer => {
+  const featureViewer = new FeatureViewerClass(geneSequence, `#${componentId}`, options)
 
   const aminoacidOffset = geneOffset % 3;
 
