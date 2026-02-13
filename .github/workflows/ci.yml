@@ -22,7 +22,7 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run type check
         working-directory: frontend
@@ -86,7 +86,7 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: frontend
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run E2E tests (UI only)
         working-directory: e2e-tests
