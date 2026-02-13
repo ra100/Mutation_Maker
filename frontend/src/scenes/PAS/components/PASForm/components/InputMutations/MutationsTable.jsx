@@ -17,14 +17,10 @@
  */
 
 import React from 'react'
-import {
-  Table,
-  Input,
-  InputNumber,
-  Popconfirm,
-  Form,
-  Button
-} from 'antd'
+import { CloseOutlined } from '@ant-design/icons';
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Table, Input, InputNumber, Popconfirm, Button } from 'antd';
 import {
   aminoAcidToCodons,
   codonTableIncludes
@@ -228,7 +224,7 @@ class EditableTable extends React.Component {
         render: (text, record) =>
           this.state.data.length >= 1 ? (
             <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              <Button type="danger" shape="circle" icon="close" />
+              <Button type="danger" shape="circle" icon={<CloseOutlined />} />
             </Popconfirm>
           ) : null,
       }

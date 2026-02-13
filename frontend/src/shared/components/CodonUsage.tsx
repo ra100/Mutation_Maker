@@ -16,162 +16,144 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import * as React from "react";
-import {
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Tooltip,
-} from 'antd';
-import FormSection from 'shared/components/FormSection';
-import * as _ from "lodash";
-import Axios from "axios";
+import * as React from 'react'
+import { Form, Input, InputNumber, Radio, Select, Tooltip } from 'antd'
+import FormSection from 'shared/components/FormSection'
+import * as _ from 'lodash'
+import Axios from 'axios'
+import { Controller, UseFormReturn, useWatch } from 'react-hook-form'
 
-const {Option} = Select;
+const { Option } = Select
 
-export default class CodonUsage extends React.Component<any> {
+type CodonUsageProps = {
+  index: number
+  form: UseFormReturn<any>
+}
 
-  state = {
-    customCodonUsage: '',
-    isCodonUsageDisabled: true,
-    isCodonUsageLoading: false,
-    codonUsageData: [],
-  };
-  codonUsageDataLoad: any[] = [];
-  timeout: number = 0;
+const CodonUsage: React.FC<CodonUsageProps> = ({ index, form }) => {
+  const [codonUsageData, setCodonUsageData] = React.useState<any[]>([])
+  const [isCodonUsageDisabled, setIsCodonUsageDisabled] = React.useState(true)
+  const [isCodonUsageLoading, setIsCodonUsageLoading] = React.useState(false)
+  const codonUsageDataLoad = React.useRef<any[]>([])
+  const timeout = React.useRef<number>(0)
 
-  clearTimeout = () => {
-    if (this.timeout) {
-      clearTimeout(this.timeout)
-    }
-  };
+  const { control, setValue } = form
+  const codonUsage = useWatch({ control, name: 'codonUsage', defaultValue: 'e-coli' })
 
-  handleCodonUsageSearch = (value: string) => {
-    if (value.length === 0) {
-      this.setState({
-        codonUsageData: this.codonUsageDataLoad.slice(0, 10),
-      })
-    } else {
-      this.setState({isCodonUsageLoading: true,});
-      this.clearTimeout();
-      this.timeout = window.setTimeout(() => {
-        const regex = new RegExp(_.escapeRegExp(value), 'i');
-        const isMatch = (result: any) => regex.test(result.name)
-          || regex.test(result.id);
-        let filteredResults = this.codonUsageDataLoad.filter(isMatch);
-        // Display maximum 10 results
-        filteredResults.length = Math.min(
-          filteredResults.length,
-          10
-        );
-
-        this.setState({
-          isCodonUsageLoading: false,
-          codonUsageData: filteredResults,
-        })
-      }, 500)
-    }
-  };
-
-  handleCodonUsageChange = (value: string) => {
-    const customCodonUsage = this.codonUsageDataLoad.find(
-      (element: any) => {
-        return element.id === value
-      });
-    this.props.form.setFieldsValue({customCodonUsage: customCodonUsage.name})
-  };
-
-  handleCustomCodonUsageSelect = (event: any) => {
-    if (event.target.value === 'custom') {
-      this.setState({isCodonUsageDisabled: false})
-    } else {
-      this.setState({isCodonUsageDisabled: true})
-    }
-  };
-
-  async componentDidMount() {
-    try {
-      const response: any = await Axios.get('/v1/get_species');
-      if (response && response.data && response.data.length) {
-        this.codonUsageDataLoad = [...response.data];
-        this.setState({
-          codonUsageData: response.data.slice(0, 10),
-        })
-      } else {
-        console.error('Fetching species failed.')
-      }
-    } catch (error) {
-      console.error(error);
-      console.error('Fetching species failed because of unexpected exception.')
+  const clearTimeout = () => {
+    if (timeout.current) {
+      window.clearTimeout(timeout.current)
     }
   }
 
-  render() {
-    const {getFieldDecorator} = this.props.form;
+  const handleCodonUsageSearch = (value: string) => {
+    if (value.length === 0) {
+      setCodonUsageData(codonUsageDataLoad.current.slice(0, 10))
+    } else {
+      setIsCodonUsageLoading(true)
+      clearTimeout()
+      timeout.current = window.setTimeout(() => {
+        const regex = new RegExp(_.escapeRegExp(value), 'i')
+        const isMatch = (result: any) => regex.test(result.name) || regex.test(result.id)
+        let filteredResults = codonUsageDataLoad.current.filter(isMatch)
+        filteredResults.length = Math.min(filteredResults.length, 10)
+        setIsCodonUsageLoading(false)
+        setCodonUsageData(filteredResults)
+      }, 500)
+    }
+  }
 
-    const codonUsageOptions = this.state.codonUsageData.map((data: any) =>
-      <Option key={data.id}>{data.name + ' ' + data.id}</Option>);
+  const handleCodonUsageChange = (value: string) => {
+    const customCodonUsage = codonUsageDataLoad.current.find((element: any) => element.id === value)
+    if (customCodonUsage) {
+      setValue('customCodonUsage', customCodonUsage.name)
+    }
+  }
 
-    return (
-      <FormSection index={this.props.index} title='Codon Usage'>
-        <Tooltip title='Select species codon usage table'>
-          <React.Fragment/>
-          <Form.Item label='Codon Usage'>
-            {getFieldDecorator('codonUsage', {
-              initialValue: 'e-coli',
-            })(
-              <Radio.Group onChange={this.handleCustomCodonUsageSelect}>
-                <Radio.Button value='e-coli'>
-                  E.coli
-                </Radio.Button>
-                <Radio.Button value='yeast'>
-                  Yeast
-                </Radio.Button>
-                <Radio.Button value='custom'>
-                  Custom
-                </Radio.Button>
-              </Radio.Group>,
+  const handleCustomCodonUsageSelect = (event: any) => {
+    if (event.target.value === 'custom') {
+      setIsCodonUsageDisabled(false)
+    } else {
+      setIsCodonUsageDisabled(true)
+    }
+  }
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: any = await Axios.get('/v1/get_species')
+        if (response && response.data && response.data.length) {
+          codonUsageDataLoad.current = [...response.data]
+          setCodonUsageData(response.data.slice(0, 10))
+        } else {
+          console.error('Fetching species failed.')
+        }
+      } catch (error) {
+        console.error(error)
+        console.error('Fetching species failed because of unexpected exception.')
+      }
+    }
+    fetchData()
+  }, [])
+
+  const codonUsageOptions = codonUsageData.map((data: any) => (
+    <Option key={data.id}>{data.name + ' ' + data.id}</Option>
+  ))
+
+  return (
+    <FormSection index={index} title="Codon Usage">
+      <Tooltip title="Select species codon usage table">
+        <Form.Item label="Codon Usage">
+          <Controller
+            name="codonUsage"
+            control={control}
+            defaultValue="e-coli"
+            render={({ field }) => (
+              <Radio.Group {...field} onChange={(e) => { field.onChange(e); handleCustomCodonUsageSelect(e) }}>
+                <Radio.Button value="e-coli">E.coli</Radio.Button>
+                <Radio.Button value="yeast">Yeast</Radio.Button>
+                <Radio.Button value="custom">Custom</Radio.Button>
+              </Radio.Group>
             )}
-          </Form.Item>
-          <React.Fragment/>
-          <Form.Item>
-            {getFieldDecorator('taxonomyId')(
+          />
+        </Form.Item>
+        <Form.Item>
+          <Controller
+            name="taxonomyId"
+            control={control}
+            render={({ field }) => (
               <Select
-                disabled={this.state.isCodonUsageDisabled}
+                {...field}
+                disabled={isCodonUsageDisabled}
                 showSearch
                 filterOption={false}
-                placeholder='Search Custom Codon Usage'
-                onSearch={this.handleCodonUsageSearch}
-                onChange={this.handleCodonUsageChange}
+                placeholder="Search Custom Codon Usage"
+                onSearch={handleCodonUsageSearch}
+                onChange={(val) => { field.onChange(val); handleCodonUsageChange(val) }}
+                loading={isCodonUsageLoading}
               >
                 {codonUsageOptions}
               </Select>
             )}
-          </Form.Item>
-          <React.Fragment/>
-          <Form.Item>
-            {getFieldDecorator('customCodonUsage')(
-              <Input type='hidden'/>)}
-          </Form.Item>
-        </Tooltip>
-        <Tooltip
-          title='Enter threshold of frequency percentage. Only codons above
-            entered threshold will be used.'>
-          <React.Fragment/>
-          <Form.Item label='Codon Usage Frequency Threshold Percentage'>
-            {getFieldDecorator('codonUsageFrequencyThresholdPct', {
-              initialValue: 10,
-              rules: [{
-                required: true,
-                message: 'Frequency Threshold Percentage is required'
-              }],
-            })(<InputNumber min={0} max={100}/>)}
-          </Form.Item>
-        </Tooltip>
-      </FormSection>
-    )
-
-  }
+          />
+        </Form.Item>
+        <Form.Item>
+          <Controller name="customCodonUsage" control={control} render={({ field }) => <Input {...field} type="hidden" />} />
+        </Form.Item>
+      </Tooltip>
+      <Tooltip title="Enter threshold of frequency percentage. Only codons above entered threshold will be used.">
+        <Form.Item label="Codon Usage Frequency Threshold Percentage" validateStatus={form.formState.errors.codonUsageFrequencyThresholdPct ? 'error' : undefined} help={form.formState.errors.codonUsageFrequencyThresholdPct?.message}>
+          <Controller
+            name="codonUsageFrequencyThresholdPct"
+            control={control}
+            defaultValue={10}
+            rules={{ required: 'Frequency Threshold Percentage is required' }}
+            render={({ field }) => <InputNumber {...field} min={0} max={100} />}
+          />
+        </Form.Item>
+      </Tooltip>
+    </FormSection>
+  )
 }
+
+export default CodonUsage

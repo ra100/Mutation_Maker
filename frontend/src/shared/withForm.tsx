@@ -16,8 +16,9 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Form, FormInstance } from 'antd'
+import { Form } from 'antd'
 import React from 'react'
+import { FormProvider, useForm, UseFormReturn, FieldValues } from 'react-hook-form'
 
 export type WithFormOuterProps<D> = {
   data: Partial<D>
@@ -25,28 +26,32 @@ export type WithFormOuterProps<D> = {
 }
 
 export type WithFormInnerProps<D> = WithFormOuterProps<D> & {
-  form: FormInstance
+  form: UseFormReturn<D, FieldValues>
 }
 
-function withForm<P, D>(
+function withForm<P, D extends FieldValues>(
   Component: React.ComponentType<P & WithFormInnerProps<D>>,
 ): React.FC<P & WithFormOuterProps<D>> {
   const WrappedComponent: React.FC<P & WithFormOuterProps<D>> = (props) => {
-    const [form] = Form.useForm()
+    const form = useForm<D>({
+      defaultValues: props.data as D,
+    })
 
     React.useEffect(() => {
       if (props.data) {
-        form.setFieldsValue(props.data as any)
+        form.reset(props.data as D)
       }
     }, [props.data, form])
 
-    const handleSubmit = (values: D) => {
+    const handleSubmit = form.handleSubmit((values) => {
       props.onSubmit(values)
-    }
+    })
 
     return (
-      <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        <Component {...props} form={form} />
+      <Form layout="vertical" onFinish={handleSubmit}>
+        <FormProvider {...form}>
+          <Component {...props} form={form} />
+        </FormProvider>
       </Form>
     )
   }
