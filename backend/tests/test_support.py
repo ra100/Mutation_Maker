@@ -608,29 +608,34 @@ def random_qclm_mutations(
 
 
 def sample_qclm_sequences(ind=0) -> QCLMSequences:
-    if ind == 4:
-        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-    elif ind == 5 or ind == 6:
-        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-        three_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-    elif ind in [7, 8]:
-        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
-        three_end_flanking = ""
-        five_end_flanking = ""
-    elif ind == 11:
-        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+    gene = (
+        "ATGGAAAGGGTAAAGGGAAAAGTTGCTATAGTCACCGGTGCTGCTCGTGGTCAAGGTGCAGCGGAAGCGCGCTTG"
+        "CTGGCCAAAGAAGGCGCGAAGGTGTGCCTGACTGACGTGTTGGTTGATGAGGGTCGTACCGTTGCAGAAGAACTG"
+        "CAGAAAGAGGGCTACGACACTGTTTTTGAACGTCTGGATGTGACCGACCCGAAAGCATGGCAGACCGTTGTTGAG"
+        "GGCGTGATCCAGCGTTATGGTAAAATTGACATCCTGGTGAACAACGCAGGCATTCTGGCAATGGAAGGCGTCGAA"
+        "GACACAACCCTGGAGATCTGGAATCGTGTCTTAAGCGTGAACCTGACGGGTGTGTTCCTGGGTATGAAGACCGT"
+        "GTTACCGTACATGAAGCAACAACGCTCTGGTAGCATCATCAACACCAGCTCTATCTACGGCCTGATTCTGTCCG"
+        "GTGGTGCTGCGGCGTATCAAGTGACCAAGGGTGCTGTGCGCATCTTGACCAAGACGGCAGCGGTTGAGTATGCT"
+        "CCGTACTGGATTCGCATTAATTCCGTGCATCCGGGTGTCATCGACACCCCGATGATCGCGGGTATTAAAGAGGC"
+        "GGGTGCGTTGGAGCAGGTTAACGCACTGACTGCCCTGCCACGTCTCGGAACCCCGGAAGATATTGCGTTCGGCG"
+        "TGCTTTATCTGGCGAGCGATGAGAGCAGCTTTGTTACGGGCTCGGAACTGGTTATCGATGGTGGCCTGACCAC"
+        "CCGTTTGGAGCATCACCACCATCATCACT"
+    )
+    forward_primer = "ATGATGATGATGATGATGATGATGATGATG"
+    reverse_primer = "TACTACTACTACTACTACTACTACTACTAC"
+
+    if ind in [4, 5, 6]:
+        three_end_flanking = reverse_primer
+        five_end_flanking = forward_primer
+    elif ind in [7, 8, 11]:
         three_end_flanking = ""
         five_end_flanking = ""
     else:
-        mutated_dna = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
         three_end_flanking = ""
-        five_end_flanking = "ATGCGTACGTAGCTAGCTAGCTAGCTAGC"
+        five_end_flanking = forward_primer
 
     return QCLMSequences(
-        gene_of_interest=mutated_dna,
+        gene_of_interest=gene,
         five_end_flanking_sequence=five_end_flanking,
         three_end_flanking_sequence=three_end_flanking,
     )
