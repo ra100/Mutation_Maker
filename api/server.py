@@ -19,7 +19,3 @@
 from server_fastapi import app
 
 print("Mutation Maker version: 1.0.0")
-
-import uvicorn
-
-uvicorn.run(app, host="0.0.0.0", port=8000)
