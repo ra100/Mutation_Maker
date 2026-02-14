@@ -25,7 +25,7 @@ RUN make
 
 COPY requirements.txt /var/tmp/
 RUN pip install six==1.16.0 cython==3.0.7
-RUN pip install -r /var/tmp/requirements.txt
+RUN pip install --timeout 120 --retries 5 -r /var/tmp/requirements.txt
 
 COPY . ${HOME}
 WORKDIR ${HOME}
