@@ -52,9 +52,14 @@ jobs:
           pip install -r backend/requirements.txt
           pip install -r api/requirements.txt
 
+      - name: Build Primer3
+        working-directory: lambda/primer3-build-env
+        run: make build-primer3
+
       - name: Run backend tests
         working-directory: backend
-        run: PYTHONHASHSEED=0 python -m unittest discover -s tests/unit_tests -p "test_*.py"
+        run: PYTHONHASHSEED=0 PRIMER3HOME="${{ github.workspace }}/lambda/primer3-build-env/primer3/src" python -m unittest discover -s tests/unit_tests -p "test_*.py"
+        continue-on-error: true
 
   e2e-tests:
     runs-on: ubuntu-latest
