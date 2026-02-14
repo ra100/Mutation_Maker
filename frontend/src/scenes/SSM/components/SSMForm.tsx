@@ -270,7 +270,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
                   substring: flankingPrimerIsSubstringOfPlasmid,
                 },
               }}
-              render={({ field }) => <Input {...field} disabled={primersType !== PrimersType.custom} />}
+              render={({ field }) => <Input {...field} readOnly={primersType !== PrimersType.custom} />}
             />
           </Form.Item>
           <Form.Item
@@ -291,7 +291,7 @@ const SSMForm: React.FC<SSMFormInnerProps> = ({ form, disabled }) => {
                   substring: reverseComplementFlankingPrimerIsSubstringOfPlasmid,
                 },
               }}
-              render={({ field }) => <Input {...field} disabled={primersType !== PrimersType.custom} />}
+              render={({ field }) => <Input {...field} readOnly={primersType !== PrimersType.custom} />}
             />
           </Form.Item>
         </Tooltip>
