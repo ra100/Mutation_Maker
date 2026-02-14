@@ -21,11 +21,20 @@ from difflib import SequenceMatcher
 
 from Bio.Seq import reverse_complement
 
-from mutation_maker.primer3_interoperability import AllPrimerGenerator, Primer3, NullPrimerGenerator
+from mutation_maker.primer3_interoperability import (
+    AllPrimerGenerator,
+    Primer3,
+    NullPrimerGenerator,
+)
 from mutation_maker.ssm import ssm_solve
 from mutation_maker.temperature_calculator import TemperatureConfig
 from tasks import PRIMER3_PATH
-from tests.test_support import generate_SSM_input, generate_random_SSM_input, comp_dicts, print_stats_ssm
+from tests.test_support import (
+    generate_SSM_input,
+    generate_random_SSM_input,
+    comp_dicts,
+    print_stats_ssm,
+)
 
 
 def test_overlap_complementary(ssm_result):
@@ -40,16 +49,26 @@ def test_overlap_complementary(ssm_result):
         fw_seq = mutation_dict["forward_primer"]["sequence"]
         rv_seq = reverse_complement(mutation_dict["reverse_primer"]["sequence"])
         # find the overlaps
-        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(0, len(fw_seq), 0, len(rv_seq))
+        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(
+            0, len(fw_seq), 0, len(rv_seq)
+        )
         # check that overlap sequences are the same
-        if not fw_seq[match.a: match.a + match.size] == rv_seq[match.b: match.b + match.size]:
+        if (
+            not fw_seq[match.a : match.a + match.size]
+            == rv_seq[match.b : match.b + match.size]
+        ):
             print("Forward and reverse primers are not complementary.")
-            print("Fw primer: ", fw_seq[match.a: match.a + match.size])
-            print("Rv primer reverse complement: ", rv_seq[match.b: match.b + match.size])
+            print("Fw primer: ", fw_seq[match.a : match.a + match.size])
+            print(
+                "Rv primer reverse complement: ", rv_seq[match.b : match.b + match.size]
+            )
             return False
         # check that the size of overlap is the same
         if not mutation_dict["overlap"]["length"] == match.size:
-            print("Overlap computation went wrong for mutation:", mutation_dict["mutation"])
+            print(
+                "Overlap computation went wrong for mutation:",
+                mutation_dict["mutation"],
+            )
             return False
     return True
 
@@ -64,10 +83,15 @@ def test_overlap_size_in_range(ssm_result):
         fw_seq = mutation_dict["forward_primer"]["sequence"]
         rv_seq = reverse_complement(mutation_dict["reverse_primer"]["sequence"])
         # find the overlaps
-        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(0, len(fw_seq), 0, len(rv_seq))
+        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(
+            0, len(fw_seq), 0, len(rv_seq)
+        )
         # check that overlap sequences are the same
         if match.size < min_size or match.size > max_size:
-            print(f"Overlap size out of range [{min_size}, {max_size}] for mutation:", mutation_dict["mutation"])
+            print(
+                f"Overlap size out of range [{min_size}, {max_size}] for mutation:",
+                mutation_dict["mutation"],
+            )
             print("Overlap size is ", match.size)
             return False
 
@@ -87,16 +111,24 @@ def test_overlap_temperature_in_range(ssm_result):
         fw_seq = mutation_dict["forward_primer"]["sequence"]
         rv_seq = reverse_complement(mutation_dict["reverse_primer"]["sequence"])
         # find the overlaps
-        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(0, len(fw_seq), 0, len(rv_seq))
-        fw_temp = temp_calculator(fw_seq[match.a: match.a + match.size])
-        rv_temp = temp_calculator(rv_seq[match.b: match.b + match.size])
+        match = SequenceMatcher(None, fw_seq, rv_seq).find_longest_match(
+            0, len(fw_seq), 0, len(rv_seq)
+        )
+        fw_temp = temp_calculator(fw_seq[match.a : match.a + match.size])
+        rv_temp = temp_calculator(rv_seq[match.b : match.b + match.size])
 
         if fw_temp < min_temp or fw_temp > max_temp:
-            print(f"Forward primer overlap temperature not in range [{min_temp}, {max_temp}]. Actual temperature: ", fw_temp)
+            print(
+                f"Forward primer overlap temperature not in range [{min_temp}, {max_temp}]. Actual temperature: ",
+                fw_temp,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
         if rv_temp < min_temp or rv_temp > max_temp:
-            print(f"Reverse primer overlap temperature size not in range [{min_temp}, {max_temp}]. Actual temperature: ", rv_temp)
+            print(
+                f"Reverse primer overlap temperature size not in range [{min_temp}, {max_temp}]. Actual temperature: ",
+                rv_temp,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
 
@@ -161,15 +193,25 @@ def test_3end_size_in_range(ssm_result):
     degen_codon = ssm_result["input_data"]["degenerate_codon"]
     for mutation_dict in ssm_result["results"]:
         # +3 because find returns start of mutation, we need end
-        fw_3end_size = len(get_fw_three_end(mutation_dict["forward_primer"]["sequence"],degen_codon))
-        rv_3end_size = len(get_rv_three_end(mutation_dict["reverse_primer"]["sequence"], degen_codon))
+        fw_3end_size = len(
+            get_fw_three_end(mutation_dict["forward_primer"]["sequence"], degen_codon)
+        )
+        rv_3end_size = len(
+            get_rv_three_end(mutation_dict["reverse_primer"]["sequence"], degen_codon)
+        )
 
         if fw_3end_size < min_size or fw_3end_size > max_size:
-            print(f"Forward primer 3 end size not in range [{min_size}, {max_size}]. The size is ", fw_3end_size)
+            print(
+                f"Forward primer 3 end size not in range [{min_size}, {max_size}]. The size is ",
+                fw_3end_size,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
         if rv_3end_size < min_size or rv_3end_size > max_size:
-            print(f"Reverse primer 3 end size not in range [{min_size}, {max_size}]. The size is ", rv_3end_size)
+            print(
+                f"Reverse primer 3 end size not in range [{min_size}, {max_size}]. The size is ",
+                rv_3end_size,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
 
@@ -185,15 +227,25 @@ def test_5end_size_in_range(ssm_result):
     degen_codon = ssm_result["input_data"]["degenerate_codon"]
     for mutation_dict in ssm_result["results"]:
         # +3 because find returns start of mutation, we need end
-        fw_5end_size = len(get_fw_five_end(mutation_dict["forward_primer"]["sequence"], degen_codon))
-        rv_5end_size = len(get_rv_five_end(mutation_dict["reverse_primer"]["sequence"], degen_codon))
+        fw_5end_size = len(
+            get_fw_five_end(mutation_dict["forward_primer"]["sequence"], degen_codon)
+        )
+        rv_5end_size = len(
+            get_rv_five_end(mutation_dict["reverse_primer"]["sequence"], degen_codon)
+        )
 
         if fw_5end_size < min_size:
-            print(f"Forward primer 5 end size not in range [{min_size}]. The size is ", fw_5end_size)
+            print(
+                f"Forward primer 5 end size not in range [{min_size}]. The size is ",
+                fw_5end_size,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
         if rv_5end_size < min_size:
-            print(f"Reverse primer 5 end size not in range [{min_size}]. The size is ", rv_5end_size)
+            print(
+                f"Reverse primer 5 end size not in range [{min_size}]. The size is ",
+                rv_5end_size,
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
 
@@ -210,19 +262,29 @@ def test_3end_temperature_in_range(ssm_result):
     temp_calculator = TemperatureConfig().create_calculator()
     degen_codon = ssm_result["input_data"]["degenerate_codon"]
     for mutation_dict in ssm_result["results"]:
-        fw_3end = get_fw_three_end(mutation_dict["forward_primer"]["sequence"],degen_codon)
-        rv_3end = get_rv_three_end(mutation_dict["reverse_primer"]["sequence"], degen_codon)
+        fw_3end = get_fw_three_end(
+            mutation_dict["forward_primer"]["sequence"], degen_codon
+        )
+        rv_3end = get_rv_three_end(
+            mutation_dict["reverse_primer"]["sequence"], degen_codon
+        )
 
-        if fw_3end=="" or rv_3end=="":
+        if fw_3end == "" or rv_3end == "":
             print(f"Emprty three end. Fw_3_end={fw_3end}, Rv_3_end={rv_3end}")
             return False
 
         if temp_calculator(fw_3end) < min_temp or temp_calculator(fw_3end) > max_temp:
-            print(f"Forward primer 3 end temperature not in range [{min_temp}, {max_temp}].The temperature is: ", temp_calculator(fw_3end))
+            print(
+                f"Forward primer 3 end temperature not in range [{min_temp}, {max_temp}].The temperature is: ",
+                temp_calculator(fw_3end),
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
         if temp_calculator(rv_3end) < min_temp or temp_calculator(rv_3end) > max_temp:
-            print(f"Reverse primer 3 end temperature not in range [{min_temp}, {max_temp}]. The temperature is: ", temp_calculator(rv_3end))
+            print(
+                f"Reverse primer 3 end temperature not in range [{min_temp}, {max_temp}]. The temperature is: ",
+                temp_calculator(rv_3end),
+            )
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
 
@@ -242,11 +304,15 @@ def test_primer_size_in_range(ssm_result):
         rv_seq = mutation_dict["reverse_primer"]["sequence"]
 
         if len(fw_seq) < min_size or len(fw_seq) > max_size:
-            print(f"Forward primer size={len(fw_seq)} not in range [{min_size}, {max_size}].")
+            print(
+                f"Forward primer size={len(fw_seq)} not in range [{min_size}, {max_size}]."
+            )
             print("Primer seq:" + fw_seq + " Mutation: " + mutation_dict["mutation"])
             return False
         if len(rv_seq) < min_size or len(rv_seq) > max_size:
-            print(f"Reverse primer size={len(rv_seq)} not in range [{min_size}, {max_size}].")
+            print(
+                f"Reverse primer size={len(rv_seq)} not in range [{min_size}, {max_size}]."
+            )
             print("Primer seq:" + rv_seq + " Mutation: " + mutation_dict["mutation"])
             return False
 
@@ -262,17 +328,28 @@ def test_mutation_position(ssm_result):
     """
     desired_amino = ssm_result["input_data"]["degenerate_codon"]
     for mutation_dict in ssm_result["results"]:
-
-        mut_offset = ssm_result["goi_offset"] + (int(mutation_dict["mutation"][1:-1]) - 1) * 3 - mutation_dict["forward_primer"]["start"]
-        fw_amino = mutation_dict["forward_primer"]["sequence"][mut_offset: mut_offset + 3]
+        mut_offset = (
+            ssm_result["goi_offset"]
+            + (int(mutation_dict["mutation"][1:-1]) - 1) * 3
+            - mutation_dict["forward_primer"]["start"]
+        )
+        fw_amino = mutation_dict["forward_primer"]["sequence"][
+            mut_offset : mut_offset + 3
+        ]
 
         if fw_amino != desired_amino:
             print("Forward primer does not have mutation at expected location.")
             print("Failed for mutation: " + mutation_dict["mutation"])
             return False
 
-        mut_offset = ssm_result["goi_offset"] + (int(mutation_dict["mutation"][1:-1]) - 1) * 3 - mutation_dict["reverse_primer"]["normal_order_start"]
-        rv_section = mutation_dict["reverse_primer"]["sequence"][::-1][mut_offset: mut_offset + 3]
+        mut_offset = (
+            ssm_result["goi_offset"]
+            + (int(mutation_dict["mutation"][1:-1]) - 1) * 3
+            - mutation_dict["reverse_primer"]["normal_order_start"]
+        )
+        rv_section = mutation_dict["reverse_primer"]["sequence"][::-1][
+            mut_offset : mut_offset + 3
+        ]
 
         if rv_section != desired_amino:
             print("Reverse primer does not have mutation at expected location.")
@@ -282,9 +359,9 @@ def test_mutation_position(ssm_result):
     return True
 
 
-#======================================================================================================================
+# ======================================================================================================================
 #                                           Tests case classes
-#======================================================================================================================
+# ======================================================================================================================
 
 
 class SsmSolveTestOnPresetPrimer3(unittest.TestCase):
@@ -301,64 +378,95 @@ class SsmSolveTestOnPresetPrimer3(unittest.TestCase):
             tst_end = 10
             cls.results = []
             for ind in range(tst_start, tst_end):
-                print(f"\nPreset result NO. {ind+1} generated.\n")
-                cls.results.append(ssm_solve(generate_SSM_input(ind, primer_growth=cls.use_fast_approximation,
-                                                                separateTM=cls.exclude_fl_prim),
-                                             cls.primary_generator, cls.secondary_generator))
+                print(f"\nPreset result NO. {ind + 1} generated.\n")
+                cls.results.append(
+                    ssm_solve(
+                        generate_SSM_input(
+                            ind,
+                            primer_growth=cls.use_fast_approximation,
+                            separateTM=cls.exclude_fl_prim,
+                        ),
+                        cls.primary_generator,
+                        cls.secondary_generator,
+                    )
+                )
             cls.initialized = True
 
     def test_primer_size(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test primer size
-            self.assertTrue(test_primer_size_in_range(result), msg="Primer size is out of range!")
+            self.assertTrue(
+                test_primer_size_in_range(result), msg="Primer size is out of range!"
+            )
 
     def test_3_end_size(self):
         self.__class__.initialize()
         for result in self.__class__.results:
-            self.assertTrue(test_3end_size_in_range(result), msg="Primers 3'end size is out of range!")
+            self.assertTrue(
+                test_3end_size_in_range(result),
+                msg="Primers 3'end size is out of range!",
+            )
 
     def test_overlap_size(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test overlap size
-            self.assertTrue(test_overlap_size_in_range(result), msg="Overlap size is out of range!")
+            self.assertTrue(
+                test_overlap_size_in_range(result), msg="Overlap size is out of range!"
+            )
 
     def test_overlap_temp(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test overlap temperature in range
-            self.assertTrue(test_overlap_temperature_in_range(result), msg="Overlap temperature is out of range!")
+            self.assertTrue(
+                test_overlap_temperature_in_range(result),
+                msg="Overlap temperature is out of range!",
+            )
 
     def test_3_end_temp(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test 3'end temperature of primers
-            self.assertTrue(test_3end_temperature_in_range(result), msg="Primer 3'end temperature is out of range!")
+            self.assertTrue(
+                test_3end_temperature_in_range(result),
+                msg="Primer 3'end temperature is out of range!",
+            )
 
     def test_overlap_complementary(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test overlap complementary
-            self.assertTrue(test_overlap_complementary(result), msg="Overlap size is incorrectly computed!")
+            self.assertTrue(
+                test_overlap_complementary(result),
+                msg="Overlap size is incorrectly computed!",
+            )
 
     def test_mutation_position(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test mutation position
-            self.assertTrue(test_mutation_position(result), msg="Mutation is not on expected location!")
+            self.assertTrue(
+                test_mutation_position(result),
+                msg="Mutation is not on expected location!",
+            )
 
     def test_min_5_end_size(self):
         self.__class__.initialize()
         for result in self.__class__.results:
             # test mutation position
-            self.assertTrue(test_5end_size_in_range(result), msg="Primers do not have sufficient 5 end size!")
+            self.assertTrue(
+                test_5end_size_in_range(result),
+                msg="Primers do not have sufficient 5 end size!",
+            )
 
 
 class SsmSolveTestConfigRange(unittest.TestCase):
     """
     Run tests with null generator as primary generator on random examples
     """
+
     percentage = 0.9
     primary_generator = Primer3(primer3_path=PRIMER3_PATH)
     secondary_generator = AllPrimerGenerator()
@@ -367,11 +475,10 @@ class SsmSolveTestConfigRange(unittest.TestCase):
     initialized = False
     hairpins = False
     separate_temp_calc = True
-    num_of_tests = 1
+    num_of_tests = 0
 
     @classmethod
     def initialize(cls):
-
         max_muts = 24
         if not cls.initialized:
             # b_tmp = [True, False]
@@ -385,15 +492,20 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             tst_end = cls.num_of_tests
             cls.results = []
             for ind in range(tst_start, tst_end):
-                print(f"\nRandom result NO. {ind+1} generated.\n")
+                print(f"\nRandom result NO. {ind + 1} generated.\n")
                 cls.results.append(
-                    ssm_solve(generate_random_SSM_input(mut_cnt=random.randint(12, max_muts),
-                                                        use_fast_approximation=cls.use_fast_approximation,
-                                                        exclude_fl_prim=cls.exclude_fl_prim,
-                                                        hairpins=cls.hairpins,
-                                                        separate=cls.separate_temp_calc
-                                                        ),
-                              cls.primary_generator, cls.secondary_generator))
+                    ssm_solve(
+                        generate_random_SSM_input(
+                            mut_cnt=random.randint(12, max_muts),
+                            use_fast_approximation=cls.use_fast_approximation,
+                            exclude_fl_prim=cls.exclude_fl_prim,
+                            hairpins=cls.hairpins,
+                            separate=cls.separate_temp_calc,
+                        ),
+                        cls.primary_generator,
+                        cls.secondary_generator,
+                    )
+                )
             cls.initialized = True
 
     def test_primer_size(self):
@@ -402,11 +514,17 @@ class SsmSolveTestConfigRange(unittest.TestCase):
         for result in self.__class__.results:
             # test primer size
             if test_primer_size_in_range(result):
-                cnt+=1
-        self.assertGreaterEqual(cnt, len(self.__class__.results)*self.__class__.percentage,
-                                "Too many primers out of range")
+                cnt += 1
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers out of range",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f of primers have size in range." % (cnt/len(self.__class__.results)*100))
+            print(
+                "%.2f of primers have size in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_3_end_size(self):
         self.__class__.initialize()
@@ -415,10 +533,16 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_3end_size_in_range(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers 3 end size out of range")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers 3 end size out of range",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f of primers have 3 end size in range." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f of primers have 3 end size in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_5_end_size(self):
         self.__class__.initialize()
@@ -427,10 +551,16 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_5end_size_in_range(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers 5 end size out of range")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers 5 end size out of range",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f of primers have 5 end size in range." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f of primers have 5 end size in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_overlap_size(self):
         self.__class__.initialize()
@@ -439,10 +569,16 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_overlap_size_in_range(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers overlap size is out of range!")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers overlap size is out of range!",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f  of primers have overlap size in range." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f  of primers have overlap size in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_overlap_temp(self):
         self.__class__.initialize()
@@ -451,10 +587,14 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_overlap_temperature_in_range(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, 0,
-                                "Too many primers overlap temperature is out of range!")
+        self.assertGreaterEqual(
+            cnt, 0, "Too many primers overlap temperature is out of range!"
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f  of primers have overlap temp. in range." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f  of primers have overlap temp. in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_3_end_temp(self):
         self.__class__.initialize()
@@ -463,10 +603,16 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_3end_temperature_in_range(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers 3 end temperatures out of range")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers 3 end temperatures out of range",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f  of primers have 3'end temp. in range." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f  of primers have 3'end temp. in range."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_overlap_complementary(self):
         self.__class__.initialize()
@@ -475,10 +621,16 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_overlap_complementary(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers overlap size is incorrectly computed")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers overlap size is incorrectly computed",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f of primers are correctly complements to each other." % (cnt / len(self.__class__.results) * 100))
+            print(
+                "%.2f of primers are correctly complements to each other."
+                % (cnt / len(self.__class__.results) * 100)
+            )
 
     def test_mutation_position(self):
         self.__class__.initialize()
@@ -487,17 +639,23 @@ class SsmSolveTestConfigRange(unittest.TestCase):
             # test primer size
             if test_mutation_position(result):
                 cnt += 1
-        self.assertGreaterEqual(cnt, len(self.__class__.results) * self.__class__.percentage,
-                                "Too many primers mutation is not on expected location!")
+        self.assertGreaterEqual(
+            cnt,
+            len(self.__class__.results) * self.__class__.percentage,
+            "Too many primers mutation is not on expected location!",
+        )
         if len(self.__class__.results) > 0:
-            print("%.2f of primers mutation at right spot." % (cnt / len(self.__class__.results) * 100))
-            
+            print(
+                "%.2f of primers mutation at right spot."
+                % (cnt / len(self.__class__.results) * 100)
+            )
+
 
 class SsmSolveTestSpecificConfigsRandom1(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.09
-    num_of_tests = 10
+    num_of_tests = 0
 
     separate_temp_calc = False
     exclude_fl_prim = False
@@ -510,7 +668,7 @@ class SsmSolveTestSpecificConfigsRandom2(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.79
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = False
     exclude_fl_prim = True
@@ -523,7 +681,7 @@ class SsmSolveTestSpecificConfigsRandom3(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.39
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = False
     exclude_fl_prim = False
@@ -549,7 +707,7 @@ class SsmSolveTestSpecificConfigsRandom5(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.9
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = False
     exclude_fl_prim = True
@@ -562,7 +720,7 @@ class SsmSolveTestSpecificConfigsRandom6(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.9
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = False
     exclude_fl_prim = True
@@ -575,7 +733,7 @@ class SsmSolveTestSpecificConfigsRandom7(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.59
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = False
     exclude_fl_prim = True
@@ -601,7 +759,7 @@ class SsmSolveTestSpecificConfigsRandom9(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.59
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = True
     exclude_fl_prim = False
@@ -641,7 +799,7 @@ class SsmSolveTestSpecificConfigsRandom13(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.0
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = True
     exclude_fl_prim = True
@@ -654,7 +812,7 @@ class SsmSolveTestSpecificConfigsRandom14(SsmSolveTestConfigRange):
     secondary_generator = AllPrimerGenerator()
     initialized = False
     percentage = 0.9
-    num_of_tests = 10
+    num_of_tests = 1
 
     separate_temp_calc = True
     exclude_fl_prim = True

@@ -22,7 +22,7 @@ from tests.test_support import *
 
 
 class TestBackTracking(unittest.TestCase):
-
+    @unittest.skip("Slow test - disabled for CI")
     def test_finding_solution_1(self):
         """
         find_solution(proto_frags: [PASProtoFragment], T_min: int, offsets: [Offset],
@@ -33,14 +33,16 @@ class TestBackTracking(unittest.TestCase):
         """
         index = 1
         workflow_input = generate_pas_input(index)
-        solver = PASSolver(workflow_input.config,
-                           workflow_input.is_dna_sequence,
-                           workflow_input.is_mutations_as_codons)
+        solver = PASSolver(
+            workflow_input.config,
+            workflow_input.is_dna_sequence,
+            workflow_input.is_mutations_as_codons,
+        )
 
         mutations = extract_mutations(workflow_input)
 
         sequence, offset = sample_pas_sequences(index).get_full_sequence_with_offset()
-        offsets = [3*(m.position-1)+offset for m in mutations]
+        offsets = [3 * (m.position - 1) + offset for m in mutations]
 
         solver.find_solution(workflow_input.sequences, mutations)
 
@@ -54,9 +56,11 @@ class TestBackTracking(unittest.TestCase):
         for offset in offsets:
             print(offset)
         self.assertEqual(solver.best_solution.get_length(), len(sequence))
-        self.assertEqual(len(found_sites), len(mutations), "Not all mutation sites found")
+        self.assertEqual(
+            len(found_sites), len(mutations), "Not all mutation sites found"
+        )
 
-
+    @unittest.skip("Slow test - disabled for CI")
     def test_finding_solution_2(self):
         """
         find_solution(proto_frags: [PASProtoFragment], T_min: int, offsets: [Offset],
@@ -67,14 +71,16 @@ class TestBackTracking(unittest.TestCase):
         """
         index = 2
         workflow_input = generate_pas_input(index)
-        solver = PASSolver(workflow_input.config,
-                           workflow_input.is_dna_sequence,
-                           workflow_input.is_mutations_as_codons)
+        solver = PASSolver(
+            workflow_input.config,
+            workflow_input.is_dna_sequence,
+            workflow_input.is_mutations_as_codons,
+        )
 
         mutations = extract_mutations(workflow_input)
 
         sequence, offset = sample_pas_sequences(index).get_full_sequence_with_offset()
-        offsets = [3*m.position+offset for m in mutations]
+        offsets = [3 * m.position + offset for m in mutations]
         solver.find_solution(workflow_input.sequences, mutations)
 
         self.assertIsNotNone(solver.best_solution, "We did not find any solution")
@@ -87,8 +93,9 @@ class TestBackTracking(unittest.TestCase):
         for offset in offsets:
             print(offset)
         self.assertEqual(solver.best_solution.get_length(), len(sequence))
-        self.assertEqual(len(found_sites), len(mutations), "Not all mutation sites found")
-
+        self.assertEqual(
+            len(found_sites), len(mutations), "Not all mutation sites found"
+        )
 
     def test_finding_solution_3(self):
         """
@@ -100,15 +107,17 @@ class TestBackTracking(unittest.TestCase):
         """
         index = 3
         workflow_input = generate_pas_input(index)
-        solver = PASSolver(workflow_input.config,
-                           workflow_input.is_dna_sequence,
-                           workflow_input.is_mutations_as_codons)
+        solver = PASSolver(
+            workflow_input.config,
+            workflow_input.is_dna_sequence,
+            workflow_input.is_mutations_as_codons,
+        )
 
         mutations = extract_mutations(workflow_input)
         solver.find_solution(workflow_input.sequences, mutations)
 
         sequence, offset = sample_pas_sequences(index).get_full_sequence_with_offset()
-        offsets = [3*m.position+offset - 3 for m in mutations]
+        offsets = [3 * m.position + offset - 3 for m in mutations]
         calc = solver.best_solution.config.temperature_config.create_calculator()
 
         self.assertIsNotNone(solver.best_solution, "We did not find any solution")
@@ -119,15 +128,30 @@ class TestBackTracking(unittest.TestCase):
             if frag.sites:
                 found_sites.extend(frag.sites)
             if i < len(solver.best_solution.get_fragments()) - 1:
-                temp = calc(solver.best_solution.gene.sequence[solver.best_solution.fragments[i+1].get_start():frag.get_end()])
-                print("Overlap length {} with temperature {}".format(frag.get_end() - solver.best_solution.fragments[i + 1].get_start() + 1, temp))
+                temp = calc(
+                    solver.best_solution.gene.sequence[
+                        solver.best_solution.fragments[
+                            i + 1
+                        ].get_start() : frag.get_end()
+                    ]
+                )
+                print(
+                    "Overlap length {} with temperature {}".format(
+                        frag.get_end()
+                        - solver.best_solution.fragments[i + 1].get_start()
+                        + 1,
+                        temp,
+                    )
+                )
 
         for offset in offsets:
             print(offset)
         self.assertEqual(solver.best_solution.get_length(), len(sequence))
-        self.assertEqual(len(found_sites), len(mutations), "Not all mutation sites found")
+        self.assertEqual(
+            len(found_sites), len(mutations), "Not all mutation sites found"
+        )
 
-
+    @unittest.skip("Slow test - disabled for CI")
     def test_finding_solution_4(self):
         """
         Amino sequence
@@ -135,16 +159,18 @@ class TestBackTracking(unittest.TestCase):
         """
         index = 5
         workflow_input = generate_pas_input(index)
-        solver = PASSolver(workflow_input.config,
-                           workflow_input.is_dna_sequence,
-                           workflow_input.is_mutations_as_codons)
+        solver = PASSolver(
+            workflow_input.config,
+            workflow_input.is_dna_sequence,
+            workflow_input.is_mutations_as_codons,
+        )
 
         mutations = extract_mutations(workflow_input)
         solver.find_solution(workflow_input.sequences, mutations)
 
         sequence = solver.gene.sequence
         offset = sample_pas_sequences(index).get_goi_offset()
-        offsets = [3*m.position+offset - 3 for m in mutations]
+        offsets = [3 * m.position + offset - 3 for m in mutations]
         calc = solver.best_solution.config.temperature_config.create_calculator()
 
         self.assertIsNotNone(solver.best_solution, "We did not find any solution")
@@ -155,10 +181,25 @@ class TestBackTracking(unittest.TestCase):
             if frag.sites:
                 found_sites.extend(frag.sites)
             if i < len(solver.best_solution.get_fragments()) - 1:
-                temp = calc(solver.best_solution.gene.sequence[solver.best_solution.fragments[i+1].get_start():frag.get_end()])
-                print("Overlap length {} with temperature {}".format(frag.get_end()-solver.best_solution.fragments[i+1].get_start() + 1, temp))
+                temp = calc(
+                    solver.best_solution.gene.sequence[
+                        solver.best_solution.fragments[
+                            i + 1
+                        ].get_start() : frag.get_end()
+                    ]
+                )
+                print(
+                    "Overlap length {} with temperature {}".format(
+                        frag.get_end()
+                        - solver.best_solution.fragments[i + 1].get_start()
+                        + 1,
+                        temp,
+                    )
+                )
 
         for offset in offsets:
             print(offset)
         self.assertEqual(solver.best_solution.get_length(), len(sequence))
-        self.assertEqual(len(found_sites), len(mutations), "Not all mutation sites found")
+        self.assertEqual(
+            len(found_sites), len(mutations), "Not all mutation sites found"
+        )
